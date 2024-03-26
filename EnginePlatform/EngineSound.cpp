@@ -1,17 +1,30 @@
+#include "PreCompile.h"
 #include "EngineSound.h"
 #include <EngineBase\EngineString.h>
 #include <EngineBase\EngineDebug.h>
 
 // lib를 사용하는법
 
-// Debug 일때는
-// #pragma comment(lib, "ThirdParty\\FMOD\\inc\\fmodL_vc.lib")
-#pragma comment(lib, "fmodL_vc.lib")
+// 아예 사라져야 한다. 빌드가 되기 전에 아예 사라져야 한다.
+// 이때 보통 사용하는게 ifdef
 
+
+#ifdef _DEBUG
+// Debug 일때는
+#pragma comment(lib, "fmodL_vc.lib")
+#else
 // Release 일때는 
-// #pragma comment(lib, "fmod_vc.lib")
+#pragma comment(lib, "fmod_vc.lib")
+#endif
 
 std::map<std::string, UEngineSound*> UEngineSound::Resources;
+float UEngineSound::GlobalVolume = 1.0f;
+
+void UEngineSoundPlayer::SetVolume(float _Volume)
+{
+	Control->setVolume(_Volume * UEngineSound::GlobalVolume);
+}
+
 
 // FMOD와 관련된 사운드를 로드할수 있는 권한.
 FMOD::System* SoundSystem = nullptr;
@@ -76,6 +89,21 @@ void UEngineSound::ResLoad(std::string_view _Path)
 	// SoundSystem->playSound(SoundHandle, nullptr, false, nullptr);
 }
 
+void UEngineSound::SetGlobalVolume(float _Value)
+{
+	GlobalVolume = _Value;
+
+	if (GlobalVolume <= 0.0f)
+	{
+		GlobalVolume = 0.0f;
+	}
+
+	if (GlobalVolume >= 1.0f)
+	{
+		GlobalVolume = 1.0f;
+	}
+}
+
 UEngineSoundPlayer UEngineSound::SoundPlay(std::string_view _Name)
 {
 	std::string UpperName = UEngineString::ToUpper(_Name);
@@ -91,6 +119,7 @@ UEngineSoundPlayer UEngineSound::SoundPlay(std::string_view _Name)
 	UEngineSoundPlayer Result;
 	SoundSystem->playSound(FindSound->SoundHandle, nullptr, false, &Result.Control);
 	Result.Control->setLoopCount(0);
+	Result.SetVolume(1.0f);
 
 	if (nullptr == Result.Control)
 	{
