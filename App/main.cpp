@@ -1,19 +1,11 @@
-#include <Windows.h>
-#include <string_view>
+#include "PreCompile.h"
 
-#include <EnginePlatform/EngineWindow.h>
-
-
-#pragma comment (lib, "EngineBase.lib")
-#pragma comment (lib, "EnginePlatform.lib")
+#include <babaCore/babaCore.h>
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
 {
-	UEngineWindow NewWindow;
-	NewWindow.Open();
-
-	UEngineWindow::WindowMessageLoop(nullptr, nullptr);
+	UEngineCore::Start<babaCore>(hInstance);
 }
