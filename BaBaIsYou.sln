@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "babaCore", "babaCore\babaCo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineBase", "EngineBase\EngineBase.vcxproj", "{EA197215-13BB-4729-9573-DB483A0EE1A3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EngineShader", "EngineShader\EngineShader.vcxproj", "{48EA064C-43D1-448E-A47D-9534DB00D4F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -71,6 +73,14 @@ Global
 		{EA197215-13BB-4729-9573-DB483A0EE1A3}.Release|x64.Build.0 = Release|x64
 		{EA197215-13BB-4729-9573-DB483A0EE1A3}.Release|x86.ActiveCfg = Release|Win32
 		{EA197215-13BB-4729-9573-DB483A0EE1A3}.Release|x86.Build.0 = Release|Win32
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Debug|x64.ActiveCfg = Debug|x64
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Debug|x64.Build.0 = Debug|x64
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Debug|x86.ActiveCfg = Debug|Win32
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Debug|x86.Build.0 = Debug|Win32
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Release|x64.ActiveCfg = Release|x64
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Release|x64.Build.0 = Release|x64
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Release|x86.ActiveCfg = Release|Win32
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,6 +91,7 @@ Global
 		{E900C797-09AD-46CE-9F93-4065214CF169} = {00EE5F47-26DC-4B3E-9972-1D48BAFEED14}
 		{26A14A96-097B-4ED6-8F9D-C86F19137A39} = {D2BB5D9A-8FBA-45CD-8319-37ADA80BACD1}
 		{EA197215-13BB-4729-9573-DB483A0EE1A3} = {0040BCAB-53CD-439C-AB37-327EE84AAF82}
+		{48EA064C-43D1-448E-A47D-9534DB00D4F7} = {00EE5F47-26DC-4B3E-9972-1D48BAFEED14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E53EE1AA-324E-446C-9C7F-23F5E55ED8DA}
