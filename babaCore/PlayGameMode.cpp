@@ -3,15 +3,15 @@
 #include "Player.h"
 #include <EngineCore/Camera.h>
 
-APlayGameMode::APlayGameMode()
+APlayGameMode::APlayGameMode() 
 {
 }
 
-APlayGameMode::~APlayGameMode()
+APlayGameMode::~APlayGameMode() 
 {
 }
 
-void APlayGameMode::BeginPlay()
+void APlayGameMode::BeginPlay() 
 {
 	Super::BeginPlay();
 

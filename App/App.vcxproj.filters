@@ -19,4 +19,7 @@
       <Filter>PreCompile</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Doc\DirectX\랜파.jpg" />
+  </ItemGroup>
 </Project>
