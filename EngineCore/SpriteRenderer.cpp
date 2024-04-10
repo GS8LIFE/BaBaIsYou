@@ -42,6 +42,19 @@ USpriteRenderer::~USpriteRenderer()
 {
 }
 
+
+void USpriteRenderer::SetAutoSize(float _ScaleRatio, bool _AutoSize)
+{
+	AutoSize = _AutoSize;
+	ScaleRatio = _ScaleRatio;
+
+	if (true == AutoSize && nullptr != CurInfo.Texture)
+	{
+		SetSpriteInfo(CurInfo);
+	}
+}
+
+
 void USpriteRenderer::Tick(float _DeltaTime) 
 {
 	Super::Tick(_DeltaTime);
@@ -52,12 +65,28 @@ void USpriteRenderer::Tick(float _DeltaTime)
 		CurAnimation->Update(_DeltaTime);
 
 		FSpriteInfo Info = CurAnimation->GetCurSpriteInfo();
-		CuttingDataValue.CuttingPosition = Info.CuttingPosition;
-		CuttingDataValue.CuttingSize = Info.CuttingSize;
-		CurTexture = Info.Texture;
-		Resources->SettingTexture("Image", Info.Texture, "POINT");
-		SetSamplering(SamplingValue);
+		SetSpriteInfo(Info);
 	}
+}
+
+void USpriteRenderer::SetSpriteInfo(const FSpriteInfo& _Info)
+{
+	CuttingDataValue.CuttingPosition = _Info.CuttingPosition;
+	CuttingDataValue.CuttingSize = _Info.CuttingSize;
+	CurTexture = _Info.Texture;
+
+	if (true == AutoSize)
+	{
+		// 문제 UV기반
+		// 0~1상이의 비율 값이다.
+		float4 TexScale = _Info.Texture->GetScale();
+		Transform.SetScale(TexScale * CuttingDataValue.CuttingSize * ScaleRatio);
+	}
+
+	CurInfo = _Info;
+
+	Resources->SettingTexture("Image", _Info.Texture, "POINT");
+	SetSamplering(SamplingValue);
 }
 
 void USpriteRenderer::SetSprite(std::string_view _Name, UINT _Index/* = 0*/)
@@ -71,11 +100,7 @@ void USpriteRenderer::SetSprite(std::string_view _Name, UINT _Index/* = 0*/)
 	}
 
 	FSpriteInfo Info = Sprite->GetSpriteInfo(_Index);
-	CuttingDataValue.CuttingPosition = Info.CuttingPosition;
-	CuttingDataValue.CuttingSize = Info.CuttingSize;
-	CurTexture = Info.Texture;
-	Resources->SettingTexture("Image", Info.Texture, "POINT");
-	SetSamplering(SamplingValue);
+	SetSpriteInfo(Info);
 }
 
 void USpriteRenderer::SetSamplering(ETextureSampling _Value)
@@ -118,12 +143,6 @@ void USpriteRenderer::CreateAnimation(
 	int _Start /*= -1*/, 
 	int _End /*= -1*/)
 {
-	if (_Start > _End)
-	{
-		MsgBoxAssert("아직 역방향 기능은 지원하지 않습니다.");
-		return;
-	}
-
 	std::shared_ptr<UEngineSprite> FindSprite = UEngineSprite::FindRes(_SpriteName);
 
 	if (nullptr == FindSprite)
@@ -141,10 +160,22 @@ void USpriteRenderer::CreateAnimation(
 	if (0 > _Start)
 	{
 		Start = 0;
-		End = static_cast<int>(FindSprite->GetInfoSize());
 	}
 
-	for (int i = 0; i < End; i++)
+	if (0 > End)
+	{
+		End = static_cast<int>(FindSprite->GetInfoSize()) - 1;
+	}
+
+	if (End < Start)
+	{
+		MsgBoxAssert("아직 역방향 기능은 지원하지 않습니다.");
+		return;
+	}
+
+
+
+	for (int i = Start; i < End + 1; i++)
 	{
 		Inter.push_back(_Inter);
 		Frame.push_back(i);

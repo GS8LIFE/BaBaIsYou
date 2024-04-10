@@ -1,8 +1,9 @@
 #include "PreCompile.h"
 #include "TitleGameMode.h"
 #include "TitleLogo.h"
+#include "map.h"
+#include "MapDeco.h"
 #include <EngineCore/Camera.h>
-
 ATitleGameMode::ATitleGameMode() 
 {
 }
@@ -17,7 +18,7 @@ void ATitleGameMode::BeginPlay()
 
 	std::shared_ptr<UCamera> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(0.0f, 0.0f, -100.0f));
-	GetWorld()->SpawnActor<ATitleLogo>("TitleLogo");
+	GetWorld()->SpawnActor<Map>("Map");
 }
 
 void ATitleGameMode::Tick(float _DeltaTime)

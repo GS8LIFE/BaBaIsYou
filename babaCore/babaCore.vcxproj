@@ -23,6 +23,13 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ContentsConstValue.h" />
+    <ClInclude Include="ContentsEnum.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapDeco.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayGameMode.h" />
     <ClInclude Include="PreCompile.h" />
@@ -40,6 +47,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="ContentsConstValue.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapDeco.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayGameMode.cpp" />
     <ClCompile Include="PreCompile.cpp">
@@ -54,6 +67,17 @@
     </ClCompile>
     <ClCompile Include="TitleGameMode.cpp" />
     <ClCompile Include="TitleLogo.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EngineBase\EngineBase.vcxproj">
+      <Project>{ea197215-13bb-4729-9573-db483a0ee1a3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\EngineCore\EngineCore.vcxproj">
+      <Project>{e900c797-09ad-46ce-9f93-4065214cf169}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\EnginePlatform\EnginePlatform.vcxproj">
+      <Project>{f0716ec2-0bc5-43ea-9046-b203e0985a67}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -195,6 +195,20 @@
   <ItemGroup>
     <Image Include="..\..\..\Doc\DirectX\랜파.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\babaCore\babaCore.vcxproj">
+      <Project>{26a14a96-097b-4ed6-8f9d-c86f19137a39}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\EngineBase\EngineBase.vcxproj">
+      <Project>{ea197215-13bb-4729-9573-db483a0ee1a3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\EngineCore\EngineCore.vcxproj">
+      <Project>{e900c797-09ad-46ce-9f93-4065214cf169}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\EnginePlatform\EnginePlatform.vcxproj">
+      <Project>{f0716ec2-0bc5-43ea-9046-b203e0985a67}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

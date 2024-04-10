@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "babaCore.h"
 #include "PlayGameMode.h"
+#include "TitleGameMode.h"
+#include <EngineCore/EngineSprite.h>
 
 babaCore::babaCore()
 {
@@ -42,7 +44,6 @@ void babaCore::Initialize()
 		// 이미 이 이름을 가진 스프라이트가 존재한다.
 		// 그러면 기존의 스프라이트 데이터는 날려버리고
 		// 자른 스프라이트 데이터 변경한다.
-		UEngineSprite::CreateCutting("CuttingTest.png", 4, 3);
 	}
 
 
@@ -65,7 +66,7 @@ void babaCore::Initialize()
 
 	GEngine->CreateLevel<APlayGameMode>("PlayLevel");
 	GEngine->CreateLevel<ATitleGameMode>("TitleLevel");
-	GEngine->ChangeLevel("TitleLevel");
+	GEngine->ChangeLevel("PlayLevel");
 
 
 }

@@ -1,4 +1,5 @@
 WindowTitle : [Title]
-WindowScale : [1280], [720]
+WindowScale : [1260], [720]
 IsDebug : [false]
-ClearColor : R[0],G[0],B[1]
+ClearColor : R[0.082],G[0.094],B[0.121]
+FreeCameraKey : [0]
