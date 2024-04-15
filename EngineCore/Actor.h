@@ -11,7 +11,7 @@
 class ULevel;
 class UActorComponent;
 class USceneComponent;
-class AActor : public UTickObject, public UWorldObject
+class AActor : public UTickObject, public UWorldObject, public UNameObject
 {
 	friend ULevel;
 	GENERATED_BODY(UTickObject)
@@ -52,6 +52,8 @@ public:
 	FVector GetActorRightVector();
 	FVector GetActorUpVector();
 
+	FVector GetActorScale3D();
+
 	void SetActorScale3D(FVector _Value);
 	void SetActorRotation(FVector _Value);
 	void SetActorLocation(FVector _Value);
@@ -59,6 +61,16 @@ public:
 	void AddActorScale3D(FVector _Value);
 	void AddActorRotation(FVector _Value);
 	void AddActorLocation(FVector _Value);
+
+	void SetRoot(USceneComponent* _Root)
+	{
+		if (nullptr != RootComponent)
+		{
+			MsgBoxAssert("이미 루트를 지정한 상태입니다.");
+		}
+
+		RootComponent = _Root;
+	}
 
 protected:
 	void BeginPlay() override;
@@ -75,8 +87,6 @@ private:
 	std::vector<std::shared_ptr<UActorComponent>> Components;
 
 	void PushComponent(std::shared_ptr<UActorComponent> _Component, std::string_view _Name);
-	void RootCheck();
-
 	/////////////////////// 인풋
 
 

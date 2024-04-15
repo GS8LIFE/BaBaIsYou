@@ -3,23 +3,52 @@
 #include "EngineShaderResources.h"
 #include "EngineSprite.h"
 
+void USpriteRenderer::SetFrameCallback(std::string_view _AnimationName, int _Index, std::function<void()> _Function)
+{
+	std::string UpperName = UEngineString::ToUpper(_AnimationName);
+
+	if (false == Animations.contains(UpperName))
+	{
+		MsgBoxAssert("존재하지 않는 애니메이션에 콜백을 지정할수 없습니다." + std::string(_AnimationName));
+		return;
+	}
+
+	Animations[UpperName]->FrameCallback[_Index] = _Function;
+
+}
+
+void USpriteAnimation::FrameCallBackCheck()
+{
+	if (false == FrameCallback.contains(CurFrame))
+	{
+		return;
+	}
+
+	FrameCallback[CurFrame]();
+}
+
 void USpriteAnimation::Update(float _DeltaTime)
 {
+	IsEnd = false;
+
 	CurTime += _DeltaTime;
 
 	if (CurTime > Inter[CurFrame])
 	{
 		CurTime -= Inter[CurFrame];
 		++CurFrame;
+		FrameCallBackCheck();
 
 		if (Frame.size() <= CurFrame)
 		{
 			if (true == Loop)
 			{
+				IsEnd = true;
 				CurFrame = 0;
 			}
 			else 
 			{
+				IsEnd = true;
 				--CurFrame;
 			}
 		}
@@ -30,18 +59,12 @@ USpriteRenderer::USpriteRenderer()
 {
 	SetMesh("Rect");
 	SetMaterial("2DImage");
-	Resources->SettingTexture("Image", "EngineBaseTexture.png", "POINT");
-	CurTexture = nullptr;
-	Resources->SettingConstantBuffer("ResultColorValue", PlusColor);
-	Resources->SettingConstantBuffer("FCuttingData", CuttingDataValue);
-
 }
 
 
 USpriteRenderer::~USpriteRenderer() 
 {
 }
-
 
 void USpriteRenderer::SetAutoSize(float _ScaleRatio, bool _AutoSize)
 {
@@ -52,6 +75,15 @@ void USpriteRenderer::SetAutoSize(float _ScaleRatio, bool _AutoSize)
 	{
 		SetSpriteInfo(CurInfo);
 	}
+}
+
+void USpriteRenderer::MaterialSettingEnd()
+{
+	Super::MaterialSettingEnd();
+	Resources->SettingTexture("Image", "EngineBaseTexture.png", "POINT");
+	CurTexture = nullptr;
+	Resources->SettingConstantBuffer("ResultColorValue", ColorData);
+	Resources->SettingConstantBuffer("FCuttingData", CuttingDataValue);
 }
 
 
@@ -69,6 +101,16 @@ void USpriteRenderer::Tick(float _DeltaTime)
 	}
 }
 
+void USpriteRenderer::SetDir(EEngineDir _Dir)
+{
+	Dir = _Dir;
+
+	if (nullptr != CurInfo.Texture)
+	{
+		SetSpriteInfo(CurInfo);
+	}
+}
+
 void USpriteRenderer::SetSpriteInfo(const FSpriteInfo& _Info)
 {
 	CuttingDataValue.CuttingPosition = _Info.CuttingPosition;
@@ -83,7 +125,69 @@ void USpriteRenderer::SetSpriteInfo(const FSpriteInfo& _Info)
 		Transform.SetScale(TexScale * CuttingDataValue.CuttingSize * ScaleRatio);
 	}
 
+	switch (Pivot)
+	{
+	case EPivot::BOT:
+	{
+		float4 Scale = Transform.WorldScale;
+		Scale.X = 0.0f;
+		Scale.Y = abs(Scale.Y) * 0.5f;
+		Scale.Z = 0.0f;
+		CuttingDataValue.PivotMat.Position(Scale);
+		break;
+	}
+	case EPivot::RIGHT:
+	{
+		float4 Scale = Transform.WorldScale;
+		Scale.X = -abs(Scale.X) * 0.5f;
+		Scale.Y = 0.0f;
+		Scale.Z = 0.0f;
+		CuttingDataValue.PivotMat.Position(Scale);
+		break;
+	}
+	case EPivot::MAX:
+	default:
+	{
+		CuttingDataValue.PivotMat.Identity();
+	}
+		break;
+	}
+
+	if (Dir != EEngineDir::MAX)
+	{
+		float4 Scale = Transform.GetScale();
+
+		switch (Dir)
+		{
+		case EEngineDir::Left:
+		{
+			if (0 < Scale.X)
+			{
+				Scale.X = -Scale.X;
+			}
+			break;
+		}
+		case EEngineDir::Right:
+		{
+			if (0 > Scale.X)
+			{
+				Scale.X = -Scale.X;
+			}
+			break;
+		}
+		case EEngineDir::MAX:
+		default:
+			break;
+		}
+
+		Transform.SetScale(Scale);
+	}
+
 	CurInfo = _Info;
+
+	// CuttingDataValue.PivotMat.Position({ 0.0f,100.0f, 0.0f });
+	// Transform.World * CuttingDataValue.PivotMat;
+
 
 	Resources->SettingTexture("Image", _Info.Texture, "POINT");
 	SetSamplering(SamplingValue);
@@ -128,11 +232,6 @@ void USpriteRenderer::SetSamplering(ETextureSampling _Value)
 	default:
 		break;
 	}
-}
-
-void USpriteRenderer::SetPlusColor(float4 _Color)
-{
-	PlusColor = _Color;
 }
 
 void USpriteRenderer::CreateAnimation(
@@ -195,6 +294,8 @@ void USpriteRenderer::ChangeAnimation(std::string_view _AnimationName)
 	}
 
 	CurAnimation = Animations[UpperName];
+	CurAnimation->Reset();
+	CurAnimation->FrameCallBackCheck();
 }
 
 void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::string_view _SpriteName, std::vector<float> _Inter, std::vector<int> _Frame, bool _Loop /*= true*/)
@@ -224,4 +325,9 @@ void USpriteRenderer::CreateAnimation(std::string_view _AnimationName, std::stri
 	NewAnimation->Reset();
 
 	Animations[UpperName] = NewAnimation;
+}
+
+bool USpriteRenderer::IsCurAnimationEnd()
+{
+	return CurAnimation->IsEnd;
 }

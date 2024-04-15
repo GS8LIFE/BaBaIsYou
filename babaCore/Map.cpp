@@ -4,6 +4,7 @@
 Map::Map()
 {
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+	SetRoot(Renderer);
 }
 
 int Index = 0;

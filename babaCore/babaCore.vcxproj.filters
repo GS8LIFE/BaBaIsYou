@@ -28,6 +28,12 @@
     <ClCompile Include="ContentsConstValue.cpp">
       <Filter>Value</Filter>
     </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TitleGameMode.h">
@@ -57,8 +63,8 @@
     <ClInclude Include="ContentsConstValue.h">
       <Filter>Value</Filter>
     </ClInclude>
-    <ClInclude Include="ContentsEnum.h">
-      <Filter>Value</Filter>
+    <ClInclude Include="Tile.h">
+      <Filter>Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +88,12 @@
     </Filter>
     <Filter Include="Value">
       <UniqueIdentifier>{7b901759-25df-4a8f-a5e7-ad7a157dd424}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stage">
+      <UniqueIdentifier>{5bd7c124-a1da-44e1-a8b2-7a4883527972}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tile">
+      <UniqueIdentifier>{f67e6590-655b-4288-af56-f8df346e2fce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

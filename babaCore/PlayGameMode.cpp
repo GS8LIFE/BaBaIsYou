@@ -19,21 +19,20 @@ void APlayGameMode::BeginPlay()
 
 
 	std::shared_ptr<UCamera> Camera = GetWorld()->GetMainCamera();
-	Camera->SetActorLocation(FVector(640.0f, -360.0f, -100.0f));
+	Camera->SetActorLocation(FVector(630.0f, -360.0f, -100.0f));
 
 	{
 	}
 
 	{
 		std::shared_ptr<Map> MapPtr = GetWorld()->SpawnActor<Map>("Map");
+		std::shared_ptr<APlayer> Player = GetWorld()->SpawnActor<APlayer>("Player");
 		std::shared_ptr<MapDeco> MapDecoPtr = GetWorld()->SpawnActor<MapDeco>("MapDeco");
 
-		MapPtr->SetActorLocation({ 640.0f, -360.0f, 200.0f });
-		MapDecoPtr->SetActorLocation({ 640.0f, -360.0f, 200.0f });
+		Player->SetActorLocation({ 18.0f, -18.0f, 0.0f });
+		MapPtr->SetActorLocation({ 630.0f, -360.0f, 0.0f });
+		MapDecoPtr->SetActorLocation({ 630.0f, -360.0f, 0.0f });
 
-		float TileSize = UContentsConstValue::TileSize;
-		float4 TexScale = UContentsConstValue::MapTexScale;
-		float4 ImageScale = { TexScale.X * TileSize, TexScale.Y * TileSize, 0.0f };
 
 	}
 }

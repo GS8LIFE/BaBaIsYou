@@ -3,6 +3,7 @@
 MapDeco::MapDeco() 
 {
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer1");
+	SetRoot(Renderer);
 }
 
 MapDeco::~MapDeco() 

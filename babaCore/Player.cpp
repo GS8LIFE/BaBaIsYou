@@ -1,26 +1,56 @@
 #include "PreCompile.h"
 #include "Player.h"
-#include <EngineCore/Renderer.h>
-#include <EngineCore/SpriteRenderer.h>
+#include <EngineCore/DefaultSceneComponent.h>
+#include <EngineCore/EngineDebugMsgWindow.h>
 
 APlayer::APlayer()
 {
+	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Renderer");
+
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+	Renderer->SetupAttachment(Root);
+	SetRoot(Root);
 	InputOn();
 }
 
+void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
+{
+	if(MoveActive == true)
+	{
+		MoveTime += _DeltaTime + MoveTimeWeight;
+		FVector CurLocation = GetActorLocation();
+
+		FVector NextPos = FVector::LerpClamp(CurLocation, _MoveDir, MoveTime);
+		SetActorLocation(NextPos);
+
+		if (MoveTime >= 1.0f)
+		{
+			MoveTime = 0.0f;
+			MoveDir = FVector::Zero;
+			MoveActive = false;
+		}
+	}
+}
 APlayer::~APlayer()
 {
+
+
 }
 
 void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetActorScale3D(FVector(300.0f, 300.0f, 100.0f));
-
+	Renderer->CreateAnimation("baba", "baba", 0.2f,true,0,2);
+	Renderer->CreateAnimation("move", "baba", 0.2f, true, 3, 5);
+	Renderer->CreateAnimation("move1", "baba", 0.2f, true, 6, 8);
+	Renderer->CreateAnimation("move2", "baba", 0.2f, true, 9, 11);
+	SetActorScale3D(FVector(32.0f, 32.0f, -100.0f));
+	SetActorLocation(FVector(-612.0f, 342.0f, 0.0f));
+	Renderer->ChangeAnimation("baba");
 	// 내부에서 샘플러도 같이 찾을
-	Renderer->SetSprite("CharIdle0.png");
+	Renderer->SetOrder(5);
+	StateInit();
 }
 
 void APlayer::Tick(float _DeltaTime)
@@ -28,57 +58,25 @@ void APlayer::Tick(float _DeltaTime)
 	// 위에 뭔가를 쳐야할때도 있다.
 	Super::Tick(_DeltaTime);
 
-	float Speed = 100.0f;
-
-	if (true == IsPress('A'))
+	State.Update(_DeltaTime);
+	MoveOneBlock(_DeltaTime, MoveDir);
+	DebugMessageFunction();
+}
+void APlayer::DebugMessageFunction()
+{
 	{
-		AddActorLocation(FVector::Left * _DeltaTime * Speed);
+		std::string Msg = std::format("PlayerPos : {}\n", GetActorLocation().ToString());
+		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
-	if (true == IsPress('D'))
 	{
-		AddActorLocation(FVector::Right * _DeltaTime * Speed);
+		std::string Msg = std::format("MousePos : {}\n", GEngine->EngineWindow.GetScreenMousePos().ToString());
+		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
-	if (true == IsPress('W'))
 	{
-		AddActorLocation(FVector::Up * _DeltaTime * Speed);
-	}
-
-	if (true == IsPress('S'))
-	{
-		AddActorLocation(FVector::Down * _DeltaTime * Speed);
-	}
-
-	if (true == IsPress(VK_NUMPAD1))
-	{
-		// AddActorRotation(float4{0.0f, 0.0f, 1.0f} * 360.0f * _DeltaTime);
-		// Color.X += _DeltaTime;
-	}
-
-	if (true == IsPress(VK_NUMPAD2))
-	{
-		Color.X -= _DeltaTime;
-	}
-
-	if (true == IsPress(VK_NUMPAD4))
-	{
-		Color.Y += _DeltaTime;
-	}
-
-	if (true == IsPress(VK_NUMPAD5))
-	{
-		Color.Y -= _DeltaTime;
-	}
-
-	if (true == IsPress(VK_NUMPAD7))
-	{
-		Color.Z += _DeltaTime;
-	}
-
-	if (true == IsPress(VK_NUMPAD8))
-	{
-		Color.Z -= _DeltaTime;
+		std::string Msg = std::format("MoveTime : {}\n", MoveTime);
+		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
 }
