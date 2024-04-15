@@ -1,18 +1,115 @@
 #include "PreCompile.h"
 #include "Tile.h"
+#include "PlayGameMode.h"
+#include <EngineCore/DefaultSceneComponent.h>
 Tile::Tile() 
 {
+	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Renderer");
+
+	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
+	Renderer->SetupAttachment(Root);
+	SetRoot(Root);
+	
 	
 }
 
 Tile::~Tile() 
 {
 }
+void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
+{
+	if (IsMove == true)
+	{
+		MoveTime += _DeltaTime + MoveTimeWeight;
+		FVector CurLocation = GetActorLocation();
 
+		FVector NextPos = FVector::LerpClamp(CurLocation, _MoveDir, MoveTime);
+		SetActorLocation(NextPos);
+
+		if (MoveTime >= 1.0f)
+		{
+			MoveTime = 0.0f;
+			MoveDir = FVector::Zero;
+			IsMove = false;
+		}
+	}
+}
+
+bool Tile::containsString(const std::vector<std::string>& strings, const std::string& target) {
+	for (const auto& str : strings) {
+		if (str == target) {
+			return true;
+		}
+	}
+	return false;
+}
+void Tile::move(float _DeltaTime)
+{
+	//if (true == Renderer->IsCurAnimationEnd())
+	//{
+	//	int a = 0;
+	//}
+
+
+	if (true == IsUp('A'))
+	{
+		IsMove = true;
+		MoveDir = GetActorLocation();
+		MoveDir += {-TileSize, 0.0f};
+	}
+
+	if (true == IsUp('D'))
+	{
+		IsMove = true;
+		MoveDir = GetActorLocation();
+		MoveDir += {TileSize, 0.0f};
+	}
+
+	if (true == IsUp('W'))
+	{
+		IsMove = true;
+		MoveDir = GetActorLocation();
+		MoveDir += {0.0f, TileSize};
+	}
+
+	if (true == IsUp('S'))
+	{
+		IsMove = true;
+		MoveDir = GetActorLocation();
+		MoveDir += {0.0f, -TileSize};
+	}
+
+
+	//float4 Pos = GetActorLocation();
+
+
+	//Pos /= UContentsConstValue::TileSize;
+	//Pos.Y = -Pos.Y;
+
+	//Color8Bit Color = Tex->GetColor(Pos, Color8Bit::Black);
+
+	//if (Color != Color8Bit::Black)
+	//{
+	//	AddActorLocation(float4::Down * _DeltaTime * 100.0f);
+	//}
+
+
+}
+void Tile::setTileMap(int _a, int _b,char _c)
+{
+	Tilemap[_a][_b] = _c;
+}
 void Tile::BeginPlay()
 {
-	TileSize = UContentsConstValue::TileSize;
-	
+	Super::BeginPlay();
+	TileSize = helper::TileSize;
+
+
+	Renderer->CreateAnimation("Dmove0", "baba", 0.2f, true, 0, 2);
+	Renderer->CreateAnimation("babablock", "textbaba", 0.2f);
+
+	SetActorScale3D(FVector(36.0f, 36.0f, -100.0f));
+	Renderer->ChangeAnimation("babablock");
 }
 
 void Tile::MoveBase(float _Deltatime)
@@ -24,7 +121,8 @@ void Tile::MoveBase(float _Deltatime)
 }
 void Tile::Tick(float _DeltaTime)
 {
+	// 위에 뭔가를 쳐야할때도 있다.
 	Super::Tick(_DeltaTime);
 
-	int a = 0;
+	MoveOneBlock(_DeltaTime, MoveDir);
 }

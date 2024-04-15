@@ -1,10 +1,14 @@
 #pragma once
+#include "PreCompile.h"
 #include <EngineCore/Actor.h>
+#include "ContentsConstValue.h"
+#include "PlayGameMode.h"
+#include "Tile.h"
 #include <EngineCore/StateManager.h>
 
 // 설명 :
 class USpriteRenderer;
-class APlayer : public AActor
+class APlayer : public AActor , public helper 
 {
 	GENERATED_BODY(AActor)
 
@@ -19,6 +23,7 @@ public:
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
+	void setTileMap(int _a, int _b,char _c);
 	UStateManager State;
 protected:
 	void BeginPlay() override;
@@ -33,7 +38,7 @@ private:
 	FVector MoveDir = FVector::Zero;
 	//상태함수
 	void StateInit();
-
+	float TileSize = helper::TileSize;
 	bool MoveActive = false;
 	void Idle(float _DeltaTime);
 	void moveStart();

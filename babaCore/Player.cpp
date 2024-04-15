@@ -17,6 +17,7 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 {
 	if(MoveActive == true)
 	{
+		InputOff();
 		MoveTime += _DeltaTime + MoveTimeWeight;
 		FVector CurLocation = GetActorLocation();
 
@@ -28,6 +29,7 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 			MoveTime = 0.0f;
 			MoveDir = FVector::Zero;
 			MoveActive = false;
+			InputOn();
 		}
 	}
 }
@@ -37,6 +39,10 @@ APlayer::~APlayer()
 
 }
 
+void APlayer::setTileMap(int _a, int _b,char _c)
+{
+	Tilemap[_a][_b] = _c;
+}
 void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
@@ -57,7 +63,7 @@ void APlayer::BeginPlay()
 	Renderer->CreateAnimation("Smove1", "baba", 0.2f, true, 48, 50);
 	Renderer->CreateAnimation("Smove2", "baba", 0.2f, true, 51, 53);
 	Renderer->CreateAnimation("Smove3", "baba", 0.2f, true, 54, 56);
-	SetActorScale3D(FVector(32.0f, 32.0f, -100.0f));
+	SetActorScale3D(FVector(36.0f, 36.0f, -100.0f));
 	SetActorLocation(FVector(-612.0f, 342.0f, 0.0f));
 	Renderer->ChangeAnimation("Dmove0");
 	// 내부에서 샘플러도 같이 찾을

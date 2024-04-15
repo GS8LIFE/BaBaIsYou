@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Player.h"
+#include "Tile.h"
 #include <EngineCore/SpriteRenderer.h>
 
 int movestack = 0; // ¿òÁ÷ÀÎ È½¼ö
@@ -41,7 +42,7 @@ void APlayer::StateInit()
 			// this->Renderer->ChangeAnimation("Idle");
 		});
 
-
+	
 	State.SetUpdateFunction("move", std::bind(&APlayer::move, this, std::placeholders::_1));
 
 	State.SetStartFunction("move", std::bind(&APlayer::moveStart, this));
@@ -187,30 +188,30 @@ void APlayer::move(float _DeltaTime)
 	//	int a = 0;
 	//}
 
-
 	if (true == IsUp('A'))
 	{
 		MoveActive = true;
 		MoveDir = GetActorLocation();
-		MoveDir += {-32.0f, 0.0f};
+		MoveDir += {-TileSize, 0.0f};
 		State.ChangeState("move");
 		movestack++;
 	}
-
-	if (true == IsUp('D'))
+	if (Tilemap[0][1] != '.')
 	{
-		MoveActive = true;
-		MoveDir = GetActorLocation();
-		MoveDir += {32.0f, 0.0f};
-		State.ChangeState("move");
-		movestack++;
+		if (true == IsUp('D'))
+		{
+			MoveActive = true;
+			MoveDir = GetActorLocation();
+			MoveDir += {TileSize, 0.0f};
+			State.ChangeState("move");
+			movestack++;
+		}
 	}
-
 	if (true == IsUp('W'))
 	{
 		MoveActive = true;
 		MoveDir = GetActorLocation();
-		MoveDir += {0.0f, 32.0f};
+		MoveDir += {0.0f, TileSize};
 		State.ChangeState("move");
 		movestack++;
 	}
@@ -219,7 +220,7 @@ void APlayer::move(float _DeltaTime)
 	{
 		MoveActive = true;
 		MoveDir = GetActorLocation();
-		MoveDir += {0.0f, -32.0f};
+		MoveDir += {0.0f, -TileSize};
 		State.ChangeState("move");
 		movestack++;
 	}
