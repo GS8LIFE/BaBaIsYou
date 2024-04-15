@@ -26,6 +26,7 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 
 		if (MoveTime >= 1.0f)
 		{
+			Tile::SetMove(false);
 			MoveTime = 0.0f;
 			MoveDir = FVector::Zero;
 			MoveActive = false;

@@ -2,6 +2,8 @@
 #include "Tile.h"
 #include "PlayGameMode.h"
 #include <EngineCore/DefaultSceneComponent.h>
+bool Tile::IsMove = false;
+
 Tile::Tile() 
 {
 	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Renderer");
@@ -33,6 +35,11 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 			IsMove = false;
 		}
 	}
+}
+
+void Tile::SetMove(bool _SetMove)
+{
+	IsMove = _SetMove;
 }
 
 bool Tile::containsString(const std::vector<std::string>& strings, const std::string& target) {

@@ -187,7 +187,6 @@ void APlayer::move(float _DeltaTime)
 	//{
 	//	int a = 0;
 	//}
-
 	if (true == IsUp('A'))
 	{
 		MoveActive = true;
@@ -196,15 +195,19 @@ void APlayer::move(float _DeltaTime)
 		State.ChangeState("move");
 		movestack++;
 	}
-	if (Tilemap[0][1] != '.')
+	if (Tilemap[0][1] != ' ')
 	{
-		if (true == IsUp('D'))
+		if (Tilemap[0][2] != 'D') 
 		{
-			MoveActive = true;
-			MoveDir = GetActorLocation();
-			MoveDir += {TileSize, 0.0f};
-			State.ChangeState("move");
-			movestack++;
+			if (true == IsUp('D'))
+			{
+				Tile::SetMove(true);
+				MoveActive = true;
+				MoveDir = GetActorLocation();
+				MoveDir += {TileSize, 0.0f};
+				State.ChangeState("move");
+				movestack++;
+			}
 		}
 	}
 	if (true == IsUp('W'))

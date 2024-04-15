@@ -15,10 +15,8 @@ public:
 	~Tile();
 
 	void move(float _DeltaTime);
-	void setMove(bool _setmove)
-	{
-		IsMove = _setmove;
-	}
+	static bool IsMove;
+	static void SetMove(bool _SetMove);
 	void MoveBase(float _DeltaTime);
 	// delete Function
 	Tile(const Tile& _Other) = delete;
@@ -36,7 +34,6 @@ private:
 	const float MoveTimeWeight = 0.01f;
 	void MoveOneBlock(float _DeltaTime, FVector _MoveDir);
 	USpriteRenderer* Renderer;
-	bool IsMove = false;
 	std::map<int, std::vector<char>> Grid;
 	FVector MoveDir = FVector::Zero;
 	bool containsString(const std::vector<std::string>& strings, const std::string& target); // 해당하는 문자가 있는지 확인
