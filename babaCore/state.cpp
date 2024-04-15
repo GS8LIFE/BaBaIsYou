@@ -81,20 +81,99 @@ void APlayer::Idle(float _Update)
 
 void APlayer::moveStart()
 {
-	if (movestack >= 3)
+	if (movestack >= 4)
 	{
 		movestack = 0;
 	}
 	switch (movestack)
 	{
 	case 0:
-		Renderer->ChangeAnimation("move");
+		if (true == IsUp('D'))
+		{
+			Renderer->ChangeAnimation("Dmove0");
+			return;
+		}
+		if (true == IsUp('A'))
+		{
+			Renderer->ChangeAnimation("Amove0");
+			return;
+		}
+		if (true == IsUp('S'))
+		{
+			Renderer->ChangeAnimation("Smove0");
+			return;
+		}
+		if (true == IsUp('W'))
+		{
+			Renderer->ChangeAnimation("Wmove0");
+			return;
+		}
 		break;
 	case 1:
-		Renderer->ChangeAnimation("move1");
+		if (true == IsUp('D'))
+		{
+			Renderer->ChangeAnimation("Dmove1");
+			return;
+		}
+		if (true == IsUp('A'))
+		{
+			Renderer->ChangeAnimation("Amove1");
+			return;
+		}
+		if (true == IsUp('S'))
+		{
+			Renderer->ChangeAnimation("Smove1");
+			return;
+		}
+		if (true == IsUp('W'))
+		{
+			Renderer->ChangeAnimation("Wmove1");
+			return;
+		}
 		break;
 	case 2:
-		Renderer->ChangeAnimation("move2");
+		if (true == IsUp('D'))
+		{
+			Renderer->ChangeAnimation("Dmove2");
+			return;
+		}
+		if (true == IsUp('A'))
+		{
+			Renderer->ChangeAnimation("Amove2");
+			return;
+		}
+		if (true == IsUp('S'))
+		{
+			Renderer->ChangeAnimation("Smove2");
+			return;
+		}
+		if (true == IsUp('W'))
+		{
+			Renderer->ChangeAnimation("Wmove2");
+			return;
+		}
+		break;	
+	case 3:
+		if (true == IsUp('D'))
+		{
+			Renderer->ChangeAnimation("Dmove3");
+			return;
+		}
+		if (true == IsUp('A'))
+		{
+			Renderer->ChangeAnimation("Amove3");
+			return;
+		}
+		if (true == IsUp('S'))
+		{
+			Renderer->ChangeAnimation("Smove3");
+			return;
+		}
+		if (true == IsUp('W'))
+		{
+			Renderer->ChangeAnimation("Wmove3");
+			return;
+		}
 		break;
 	default:
 		break;
