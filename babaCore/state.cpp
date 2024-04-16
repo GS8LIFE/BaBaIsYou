@@ -201,7 +201,7 @@ void APlayer::move(float _DeltaTime)
 		{
 			if (true == IsUp('D'))
 			{
-				Tile::SetMove(true);
+				helper::SetMove(true);
 				MoveActive = true;
 				MoveDir = GetActorLocation();
 				MoveDir += {TileSize, 0.0f};

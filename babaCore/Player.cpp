@@ -96,4 +96,8 @@ void APlayer::DebugMessageFunction()
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
+	{
+		std::string Msg = std::format("MoveTime : {}\n", helper::IsMove);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
 }

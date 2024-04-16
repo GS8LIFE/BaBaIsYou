@@ -2,7 +2,6 @@
 #include "Tile.h"
 #include "PlayGameMode.h"
 #include <EngineCore/DefaultSceneComponent.h>
-bool Tile::IsMove = false;
 
 Tile::Tile() 
 {
@@ -12,7 +11,7 @@ Tile::Tile()
 	Renderer->SetupAttachment(Root);
 	SetRoot(Root);
 	InputOn();
-	
+
 }
 
 Tile::~Tile() 
@@ -20,10 +19,7 @@ Tile::~Tile()
 }
 
 
-void Tile::SetMove(bool _SetMove)
-{
-	IsMove = _SetMove;
-}
+
 
 bool Tile::containsString(const std::vector<std::string>& strings, const std::string& target) {
 	for (const auto& str : strings) {
@@ -40,7 +36,8 @@ void Tile::move(float _DeltaTime)
 	//	int a = 0;
 	//}
 
-
+	if(IsMove == true)
+	{
 	if (true == IsUp('A'))
 	{
 		MoveDir = GetActorLocation();
@@ -49,6 +46,7 @@ void Tile::move(float _DeltaTime)
 
 	if (true == IsUp('D'))
 	{
+		MoveActive = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {TileSize, 0.0f};
 	}
@@ -78,13 +76,12 @@ void Tile::move(float _DeltaTime)
 	//{
 	//	AddActorLocation(float4::Down * _DeltaTime * 100.0f);
 	//}
-
-
+	}
 }
 
 void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 {
-	if (IsMove == true)
+	if (MoveActive == true)
 	{
 		MoveTime += _DeltaTime + MoveTimeWeight;
 		FVector CurLocation = GetActorLocation();
@@ -96,7 +93,7 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 		{
 			MoveTime = 0.0f;
 			MoveDir = FVector::Zero;
-			IsMove = false;
+			MoveActive = false;
 		}
 	}
 }

@@ -6,6 +6,7 @@
 #include "PlayGameMode.h"
 #include "map"
 // Ό³Έν :
+
 class Tile : public AActor , public helper
 {
 	GENERATED_BODY(AActor)
@@ -14,16 +15,14 @@ public:
 	Tile();
 	~Tile();
 
+	bool MoveActive = false;
 	void move(float _DeltaTime);
-	static bool IsMove;
-	static void SetMove(bool _SetMove);
 	void MoveBase(float _DeltaTime);
 	// delete Function
 	Tile(const Tile& _Other) = delete;
 	Tile(Tile&& _Other) noexcept = delete;
 	Tile& operator=(const Tile& _Other) = delete;
 	Tile& operator=(Tile&& _Other) noexcept = delete;
-
 	void setTileMap(int _a,int _b,char _c);
 protected:
 	void BeginPlay() override;
