@@ -17,7 +17,6 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 {
 	if(MoveActive == true)
 	{
-		InputOff();
 		MoveTime += _DeltaTime + MoveTimeWeight;
 		FVector CurLocation = GetActorLocation();
 
@@ -30,7 +29,6 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 			MoveTime = 0.0f;
 			MoveDir = FVector::Zero;
 			MoveActive = false;
-			InputOn();
 		}
 	}
 }

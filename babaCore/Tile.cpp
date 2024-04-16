@@ -11,31 +11,14 @@ Tile::Tile()
 	Renderer = CreateDefaultSubObject<USpriteRenderer>("Renderer");
 	Renderer->SetupAttachment(Root);
 	SetRoot(Root);
-	
+	InputOn();
 	
 }
 
 Tile::~Tile() 
 {
 }
-void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
-{
-	if (IsMove == true)
-	{
-		MoveTime += _DeltaTime + MoveTimeWeight;
-		FVector CurLocation = GetActorLocation();
 
-		FVector NextPos = FVector::LerpClamp(CurLocation, _MoveDir, MoveTime);
-		SetActorLocation(NextPos);
-
-		if (MoveTime >= 1.0f)
-		{
-			MoveTime = 0.0f;
-			MoveDir = FVector::Zero;
-			IsMove = false;
-		}
-	}
-}
 
 void Tile::SetMove(bool _SetMove)
 {
@@ -60,28 +43,24 @@ void Tile::move(float _DeltaTime)
 
 	if (true == IsUp('A'))
 	{
-		IsMove = true;
 		MoveDir = GetActorLocation();
-		MoveDir += {-TileSize, 0.0f};
+		MoveDir += {-TileSize, 0.0f};	
 	}
 
 	if (true == IsUp('D'))
 	{
-		IsMove = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {TileSize, 0.0f};
 	}
 
 	if (true == IsUp('W'))
 	{
-		IsMove = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {0.0f, TileSize};
 	}
 
 	if (true == IsUp('S'))
 	{
-		IsMove = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {0.0f, -TileSize};
 	}
@@ -102,6 +81,26 @@ void Tile::move(float _DeltaTime)
 
 
 }
+
+void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
+{
+	if (IsMove == true)
+	{
+		MoveTime += _DeltaTime + MoveTimeWeight;
+		FVector CurLocation = GetActorLocation();
+
+		FVector NextPos = FVector::LerpClamp(CurLocation, _MoveDir, MoveTime);
+		SetActorLocation(NextPos);
+
+		if (MoveTime >= 1.0f)
+		{
+			MoveTime = 0.0f;
+			MoveDir = FVector::Zero;
+			IsMove = false;
+		}
+	}
+}
+
 void Tile::setTileMap(int _a, int _b,char _c)
 {
 	Tilemap[_a][_b] = _c;
@@ -130,6 +129,6 @@ void Tile::Tick(float _DeltaTime)
 {
 	// 위에 뭔가를 쳐야할때도 있다.
 	Super::Tick(_DeltaTime);
-
+	move(_DeltaTime);
 	MoveOneBlock(_DeltaTime, MoveDir);
 }

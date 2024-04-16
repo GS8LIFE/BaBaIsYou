@@ -20,6 +20,7 @@ void Map::BeginPlay()
 	Renderer->CreateAnimation("Map", "Map", 0.2f);
 	SetActorScale3D(FVector(1188.0f, 648.0f, 100.0f));
 	Renderer->ChangeAnimation("Map");
+	Renderer->SetOrder(-2);
 }
 
 void Map::Tick(float _DeltaTime)
