@@ -3,7 +3,7 @@
 #include "Tile.h"
 #include <EngineCore/SpriteRenderer.h>
 
-int movestack = 0; // 움직인 횟수
+
 
 //void Function(URenderer* Renderer)
 //{
@@ -195,18 +195,34 @@ void APlayer::move(float _DeltaTime)
 		State.ChangeState("move");
 		movestack++;
 	}
-	if (Tilemap[0][1] != ' ')
+	if (true == IsUp('D'))
 	{
-		if (Tilemap[0][2] != 'D') 
+		int Column = (-GetActorLocation().Y / TileSize) ;
+		int Row = (GetActorLocation().X / TileSize);
+		if (Tilemap[Column][Row+1] == " " || Tile::containsString(helper::Nouns, Tilemap[Column][Row+1]))
+			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			if (true == IsUp('D'))
+			if (Tilemap[Column][Row+2] == " ")
 			{
+
 				helper::SetMove(true);
 				MoveActive = true;
 				MoveDir = GetActorLocation();
 				MoveDir += {TileSize, 0.0f};
 				State.ChangeState("move");
+				Tilemap[Column][Row + 2] = Tilemap[Column][Row + 1];
 				movestack++;
+			}
+		
+			else
+			{
+				{
+				MoveActive = true;
+				MoveDir = GetActorLocation();
+				MoveDir += {TileSize, 0.0f};
+				State.ChangeState("move");
+				movestack++;
+				}
 			}
 		}
 	}

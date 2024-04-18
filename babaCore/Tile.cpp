@@ -18,8 +18,25 @@ Tile::~Tile()
 {
 }
 
+void Tile::setTileType(TileType _Type)
+{
+	Type = _Type;
+}
+void Tile::TileCheck()
+{
+	for (int column = 0; column < 20; column++) 
+	{
+		for (int Row = 0; Row < 35; Row++)
+		{
+			bool a = containsString(Nouns, Tilemap[column][Row]);
+		}
+	}
+}
 
+void Tile::CreateChar()
+{
 
+}
 
 bool Tile::containsString(const std::vector<std::string>& strings, const std::string& target) {
 	for (const auto& str : strings) {
@@ -98,7 +115,7 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 	}
 }
 
-void Tile::setTileMap(int _a, int _b,char _c)
+void Tile::setTileMap(int _a, int _b,std::string _c)
 {
 	Tilemap[_a][_b] = _c;
 }
@@ -128,4 +145,5 @@ void Tile::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	move(_DeltaTime);
 	MoveOneBlock(_DeltaTime, MoveDir);
+	TileCheck();
 }

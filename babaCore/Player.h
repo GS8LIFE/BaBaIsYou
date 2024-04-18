@@ -10,6 +10,7 @@
 class USpriteRenderer;
 class APlayer : public AActor , public helper 
 {
+	friend Tile;
 	GENERATED_BODY(AActor)
 
 public:
@@ -23,7 +24,7 @@ public:
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
-	void setTileMap(int _a, int _b,char _c);
+	void setTileMap(int _a, int _b,std::string _c);
 	UStateManager State;
 protected:
 	void BeginPlay() override;
@@ -43,6 +44,6 @@ private:
 	void Idle(float _DeltaTime);
 	void moveStart();
 	void move(float _DeltaTime);
-
+	int movestack = 0; // ¿òÁ÷ÀÎ È½¼ö
 };
 

@@ -34,6 +34,9 @@
     <ClCompile Include="state.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="Stage1.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TitleGameMode.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

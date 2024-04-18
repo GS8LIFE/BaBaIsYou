@@ -38,7 +38,7 @@ APlayer::~APlayer()
 
 }
 
-void APlayer::setTileMap(int _a, int _b,char _c)
+void APlayer::setTileMap(int _a, int _b,std::string _c)
 {
 	Tilemap[_a][_b] = _c;
 }

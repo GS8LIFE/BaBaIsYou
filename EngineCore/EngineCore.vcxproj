@@ -338,6 +338,14 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="TileRenderer.h" />
+    <ClInclude Include="Image.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Widget.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="WorldObject.h">
       <SubType>
       </SubType>
@@ -512,6 +520,14 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="TileRenderer.cpp" />
+    <ClCompile Include="Image.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Widget.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="WorldObject.cpp">
       <SubType>
       </SubType>
