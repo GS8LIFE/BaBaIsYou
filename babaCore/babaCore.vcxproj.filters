@@ -31,11 +31,11 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
-    <ClCompile Include="state.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="Stage1.cpp">
       <Filter>Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="state.cpp">
+      <Filter>PreCompile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

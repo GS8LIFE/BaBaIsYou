@@ -27,6 +27,7 @@ public:
 	Tile& operator=(const Tile& _Other) = delete;
 	Tile& operator=(Tile&& _Other) noexcept = delete;
 	void setTileMap(int _a,int _b,std::string _c);
+	std::string GetTileName();
 
 protected:
 	void BeginPlay() override;
@@ -38,6 +39,7 @@ private:
 	const float MoveTimeWeight = 0.01f;
 	void MoveOneBlock(float _DeltaTime, FVector _MoveDir);
 	USpriteRenderer* Renderer;
+	void DebugMessageFunction();
 	std::map<int, std::vector<char>> Grid;
 	FVector MoveDir = FVector::Zero;
 	std::string TileName;

@@ -17,6 +17,7 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 {
 	if(MoveActive == true)
 	{
+		InputOff();
 		MoveTime += _DeltaTime + MoveTimeWeight;
 		FVector CurLocation = GetActorLocation();
 
@@ -27,7 +28,8 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 		{
 			Tile::SetMove(false);
 			MoveTime = 0.0f;
-			MoveDir = FVector::Zero;
+			MoveDir = FVector::Zero; 
+			InputOn();
 			MoveActive = false;
 		}
 	}
@@ -63,13 +65,55 @@ void APlayer::BeginPlay()
 	Renderer->CreateAnimation("Smove2", "baba", 0.2f, true, 51, 53);
 	Renderer->CreateAnimation("Smove3", "baba", 0.2f, true, 54, 56);
 	SetActorScale3D(FVector(36.0f, 36.0f, -100.0f));
-	SetActorLocation(FVector(-612.0f, 342.0f, 0.0f));
+	SetActorLocation(FVector(612.0f, 342.0f, 0.0f));
 	Renderer->ChangeAnimation("Dmove0");
 	// 내부에서 샘플러도 같이 찾을
 	Renderer->SetOrder(5);
 	StateInit();
 }
 
+bool APlayer::TileAttribute(const std::string& _TileName, std::string _Attribute)
+{
+	return _TileName.find(_Attribute) != std::string::npos;
+}
+
+void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _Dir2)
+{
+	if(_Dir2 == '+')
+	{ 
+	if (_Dir == "Column")
+	{
+		Tilemap[_Column + _stack + 2][_Row] = Tilemap[_Column + _stack +1][_Row ];
+	}
+	else if(_Dir == "Row")
+	{
+		Tilemap[_Column][_Row + _stack + 2] = Tilemap[_Column][_Row + _stack +1];
+	}
+	else
+	{
+		MsgBoxAssert("푸쉬작업 중 가로 세로를 잘못 적었습니다.세로는 Column 가로는 Row로 적어주길 바랍니다.");
+	}
+	}
+	else if (_Dir2 == '-')
+	{
+		if (_Dir == "Column")
+		{
+			Tilemap[_Column - _stack - 2][_Row ] = Tilemap[_Column-_stack-1][_Row];
+		}
+		else if (_Dir == "Row")
+		{
+			Tilemap[_Column][_Row - _stack - 2] = Tilemap[_Column][_Row - _stack-1];
+		}
+		else
+		{
+			MsgBoxAssert("푸쉬작업 중 가로 세로를 잘못 적었습니다.세로는 Column 가로는 Row로 적어주길 바랍니다.");
+		}
+	}
+	else
+	{
+		MsgBoxAssert("방향이 +방향인지 -방향인지 제대로 적어주십시오.");
+	}
+}
 void APlayer::Tick(float _DeltaTime)
 {
 	// 위에 뭔가를 쳐야할때도 있다.
@@ -81,6 +125,17 @@ void APlayer::Tick(float _DeltaTime)
 }
 void APlayer::DebugMessageFunction()
 {
+	int TileY = 0;
+	int TileX = 0;
+
+	if (GetActorLocation().Y < 0)
+	{
+		TileY = -GetActorLocation().Y/TileSize;
+	}
+	if (GetActorLocation().X > 0)
+	{
+		TileX = GetActorLocation().X/TileSize;
+	}
 	{
 		std::string Msg = std::format("PlayerPos : {}\n", GetActorLocation().ToString());
 		UEngineDebugMsgWindow::PushMsg(Msg);
@@ -92,12 +147,17 @@ void APlayer::DebugMessageFunction()
 	}
 
 	{
-		std::string Msg = std::format("MoveTime : {}\n", MoveTime);
+		std::string Msg = std::format("Location : {},{}\n", TileX,TileY);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
 	{
-		std::string Msg = std::format("MoveTime : {}\n", helper::IsMove);
+		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX]);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
+	{
+		std::string Msg = std::format("------------------------------");
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 }

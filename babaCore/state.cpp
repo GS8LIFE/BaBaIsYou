@@ -183,65 +183,127 @@ void APlayer::moveStart()
 
 void APlayer::move(float _DeltaTime)
 {
+	int Column = (-GetActorLocation().Y / TileSize);
+	int Row = (GetActorLocation().X / TileSize);
 	//if (true == Renderer->IsCurAnimationEnd())
 	//{
 	//	int a = 0;
 	//}
-	if (true == IsUp('A'))
+	if (true == IsUp('A') && Row != 0)
 	{
-		MoveActive = true;
-		MoveDir = GetActorLocation();
-		MoveDir += {-TileSize, 0.0f};
-		State.ChangeState("move");
-		movestack++;
-	}
-	if (true == IsUp('D'))
-	{
-		int Column = (-GetActorLocation().Y / TileSize) ;
-		int Row = (GetActorLocation().X / TileSize);
-		if (Tilemap[Column][Row+1] == " " || Tile::containsString(helper::Nouns, Tilemap[Column][Row+1]))
-			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
+		int stack = 0;
+		if (Tilemap[Column][Row - 1] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
-			if (Tilemap[Column][Row+2] == " ")
 			{
-
-				helper::SetMove(true);
 				MoveActive = true;
 				MoveDir = GetActorLocation();
-				MoveDir += {TileSize, 0.0f};
+				MoveDir += {-TileSize, 0.0f};
 				State.ChangeState("move");
-				Tilemap[Column][Row + 2] = Tilemap[Column][Row + 1];
+				Tilemap[Column][Row - 1] = Tilemap[Column][Row];
+				Tilemap[Column][Row] = " ";
 				movestack++;
 			}
-		
-			else
+		}
+		if (Tile::containsString(helper::Nouns, Tilemap[Column][Row - 1]))
+			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
+		{
+			while (Tilemap[Column][Row - (stack + 2)] != " ")
 			{
+				if (Tilemap[Column][Row - (stack + 2)] == "/")
 				{
+					return;
+				}
+				stack++;
+			}
+			IsMove = true;
+			while (stack >= -1)
+			{
+				PushState(Column, Row, stack, "Row", '-');
+				stack--;
+			}
+			MoveActive = true;
+			MoveDir = GetActorLocation();
+			MoveDir += {-TileSize, 0.0f};
+			State.ChangeState("move");
+
+			Tilemap[Column][Row] = " ";
+			movestack++;
+		}
+	}
+	if (true == IsUp('D') && Row != 34)
+	{	
+		int stack = 0;
+
+		if (Tilemap[Column][Row + 1] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+		{
+			{
 				MoveActive = true;
 				MoveDir = GetActorLocation();
 				MoveDir += {TileSize, 0.0f};
 				State.ChangeState("move");
+				Tilemap[Column][Row + 1] = Tilemap[Column][Row];
+				Tilemap[Column][Row] = " ";
 				movestack++;
+			}
+		}
+		if (Tile::containsString(helper::Nouns, Tilemap[Column][Row+1]))
+			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
+		{
+			while (Tilemap[Column][Row + (stack+2)] != " ")
+			{
+				if (Tilemap[Column][Row + (stack + 2)] == "/")
+				{
+					return;
 				}
+				stack++;
+			}
+			IsMove = true;
+			while (stack >= -1)
+			{
+				PushState(Column, Row, stack, "Row", '+');
+				stack--;
+			} 
+			MoveActive = true;
+			MoveDir = GetActorLocation();
+			MoveDir += {TileSize, 0.0f};
+			State.ChangeState("move");
+
+			Tilemap[Column][Row] = " ";
+			movestack++;
+		}
+	}
+	if (true == IsUp('W') && Column != 0)
+	{
+
+		int stack = 0;
+		if (Tilemap[Column - 1][Row] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+		{
+			{
+				MoveActive = true;
+				MoveDir = GetActorLocation();
+				MoveDir += {0.0f, TileSize};
+				State.ChangeState("move");
+				Tilemap[Column - 1][Row] = Tilemap[Column][Row];
+				Tilemap[Column][Row] = " ";
+				movestack++;
 			}
 		}
 	}
-	if (true == IsUp('W'))
+	if (true == IsUp('S') && Column != 19)
 	{
-		MoveActive = true;
-		MoveDir = GetActorLocation();
-		MoveDir += {0.0f, TileSize};
-		State.ChangeState("move");
-		movestack++;
-	}
-
-	if (true == IsUp('S'))
-	{
-		MoveActive = true;
-		MoveDir = GetActorLocation();
-		MoveDir += {0.0f, -TileSize};
-		State.ChangeState("move");
-		movestack++;
+		int stack = 0;
+		if (Tilemap[Column + 1][Row] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+		{
+			{
+				MoveActive = true;
+				MoveDir = GetActorLocation();
+				MoveDir += {0.0f, -TileSize};
+				State.ChangeState("move");
+				Tilemap[Column + 1][Row] = Tilemap[Column][Row];
+				Tilemap[Column][Row] = " ";
+				movestack++;
+			}
+		}
 	}
 
 	if (true == IsPress(VK_NUMPAD1))

@@ -2,6 +2,7 @@
 #include "Tile.h"
 #include "PlayGameMode.h"
 #include <EngineCore/DefaultSceneComponent.h>
+#include <EngineCore/EngineDebugMsgWindow.h>
 
 Tile::Tile() 
 {
@@ -38,6 +39,13 @@ void Tile::CreateChar()
 
 }
 
+std::string Tile::GetTileName()
+{
+	int Y = GetActorLocation().Y/TileSize;
+	int X = GetActorLocation().X/TileSize;
+	return Tilemap[Y][X];
+}
+
 bool Tile::containsString(const std::vector<std::string>& strings, const std::string& target) {
 	for (const auto& str : strings) {
 		if (str == target) {
@@ -57,8 +65,9 @@ void Tile::move(float _DeltaTime)
 	{
 	if (true == IsUp('A'))
 	{
+		MoveActive = true;
 		MoveDir = GetActorLocation();
-		MoveDir += {-TileSize, 0.0f};	
+		MoveDir += {-TileSize, 0.0f};
 	}
 
 	if (true == IsUp('D'))
@@ -70,12 +79,14 @@ void Tile::move(float _DeltaTime)
 
 	if (true == IsUp('W'))
 	{
+		MoveActive = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {0.0f, TileSize};
 	}
 
 	if (true == IsUp('S'))
 	{
+		MoveActive = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {0.0f, -TileSize};
 	}
@@ -100,6 +111,8 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 {
 	if (MoveActive == true)
 	{
+
+		InputOff();
 		MoveTime += _DeltaTime + MoveTimeWeight;
 		FVector CurLocation = GetActorLocation();
 
@@ -108,9 +121,11 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 
 		if (MoveTime >= 1.0f)
 		{
+
 			MoveTime = 0.0f;
 			MoveDir = FVector::Zero;
 			MoveActive = false;
+			InputOn();
 		}
 	}
 }
@@ -118,6 +133,7 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 void Tile::setTileMap(int _a, int _b,std::string _c)
 {
 	Tilemap[_a][_b] = _c;
+	TileName = _c;
 }
 void Tile::BeginPlay()
 {
@@ -146,4 +162,34 @@ void Tile::Tick(float _DeltaTime)
 	move(_DeltaTime);
 	MoveOneBlock(_DeltaTime, MoveDir);
 	TileCheck();
+	DebugMessageFunction();
+}
+
+void Tile::DebugMessageFunction()
+{
+	int TileY = 0;
+	int TileX = 0;
+
+	if (GetActorLocation().Y < 0)
+	{
+		TileY = -GetActorLocation().Y / TileSize;
+	}
+	if (GetActorLocation().X > 0)
+	{
+		TileX = GetActorLocation().X / TileSize;
+	}
+
+	{
+		std::string Msg = std::format("{} Location : {},{}\n",TileName, TileX, TileY);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
+	{
+		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX]);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	} 
+	{
+		std::string Msg = std::format("------------------------------");
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
 }

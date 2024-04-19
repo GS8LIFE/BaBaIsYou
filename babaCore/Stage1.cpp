@@ -3,20 +3,26 @@
 #include "Stage1.h"
 Stage1::Stage1() 
 {
+	for (size_t YY = 0; YY < 19; YY++)
+	{
+		for (size_t XX = 0; XX < 34; XX++)
+		{
+			{
+				Tilemap[YY][XX] = " ";
+			}
+		}
+	}
+
 	for (int t = 0; t < 20; t++)   //타일맵 초기화 가로35,세로20
 	{
 		if (t == 0 || t == 19)
 		{
-			Tilemap.push_back(std::vector<std::string>());
-
 			for (int i = 0; i < 35; ++i)
 			{
 				Tilemap[t][i] = "/";
 			}
 		}
 		else {
-			Tilemap.push_back(std::vector<std::string>());
-
 			for (int i = 0; i < 6; ++i)
 			{
 				Tilemap[t][i] = "/";
