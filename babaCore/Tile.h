@@ -4,11 +4,13 @@
 #include <EngineCore/SpriteRenderer.h>
 #include "ContentsConstValue.h"
 #include "PlayGameMode.h"
+#include "Player.h"
 #include "map"
 // Ό³Έν :
 
 class Tile : public AActor , public helper
 {
+	friend APlayer;
 	GENERATED_BODY(AActor)
 public:
 	// constrcuter destructer
@@ -28,7 +30,8 @@ public:
 	Tile& operator=(Tile&& _Other) noexcept = delete;
 	void setTileMap(int _a,int _b,std::string _c);
 	std::string GetTileName();
-
+	
+	void SetMove(bool _SetMove);
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
@@ -43,5 +46,6 @@ private:
 	std::map<int, std::vector<char>> Grid;
 	FVector MoveDir = FVector::Zero;
 	std::string TileName;
+	bool IsMove = false;
 };
 

@@ -45,7 +45,10 @@ std::string Tile::GetTileName()
 	int X = GetActorLocation().X/TileSize;
 	return Tilemap[Y][X];
 }
-
+void Tile::SetMove(bool _SetMove)
+{
+	Tile::IsMove = _SetMove;
+}
 bool Tile::containsString(const std::vector<std::string>& strings, const std::string& target) {
 	for (const auto& str : strings) {
 		if (str == target) {
@@ -60,7 +63,23 @@ void Tile::move(float _DeltaTime)
 	//{
 	//	int a = 0;
 	//}
+	if (IsDown('A') || IsDown('D') || IsDown('W') || IsDown('S'))
+	{
+		int Column = GetActorLocation().Y * -1 / TileSize;
+		int Row = GetActorLocation().X / TileSize;
+		std::pair Tilepair = std::make_pair(Column,Row);
+		for (std::pair<int,int> pair : APlayer::visitTile) {
 
+			if (pair.first == Tilepair.first)
+			{
+				if (pair.second == Tilepair.second)
+				{
+					IsMove = true;
+					APlayer::visitTile.erase(std::remove(APlayer::visitTile.begin(), APlayer::visitTile.end(), pair), APlayer::visitTile.end());
+				}
+			}
+		}
+	}
 	if(IsMove == true)
 	{
 	if (true == IsUp('A'))
@@ -125,6 +144,7 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 			MoveTime = 0.0f;
 			MoveDir = FVector::Zero;
 			MoveActive = false;
+			IsMove = false;
 			InputOn();
 		}
 	}
@@ -132,7 +152,7 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 
 void Tile::setTileMap(int _a, int _b,std::string _c)
 {
-	Tilemap[_a][_b] = _c;
+	Tilemap[-_a][_b] = _c;
 	TileName = _c;
 }
 void Tile::BeginPlay()

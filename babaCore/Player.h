@@ -4,13 +4,14 @@
 #include "ContentsConstValue.h"
 #include "PlayGameMode.h"
 #include "Tile.h"
+#include "vector"
+#include "string"
 #include <EngineCore/StateManager.h>
 
 // 설명 :
 class USpriteRenderer;
 class APlayer : public AActor , public helper 
 {
-	friend Tile;
 	GENERATED_BODY(AActor)
 
 public:
@@ -24,6 +25,7 @@ public:
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
+	static std::vector<std::pair<int,int>> visitTile;
 	void setTileMap(int _a, int _b,std::string _c);
 	bool TileAttribute(const std::string& _TileName,std::string _Attribute);
 	void PushState(int _Column, int _Row, int _stack,std::string _Dir,char _Dir2); //_Dir -> 가로 세로 Dir2 -> +할건지 -할건지

@@ -3,6 +3,8 @@
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/EngineDebugMsgWindow.h>
 
+std::vector<std::pair<int, int>> APlayer::visitTile;
+
 APlayer::APlayer()
 {
 	UDefaultSceneComponent* Root = CreateDefaultSubObject<UDefaultSceneComponent>("Renderer");
@@ -26,7 +28,6 @@ void APlayer::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 
 		if (MoveTime >= 1.0f)
 		{
-			Tile::SetMove(false);
 			MoveTime = 0.0f;
 			MoveDir = FVector::Zero; 
 			InputOn();
@@ -83,7 +84,7 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{ 
 	if (_Dir == "Column")
 	{
-		Tilemap[_Column + _stack + 2][_Row] = Tilemap[_Column + _stack +1][_Row ];
+		Tilemap[_Column + _stack + 2][_Row] = Tilemap[_Column + _stack +1][_Row];
 	}
 	else if(_Dir == "Row")
 	{
@@ -113,6 +114,7 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{
 		MsgBoxAssert("방향이 +방향인지 -방향인지 제대로 적어주십시오.");
 	}
+	visitTile.push_back(std::make_pair(_Column, _Row+1));
 }
 void APlayer::Tick(float _DeltaTime)
 {
