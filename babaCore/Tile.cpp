@@ -63,7 +63,7 @@ void Tile::move(float _DeltaTime)
 	//{
 	//	int a = 0;
 	//}
-	if (IsDown('A') || IsDown('D') || IsDown('W') || IsDown('S'))
+	if (IsUp('A') || IsUp('D') || IsUp('W') || IsUp('S'))
 	{
 		int Column = GetActorLocation().Y * -1 / TileSize;
 		int Row = GetActorLocation().X / TileSize;
@@ -89,21 +89,21 @@ void Tile::move(float _DeltaTime)
 		MoveDir += {-TileSize, 0.0f};
 	}
 
-	if (true == IsUp('D'))
+	else if (true == IsUp('D'))
 	{
 		MoveActive = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {TileSize, 0.0f};
 	}
 
-	if (true == IsUp('W'))
+	else if (true == IsUp('W'))
 	{
 		MoveActive = true;
 		MoveDir = GetActorLocation();
 		MoveDir += {0.0f, TileSize};
 	}
 
-	if (true == IsUp('S'))
+	else if (true == IsUp('S'))
 	{
 		MoveActive = true;
 		MoveDir = GetActorLocation();

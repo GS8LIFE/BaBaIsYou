@@ -37,9 +37,9 @@ void APlayGameMode::BeginPlay()
 	{
 		std::shared_ptr<Map> MapPtr = GetWorld()->SpawnActor<Map>("Map");
 		std::shared_ptr<MapDeco> MapDecoPtr = GetWorld()->SpawnActor<MapDeco>("MapDeco");
-		std::shared_ptr<Tile> TilePtr = GetWorld()->SpawnActor<Tile>("Tile");
-		std::shared_ptr<Tile> TilePtr1 = GetWorld()->SpawnActor<Tile>("Tile");
 		std::shared_ptr<APlayer> Player = GetWorld()->SpawnActor<APlayer>("Player");
+		std::shared_ptr<Tile> TilePtr1 = GetWorld()->SpawnActor<Tile>("Tile",4);
+		std::shared_ptr<Tile> TilePtr = GetWorld()->SpawnActor<Tile>("Tile",5);
 		
 		Tilemap[0][8] = "/";
 		Player->SetActorLocation({ TileSize*0.5f, -TileSize*0.5f, 0.0f });     // 18,-18이 0,0 이미지 위치임

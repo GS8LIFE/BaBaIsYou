@@ -49,5 +49,6 @@ private:
 	void moveStart();
 	void move(float _DeltaTime);
 	int movestack = 0; // 움직인 횟수
+	static char NowDir;
 };
 

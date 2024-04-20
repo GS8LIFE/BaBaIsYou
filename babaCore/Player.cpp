@@ -2,7 +2,7 @@
 #include "Player.h"
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/EngineDebugMsgWindow.h>
-
+char APlayer::NowDir;
 std::vector<std::pair<int, int>> APlayer::visitTile;
 
 APlayer::APlayer()
@@ -80,15 +80,23 @@ bool APlayer::TileAttribute(const std::string& _TileName, std::string _Attribute
 
 void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _Dir2)
 {
+	
 	if(_Dir2 == '+')
 	{ 
 	if (_Dir == "Column")
 	{
 		Tilemap[_Column + _stack + 2][_Row] = Tilemap[_Column + _stack +1][_Row];
+		if (_stack != -1)
+		{
+			visitTile.push_back(std::make_pair(_Column + _stack + 1, _Row));
+		}
 	}
 	else if(_Dir == "Row")
 	{
 		Tilemap[_Column][_Row + _stack + 2] = Tilemap[_Column][_Row + _stack +1];
+		if (_stack != -1) {
+			visitTile.push_back(std::make_pair(_Column, _Row + _stack + 1));
+		}
 	}
 	else
 	{
@@ -99,11 +107,17 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{
 		if (_Dir == "Column")
 		{
-			Tilemap[_Column - _stack - 2][_Row ] = Tilemap[_Column-_stack-1][_Row];
+			Tilemap[_Column - _stack - 2][_Row] = Tilemap[_Column - _stack - 1][_Row];
+			if (_stack != -1) {
+				visitTile.push_back(std::make_pair(_Column - _stack - 1, _Row));
+			}
 		}
 		else if (_Dir == "Row")
 		{
 			Tilemap[_Column][_Row - _stack - 2] = Tilemap[_Column][_Row - _stack-1];
+			if (_stack != -1) {
+				visitTile.push_back(std::make_pair(_Column, _Row - _stack - 1));
+			}
 		}
 		else
 		{
@@ -114,7 +128,6 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{
 		MsgBoxAssert("방향이 +방향인지 -방향인지 제대로 적어주십시오.");
 	}
-	visitTile.push_back(std::make_pair(_Column, _Row+1));
 }
 void APlayer::Tick(float _DeltaTime)
 {

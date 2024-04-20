@@ -89,88 +89,88 @@ void APlayer::moveStart()
 	switch (movestack)
 	{
 	case 0:
-		if (true == IsUp('D'))
+		if (NowDir == 'D')
 		{
 			Renderer->ChangeAnimation("Dmove0");
 			return;
 		}
-		if (true == IsUp('A'))
+		if (NowDir == 'A')
 		{
 			Renderer->ChangeAnimation("Amove0");
 			return;
 		}
-		if (true == IsUp('S'))
+		if (NowDir == 'S')
 		{
 			Renderer->ChangeAnimation("Smove0");
 			return;
 		}
-		if (true == IsUp('W'))
+		if (NowDir == 'W')
 		{
 			Renderer->ChangeAnimation("Wmove0");
 			return;
 		}
 		break;
 	case 1:
-		if (true == IsUp('D'))
+		if (NowDir == 'D')
 		{
 			Renderer->ChangeAnimation("Dmove1");
 			return;
 		}
-		if (true == IsUp('A'))
+		if (NowDir == 'A')
 		{
 			Renderer->ChangeAnimation("Amove1");
 			return;
 		}
-		if (true == IsUp('S'))
+		if (NowDir == 'S')
 		{
 			Renderer->ChangeAnimation("Smove1");
 			return;
 		}
-		if (true == IsUp('W'))
+		if (NowDir == 'W')
 		{
 			Renderer->ChangeAnimation("Wmove1");
 			return;
 		}
 		break;
 	case 2:
-		if (true == IsUp('D'))
+		if (NowDir == 'D')
 		{
 			Renderer->ChangeAnimation("Dmove2");
 			return;
 		}
-		if (true == IsUp('A'))
+		if (NowDir == 'A')
 		{
 			Renderer->ChangeAnimation("Amove2");
 			return;
 		}
-		if (true == IsUp('S'))
+		if (NowDir == 'S')
 		{
 			Renderer->ChangeAnimation("Smove2");
 			return;
 		}
-		if (true == IsUp('W'))
+		if (NowDir == 'W')
 		{
 			Renderer->ChangeAnimation("Wmove2");
 			return;
 		}
 		break;	
 	case 3:
-		if (true == IsUp('D'))
+		if (NowDir == 'D')
 		{
 			Renderer->ChangeAnimation("Dmove3");
 			return;
 		}
-		if (true == IsUp('A'))
+		if (NowDir == 'A')
 		{
 			Renderer->ChangeAnimation("Amove3");
 			return;
 		}
-		if (true == IsUp('S'))
+		if (NowDir == 'S')
 		{
 			Renderer->ChangeAnimation("Smove3");
 			return;
 		}
-		if (true == IsUp('W'))
+		if (NowDir == 'W')
 		{
 			Renderer->ChangeAnimation("Wmove3");
 			return;
@@ -191,6 +191,7 @@ void APlayer::move(float _DeltaTime)
 	//}
 	if (true == IsUp('A') && Row != 0)
 	{
+		NowDir = 'A';
 		int stack = 0;
 		if (Tilemap[Column][Row - 1] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
@@ -230,7 +231,8 @@ void APlayer::move(float _DeltaTime)
 		}
 	}
 	if (true == IsUp('D') && Row != 34)
-	{	
+	{
+		NowDir = 'D';
 		int stack = 0;
 
 		if (Tilemap[Column][Row + 1] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
@@ -272,7 +274,7 @@ void APlayer::move(float _DeltaTime)
 	}
 	if (true == IsUp('W') && Column != 0)
 	{
-
+		NowDir = 'W';
 		int stack = 0;
 		if (Tilemap[Column - 1][Row] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
@@ -313,6 +315,7 @@ void APlayer::move(float _DeltaTime)
 	}
 	if (true == IsUp('S') && Column != 19)
 	{
+		NowDir = 'S';
 		int stack = 0;
 		if (Tilemap[Column + 1][Row] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
