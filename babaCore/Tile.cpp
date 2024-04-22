@@ -19,57 +19,58 @@ Tile::~Tile()
 {
 }
 
-void Tile::setTileType(TileType _Type)
-{
-	switch (_Type)
-	{
-	case Noun:
-		Type = "Noun";
-		break;
-	case Verb:
-		Type = "Verb";
-		break;
-	case Object:
-		Type = "Object";
-		break;
-	default:
-		break;
-	}
-}
-void Tile::NounCheck(bool _Noun)
+
+/*void Tile::AllTileCheck(bool _Noun)
 {
 	for (int column = 0; column < 20; column++) 
 	{
 		for (int Row = 0; Row < 35; Row++)
 		{
-			bool a = containsString(Nouns, Tilemap[column][Row]);
+			Noun = containsString(Nouns, Tilemap[column][Row]);
 		}
 	}
 }
-void Tile::VerbCheck(bool _Verb)
+*/
+void Tile::TileTypeCheck()
 {
-	for (int column = 0; column < 20; column++)
+	Noun = containsString(Nouns, Tilemap[TileY][TileX]);
+	Verb = containsString(Verbs, Tilemap[TileY][TileX]);
+	Object = containsString(Objects, Tilemap[TileY][TileX]);
+	if (Noun)
 	{
-		for (int Row = 0; Row < 35; Row++)
-		{
-			bool a = containsString(Verbs, Tilemap[column][Row]);
-		}
+		Type = "Noun";
 	}
-}void Tile::ObjectCheck(bool _Oject)
-{
-	for (int column = 0; column < 20; column++)
+	else if (Verb)
 	{
-		for (int Row = 0; Row < 35; Row++)
-		{
-			bool a = containsString(Objects, Tilemap[column][Row]);
-		}
+		Type = "Verb";
+	}
+	else if (Object)
+	{
+		Type = "Object";
 	}
 }
-void Tile::TileTypeCheck(bool _Noun, bool _Verb, bool _Object)
+void Tile::Sentence(bool _Noun)
 {
 	if (_Noun)
 	{
-		Type = "Noun";
+		if (containsString(Verbs, Tilemap[TileY][TileX + 1]))
+		{
+			if (containsString(Objects, Tilemap[TileY][TileX + 2]))
+			{
+
+			}
+		}
+		else if (containsString(Verbs, Tilemap[TileY + 1][TileX]))
+		{
+			if (containsString(Objects, Tilemap[TileY +2][TileX]))
+			{
+
+			}
+		}
+	}
+	else
+	{
+
 	}
 }
 void Tile::CreateChar()
@@ -187,6 +188,17 @@ void Tile::MoveOneBlock(float _DeltaTime, FVector _MoveDir)
 		}
 	}
 }
+void Tile::TileLocation()
+{
+	if (GetActorLocation().Y < 0)
+	{
+		TileY = -GetActorLocation().Y / TileSize;
+	}
+	if (GetActorLocation().X > 0)
+	{
+		TileX = GetActorLocation().X / TileSize;
+	}
+}
 
 void Tile::setTileMap(int _a, int _b,std::string _c)
 {
@@ -206,40 +218,20 @@ void Tile::BeginPlay()
 	Renderer->ChangeAnimation("babablock");
 }
 
-void Tile::MoveBase(float _Deltatime)
-{
-	if (IsMove == true)
-	{
-
-	}
-}
 void Tile::Tick(float _DeltaTime)
 {
 	// 위에 뭔가를 쳐야할때도 있다.
 	Super::Tick(_DeltaTime);
-	NounCheck(Noun);
-	VerbCheck(Verb);
-	ObjectCheck(Object);
+	TileLocation();
+	TileTypeCheck();
 	move(_DeltaTime);
 	MoveOneBlock(_DeltaTime, MoveDir);
-	TileCheck();
+	Sentence(Noun);
 	DebugMessageFunction();
 }
 
 void Tile::DebugMessageFunction()
 {
-	int TileY = 0;
-	int TileX = 0;
-
-	if (GetActorLocation().Y < 0)
-	{
-		TileY = -GetActorLocation().Y / TileSize;
-	}
-	if (GetActorLocation().X > 0)
-	{
-		TileX = GetActorLocation().X / TileSize;
-	}
-
 	{
 		std::string Msg = std::format("{} Location : {},{}\n",TileName, TileX, TileY);
 		UEngineDebugMsgWindow::PushMsg(Msg);

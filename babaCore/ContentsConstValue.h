@@ -9,10 +9,3 @@ public:
 	static std::vector<std::string> Verbs;
 	static std::vector<std::string> Objects;
 };
-
-enum TileType
-{
-	Noun,
-	Verb,
-	Object
-};

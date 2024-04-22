@@ -16,15 +16,12 @@ public:
 	// constrcuter destructer
 	Tile();
 	~Tile();
-	void NounCheck(bool _Noun);
-	void VerbCheck(bool _Verb);
-	void ObjectCheck(bool _Object);
-	void TileTypeCheck(bool _Noun, bool _Verb,bool _Object);
+	void TileTypeCheck();
 	void CreateChar();
 	bool MoveActive = false;
 	void move(float _DeltaTime);
-	void MoveBase(float _DeltaTime);
-	void setTileType(TileType _Type);
+	void TileLocation();
+	void Sentence(bool _Noun);
 	static bool containsString(const std::vector<std::string>& strings, const std::string& target); // 해당하는 문자가 있는지 확인
 	// delete Function
 	Tile(const Tile& _Other) = delete;
@@ -50,8 +47,10 @@ private:
 	FVector MoveDir = FVector::Zero;
 	std::string TileName;
 	bool IsMove = false;
-	bool Numb = false;
+	bool Noun = false;
 	bool Verb = false;
-	bool Object = false;
+	bool Object = false;	
+	int TileY = 0;
+	int TileX = 0;
 };
 

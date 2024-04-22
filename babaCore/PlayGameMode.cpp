@@ -44,7 +44,6 @@ void APlayGameMode::BeginPlay()
 		Tilemap[0][8] = "/";
 		Player->SetActorLocation({ TileSize*0.5f, -TileSize*0.5f, 0.0f });     // 18,-18이 0,0 이미지 위치임
  		Player->setTileMap(Player->GetActorLocation().Y /TileSize , Player->GetActorLocation().X/TileSize, "Baba");
-		TilePtr->setTileType(TileType::Noun);
 		TilePtr1->SetActorLocation({ TileSize * 1.5f, -TileSize * 5.5f });
 		TilePtr1->setTileMap(TilePtr1->GetActorLocation().Y / TileSize, TilePtr1->GetActorLocation().X / TileSize, "TextBaba");
 		TilePtr->SetActorLocation({ TileSize*1.5f, -TileSize*4.5f });
