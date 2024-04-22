@@ -21,9 +21,22 @@ Tile::~Tile()
 
 void Tile::setTileType(TileType _Type)
 {
-	Type = _Type;
+	switch (_Type)
+	{
+	case Noun:
+		Type = "Noun";
+		break;
+	case Verb:
+		Type = "Verb";
+		break;
+	case Object:
+		Type = "Object";
+		break;
+	default:
+		break;
+	}
 }
-void Tile::TileCheck()
+void Tile::NounCheck(bool _Noun)
 {
 	for (int column = 0; column < 20; column++) 
 	{
@@ -33,7 +46,32 @@ void Tile::TileCheck()
 		}
 	}
 }
-
+void Tile::VerbCheck(bool _Verb)
+{
+	for (int column = 0; column < 20; column++)
+	{
+		for (int Row = 0; Row < 35; Row++)
+		{
+			bool a = containsString(Verbs, Tilemap[column][Row]);
+		}
+	}
+}void Tile::ObjectCheck(bool _Oject)
+{
+	for (int column = 0; column < 20; column++)
+	{
+		for (int Row = 0; Row < 35; Row++)
+		{
+			bool a = containsString(Objects, Tilemap[column][Row]);
+		}
+	}
+}
+void Tile::TileTypeCheck(bool _Noun, bool _Verb, bool _Object)
+{
+	if (_Noun)
+	{
+		Type = "Noun";
+	}
+}
 void Tile::CreateChar()
 {
 
@@ -179,6 +217,9 @@ void Tile::Tick(float _DeltaTime)
 {
 	// 위에 뭔가를 쳐야할때도 있다.
 	Super::Tick(_DeltaTime);
+	NounCheck(Noun);
+	VerbCheck(Verb);
+	ObjectCheck(Object);
 	move(_DeltaTime);
 	MoveOneBlock(_DeltaTime, MoveDir);
 	TileCheck();
@@ -208,6 +249,12 @@ void Tile::DebugMessageFunction()
 		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX]);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	} 
+
+	{
+		std::string Msg = std::format("TileType : {}\n", Type);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+
 	{
 		std::string Msg = std::format("------------------------------");
 		UEngineDebugMsgWindow::PushMsg(Msg);
