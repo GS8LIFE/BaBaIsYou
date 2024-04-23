@@ -22,7 +22,9 @@ public:
 	void move(float _DeltaTime);
 	void TileLocation();
 	void Sentence(bool _Noun);
+	std::string texterase(std::string _text);
 	static bool containsString(const std::vector<std::string>& strings, const std::string& target); // 해당하는 문자가 있는지 확인
+	std::string WhatyourName(const std::vector<std::string>& strings, std::string& target); // 해당하는 문자가 있는지 확인
 	// delete Function
 	Tile(const Tile& _Other) = delete;
 	Tile(Tile&& _Other) noexcept = delete;
@@ -52,5 +54,7 @@ private:
 	bool Object = false;	
 	int TileY = 0;
 	int TileX = 0;
+	std::string SentenceRow;
+	std::string SentenceColumn;
 };
 

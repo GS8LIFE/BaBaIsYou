@@ -193,7 +193,7 @@ void APlayer::move(float _DeltaTime)
 	{
 		NowDir = 'A';
 		int stack = 0;
-		if (Tilemap[Column][Row - 1] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+		if (Tilemap[Column][Row - 1] == "") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
 			{
 				MoveActive = true;
@@ -201,14 +201,14 @@ void APlayer::move(float _DeltaTime)
 				MoveDir += {-TileSize, 0.0f};
 				State.ChangeState("move");
 				Tilemap[Column][Row - 1] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = " ";
+				Tilemap[Column][Row] = "";
 				movestack++;
 			}
 		}
-		if (Tile::containsString(helper::Nouns, Tilemap[Column][Row - 1]))
+		if (Tile::containsString(helper::AllTile, Tilemap[Column][Row - 1]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tilemap[Column][Row - (stack + 2)] != " ")
+			while (Tilemap[Column][Row - (stack + 2)] != "")
 			{
 				if (Tilemap[Column][Row - (stack + 2)] == "/")
 				{
@@ -226,7 +226,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {-TileSize, 0.0f};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = " ";
+			Tilemap[Column][Row] = "";
 			movestack++;
 		}
 	}
@@ -235,7 +235,7 @@ void APlayer::move(float _DeltaTime)
 		NowDir = 'D';
 		int stack = 0;
 
-		if (Tilemap[Column][Row + 1] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+		if (Tilemap[Column][Row + 1] == "") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
 			{
 				MoveActive = true;
@@ -243,14 +243,14 @@ void APlayer::move(float _DeltaTime)
 				MoveDir += {TileSize, 0.0f};
 				State.ChangeState("move");
 				Tilemap[Column][Row + 1] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = " ";
+				Tilemap[Column][Row] = "";
 				movestack++;
 			}
 		}
-		if (Tile::containsString(helper::Nouns, Tilemap[Column][Row+1]))
+		if (Tile::containsString(helper::AllTile, Tilemap[Column][Row+1]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tilemap[Column][Row + (stack+2)] != " ")
+			while (Tilemap[Column][Row + (stack+2)] != "")
 			{
 				if (Tilemap[Column][Row + (stack + 2)] == "/")
 				{
@@ -268,7 +268,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {TileSize, 0.0f};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = " ";
+			Tilemap[Column][Row] = "";
 			movestack++;
 		}
 	}
@@ -276,7 +276,7 @@ void APlayer::move(float _DeltaTime)
 	{
 		NowDir = 'W';
 		int stack = 0;
-		if (Tilemap[Column - 1][Row] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+		if (Tilemap[Column - 1][Row] == "") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
 			{
 				MoveActive = true;
@@ -284,14 +284,14 @@ void APlayer::move(float _DeltaTime)
 				MoveDir += {0.0f, TileSize};
 				State.ChangeState("move");
 				Tilemap[Column - 1][Row] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = " ";
+				Tilemap[Column][Row] = "";
 				movestack++;
 			}
 		}
-		if (Tile::containsString(helper::Nouns, Tilemap[Column-1][Row]))
+		if (Tile::containsString(helper::AllTile, Tilemap[Column-1][Row]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tilemap[Column - (stack + 2)][Row] != " ")
+			while (Tilemap[Column - (stack + 2)][Row] != "")
 			{
 				if (Tilemap[Column - (stack + 2)][Row] == "/")
 				{
@@ -309,7 +309,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {0.0f, TileSize};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = " ";
+			Tilemap[Column][Row] = "";
 			movestack++;
 		}
 	}
@@ -317,7 +317,7 @@ void APlayer::move(float _DeltaTime)
 	{
 		NowDir = 'S';
 		int stack = 0;
-		if (Tilemap[Column + 1][Row] == " ") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+		if (Tilemap[Column + 1][Row] == "") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 		{
 			{
 				MoveActive = true;
@@ -325,14 +325,14 @@ void APlayer::move(float _DeltaTime)
 				MoveDir += {0.0f, -TileSize};
 				State.ChangeState("move");
 				Tilemap[Column + 1][Row] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = " ";
+				Tilemap[Column][Row] = "";
 				movestack++;
 			}
 		}
-		if (Tile::containsString(helper::Nouns, Tilemap[Column + 1][Row]))
+		if (Tile::containsString(helper::AllTile, Tilemap[Column + 1][Row]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tilemap[Column + (stack + 2)][Row] != " ")
+			while (Tilemap[Column + (stack + 2)][Row] != "")
 			{
 				if (Tilemap[Column + (stack + 2)][Row] == "/")
 				{
@@ -350,7 +350,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {0.0f, -TileSize};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = " ";
+			Tilemap[Column][Row] = "";
 			movestack++;
 		}
 	}

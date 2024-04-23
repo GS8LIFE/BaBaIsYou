@@ -8,4 +8,5 @@ public:
 	static std::vector<std::string> Nouns;
 	static std::vector<std::string> Verbs;
 	static std::vector<std::string> Objects;
+	static std::vector<std::string> AllTile;
 };

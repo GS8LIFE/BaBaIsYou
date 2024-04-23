@@ -35,7 +35,7 @@
       <Filter>Stage</Filter>
     </ClCompile>
     <ClCompile Include="state.cpp">
-      <Filter>PreCompile</Filter>
+      <Filter>Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

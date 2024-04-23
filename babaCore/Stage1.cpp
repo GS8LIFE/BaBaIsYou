@@ -8,7 +8,7 @@ Stage1::Stage1()
 		for (size_t XX = 0; XX < 34; XX++)
 		{
 			{
-				Tilemap[YY][XX] = " ";
+				Tilemap[YY][XX] = "";
 			}
 		}
 	}
@@ -29,7 +29,7 @@ Stage1::Stage1()
 			}
 			for (int i = 6; i < 30; ++i)
 			{
-				Tilemap[t][i] = " ";
+				Tilemap[t][i] = "";
 			}
 			for (int i = 30; i < 35; ++i)
 			{
