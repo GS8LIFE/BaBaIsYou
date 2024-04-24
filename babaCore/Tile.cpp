@@ -58,7 +58,7 @@ std::string Tile::texterase(std::string _text)
 	
 	int pos = _text.find(erasetext);
 	if (pos != std::string::npos)
-	{
+	{ 
 		return _text.erase(pos, erasetext.length());
 	}
 }
@@ -297,27 +297,4 @@ void Tile::Tick(float _DeltaTime)
 	MoveOneBlock(_DeltaTime, MoveDir);
 	Sentence(Noun);
 	DebugMessageFunction();
-}
-
-void Tile::DebugMessageFunction()
-{
-	{
-		std::string Msg = std::format("{} Location : {},{}\n",TileName, TileX, TileY);
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-
-	{
-		std::string Msg = std::format("Name : {}\n", TileName);
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	} 
-
-	{
-		std::string Msg = std::format("TileType : {}\n", Type);
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-
-	{
-		std::string Msg = std::format("------------------------------");
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
 }

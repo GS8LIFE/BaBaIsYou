@@ -24,6 +24,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ContentsConstValue.h" />
+    <ClInclude Include="fade.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapDeco.h">
       <SubType>
@@ -55,6 +59,11 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">PreCompile.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="ContentsConstValue.cpp" />
+    <ClCompile Include="DebugMessage.cpp" />
+    <ClCompile Include="fade.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapDeco.cpp">
       <SubType>

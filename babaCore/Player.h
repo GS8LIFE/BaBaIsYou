@@ -26,6 +26,8 @@ public:
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
 	static std::vector<std::pair<int,int>> visitTile;
+	int TileStack(std::vector<std::string> _strings, std::string _text);
+	int texterase(std::vector<std::string> _strings, std::string _text);
 	void setTileMap(int _a, int _b,std::string _c);
 	bool TileAttribute(const std::string& _TileName,std::string _Attribute);
 	void PushState(int _Column, int _Row, int _stack,std::string _Dir,char _Dir2); //_Dir -> 가로 세로 Dir2 -> +할건지 -할건지

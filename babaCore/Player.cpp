@@ -78,6 +78,32 @@ bool APlayer::TileAttribute(const std::string& _TileName, std::string _Attribute
 	return _TileName.find(_Attribute) != std::string::npos;
 }
 
+
+int APlayer::TileStack(std::vector<std::string> _strings,std::string _text)
+{
+	int stack = 0;
+	for (std::string str : _strings)
+	{
+		int pos = _text.find(str);
+		if (pos != std::string::npos)
+		{
+			_text.erase(pos, str.length());
+			stack++;
+		}
+	}
+	return stack;
+}
+
+
+
+
+
+
+
+
+
+
+
 void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _Dir2)
 {
 	
@@ -129,6 +155,9 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 		MsgBoxAssert("방향이 +방향인지 -방향인지 제대로 적어주십시오.");
 	}
 }
+
+
+
 void APlayer::Tick(float _DeltaTime)
 {
 	// 위에 뭔가를 쳐야할때도 있다.
@@ -137,42 +166,4 @@ void APlayer::Tick(float _DeltaTime)
 	State.Update(_DeltaTime);
 	MoveOneBlock(_DeltaTime, MoveDir);
 	DebugMessageFunction();
-}
-void APlayer::DebugMessageFunction()
-{
-	int TileY = 0;
-	int TileX = 0;
-
-	if (GetActorLocation().Y < 0)
-	{
-		TileY = -GetActorLocation().Y/TileSize;
-	}
-	if (GetActorLocation().X > 0)
-	{
-		TileX = GetActorLocation().X/TileSize;
-	}
-	{
-		std::string Msg = std::format("PlayerPos : {}\n", GetActorLocation().ToString());
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-
-	{
-		std::string Msg = std::format("MousePos : {}\n", GEngine->EngineWindow.GetScreenMousePos().ToString());
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-
-	{
-		std::string Msg = std::format("Location : {},{}\n", TileX,TileY);
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-
-	{
-		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX]);
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-
-	{
-		std::string Msg = std::format("------------------------------");
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
 }

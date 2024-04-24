@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "map.h"
 #include "mapdeco.h"
+#include "fade.h"
 #include "Tile.h"
 #include "ContentsConstValue.h"
 #include <EngineCore/Camera.h>
@@ -44,7 +45,7 @@ void APlayGameMode::BeginPlay()
 		std::shared_ptr<Tile> TilePtr3 = GetWorld()->SpawnActor<Tile>("Tile", 5);
 		
 		Tilemap[0][8] = "/";
-		Player->SetActorLocation({ TileSize*0.5f, -TileSize*0.5f, 0.0f });     // 18,-18이 0,0 이미지 위치임
+		Player->SetActorLocation({ TileSize*1.5f, -TileSize*0.5f, 0.0f });     // 18,-18이 0,0 이미지 위치임
  		Player->setTileMap(Player->GetActorLocation().Y /TileSize , Player->GetActorLocation().X/TileSize, "Baba");
 		TilePtr1->SetActorLocation({ TileSize * 1.5f, -TileSize * 4.5f });
 		TilePtr3->SetActorLocation({ TileSize * 3.5f, -TileSize * 4.5f });
@@ -59,25 +60,9 @@ void APlayGameMode::BeginPlay()
 		MapPtr->SetActorLocation({ 630.0f, -360.0f, 0.0f });
 		MapDecoPtr->SetActorLocation({ 630.0f, -360.0f, 0.0f });
 
-
 	}
 }
 
-void APlayGameMode::DebugMessageFunction()
-{
-	std::string Msg;
-	for (size_t YY = 0; YY < 19; YY++)
-	{
-		for (size_t XX = 0; XX < 34; XX++)
-		{
-			{
-				Msg = std::format("map : {} = {},{}", Tilemap[YY][XX], YY, XX);
-				UEngineDebugMsgWindow::PushMsg(Msg);
-			}
-		}
-		UEngineDebugMsgWindow::PushMsg("\n");
-	}
-}
 void APlayGameMode::Tick(float _DeltaTime)
 {
 	Super::Tick(_DeltaTime);

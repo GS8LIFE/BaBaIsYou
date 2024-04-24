@@ -37,6 +37,12 @@
     <ClCompile Include="state.cpp">
       <Filter>Player</Filter>
     </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugMessage.cpp">
+      <Filter>DebugMessage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TitleGameMode.h">
@@ -72,6 +78,9 @@
     <ClInclude Include="Stage1.h">
       <Filter>Stage</Filter>
     </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
@@ -100,6 +109,9 @@
     </Filter>
     <Filter Include="Tile">
       <UniqueIdentifier>{f67e6590-655b-4288-af56-f8df346e2fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DebugMessage">
+      <UniqueIdentifier>{55ec9cf9-2f07-46b0-a504-225dc3963e00}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

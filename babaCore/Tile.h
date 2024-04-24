@@ -10,7 +10,6 @@
 
 class Tile : public AActor , public helper
 {
-	friend APlayer;
 	GENERATED_BODY(AActor)
 public:
 	// constrcuter destructer
