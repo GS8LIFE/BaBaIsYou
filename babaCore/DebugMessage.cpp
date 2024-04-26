@@ -2,20 +2,7 @@
 #include "Tile.h"
 #include <EngineCore/EngineDebugMsgWindow.h>
 
-void APlayGameMode::DebugMessageFunction()
-{
-	std::string Msg;
-	for (size_t YY = 0; YY < 19; YY++)
-	{
-		for (size_t XX = 0; XX < 34; XX++)
-		{
-			{
-				Msg += std::format("map : {} = {},{}\n", Tilemap[YY][XX], YY, XX);
-			}
-		}
-	}
-	UEngineDebugMsgWindow::PushMsg(Msg);
-}
+
 
 
 void Tile::DebugMessageFunction()
