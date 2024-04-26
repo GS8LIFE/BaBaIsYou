@@ -90,6 +90,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="TileAnimationName.cpp" />
     <ClCompile Include="TitleGameMode.cpp" />
     <ClCompile Include="TitleLogo.cpp" />
   </ItemGroup>

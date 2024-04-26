@@ -43,6 +43,9 @@
     <ClCompile Include="DebugMessage.cpp">
       <Filter>DebugMessage</Filter>
     </ClCompile>
+    <ClCompile Include="TileAnimationName.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TitleGameMode.h">

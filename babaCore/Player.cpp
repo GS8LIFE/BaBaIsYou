@@ -43,12 +43,13 @@ APlayer::~APlayer()
 
 void APlayer::setTileMap(int _a, int _b,std::string _c)
 {
-	Tilemap[_a][_b] = _c;
+	Tilemap[-_a][_b] = _c;
+	CharName = _c;
 }
 void APlayer::BeginPlay()
 {
 	Super::BeginPlay();
-
+	Renderer->CreateAnimation("Cursor", "Cursor", 0.2f);
 	Renderer->CreateAnimation("Dmove0", "baba", 0.2f, true, 0, 2);
 	Renderer->CreateAnimation("Dmove1", "baba", 0.2f, true, 3, 5);
 	Renderer->CreateAnimation("Dmove2", "baba", 0.2f, true, 6, 8);
@@ -65,9 +66,8 @@ void APlayer::BeginPlay()
 	Renderer->CreateAnimation("Smove1", "baba", 0.2f, true, 48, 50);
 	Renderer->CreateAnimation("Smove2", "baba", 0.2f, true, 51, 53);
 	Renderer->CreateAnimation("Smove3", "baba", 0.2f, true, 54, 56);
-	SetActorScale3D(FVector(36.0f, 36.0f, -100.0f));
+	SetActorScale3D(FVector(100.0f, 100.0f, -100.0f));
 	SetActorLocation(FVector(612.0f, 342.0f, 0.0f));
-	Renderer->ChangeAnimation("Dmove0");
 	// 내부에서 샘플러도 같이 찾을
 	Renderer->SetOrder(5);
 	StateInit();
@@ -82,19 +82,32 @@ bool APlayer::TileAttribute(const std::string& _TileName, std::string _Attribute
 int APlayer::TileStack(std::vector<std::string> _strings,std::string _text)
 {
 	int stack = 0;
+	std::string TempText = _text;
 	for (std::string str : _strings)
 	{
-		int pos = _text.find(str);
+		int pos = TempText.find(str);
 		if (pos != std::string::npos)
 		{
-			_text.erase(pos, str.length());
+			TempText.erase(pos, str.length());
 			stack++;
 		}
 	}
 	return stack;
 }
 
-
+bool APlayer::ContainString(std::vector<std::string> _strings, std::string _text)
+{
+	int stack = 0;
+	std::string TempText = _text;
+	for (std::string str : _strings)
+	{
+		int pos = TempText.find(str);
+		if (pos != std::string::npos)
+		{
+			return true;
+		}
+	}
+}
 
 
 
@@ -114,14 +127,22 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 		Tilemap[_Column + _stack + 2][_Row] = Tilemap[_Column + _stack +1][_Row];
 		if (_stack != -1)
 		{
+			int stack = TileStack(AllTile, Tilemap[_Column + _stack + 2][_Row]);
+			for (int i = 0; i < stack; i++)
+			{
 			visitTile.push_back(std::make_pair(_Column + _stack + 1, _Row));
+			}
 		}
 	}
 	else if(_Dir == "Row")
 	{
 		Tilemap[_Column][_Row + _stack + 2] = Tilemap[_Column][_Row + _stack +1];
 		if (_stack != -1) {
+			int stack = TileStack(AllTile, Tilemap[_Column][_Row + _stack + 2]);
+			for (int i = 0; i < stack; i++)
+			{
 			visitTile.push_back(std::make_pair(_Column, _Row + _stack + 1));
+			}
 		}
 	}
 	else
@@ -135,14 +156,22 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 		{
 			Tilemap[_Column - _stack - 2][_Row] = Tilemap[_Column - _stack - 1][_Row];
 			if (_stack != -1) {
-				visitTile.push_back(std::make_pair(_Column - _stack - 1, _Row));
+				int stack = TileStack(AllTile, Tilemap[_Column + _stack - 2][_Row]);
+				for (int i = 0; i < stack; i++)
+				{
+					visitTile.push_back(std::make_pair(_Column - _stack - 1, _Row));
+				}
 			}
 		}
 		else if (_Dir == "Row")
 		{
 			Tilemap[_Column][_Row - _stack - 2] = Tilemap[_Column][_Row - _stack-1];
 			if (_stack != -1) {
-				visitTile.push_back(std::make_pair(_Column, _Row - _stack - 1));
+				int stack = TileStack(AllTile, Tilemap[_Column][_Row - _stack - 2]);
+				for (int i = 0; i < stack; i++)
+				{
+					visitTile.push_back(std::make_pair(_Column, _Row - _stack - 1));
+				}
 			}
 		}
 		else
@@ -165,5 +194,7 @@ void APlayer::Tick(float _DeltaTime)
 
 	State.Update(_DeltaTime);
 	MoveOneBlock(_DeltaTime, MoveDir);
+	Renderer->ChangeAnimation(CharName);
 	DebugMessageFunction();
+	
 }

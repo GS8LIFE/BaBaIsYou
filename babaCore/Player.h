@@ -27,10 +27,14 @@ public:
 
 	static std::vector<std::pair<int,int>> visitTile;
 	int TileStack(std::vector<std::string> _strings, std::string _text);
-	int texterase(std::vector<std::string> _strings, std::string _text);
+	bool ContainString(std::vector<std::string> _strings, std::string _text);
 	void setTileMap(int _a, int _b,std::string _c);
 	bool TileAttribute(const std::string& _TileName,std::string _Attribute);
 	void PushState(int _Column, int _Row, int _stack,std::string _Dir,char _Dir2); //_Dir -> 가로 세로 Dir2 -> +할건지 -할건지
+	void SetPlayer(bool _Player)
+	{
+		IsPlayer = _Player; 
+	}
 	UStateManager State;
 protected:
 	void BeginPlay() override;
@@ -51,6 +55,9 @@ private:
 	void moveStart();
 	void move(float _DeltaTime);
 	int movestack = 0; // 움직인 횟수
+	bool IsPlayer = false;
 	static char NowDir;
+	std::string CharName = "Cursor";
+
 };
 

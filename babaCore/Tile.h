@@ -24,7 +24,11 @@ public:
 	std::string texterase(std::string _text);
 	static bool containsString(const std::vector<std::string>& strings, const std::string& target); // 해당하는 문자가 있는지 확인
 	std::string WhatyourName(const std::vector<std::string>& strings, std::string& target); // 해당하는 문자가 있는지 확인
-	// delete Function
+	// delete Functionvoid 
+	void SetTileName(std::string _TileName)
+	{
+		TileName = _TileName;
+	}
 	Tile(const Tile& _Other) = delete;
 	Tile(Tile&& _Other) noexcept = delete;
 	Tile& operator=(const Tile& _Other) = delete;

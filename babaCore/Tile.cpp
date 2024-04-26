@@ -183,7 +183,11 @@ void Tile::move(float _DeltaTime)
 				if (pair.second == Tilepair.second)
 				{
 					IsMove = true;
-					APlayer::visitTile.erase(std::remove(APlayer::visitTile.begin(), APlayer::visitTile.end(), pair), APlayer::visitTile.end());
+					auto it = std::find(APlayer::visitTile.begin(), APlayer::visitTile.end(), pair);
+					if (it != APlayer::visitTile.end()) {
+						APlayer::visitTile.erase(it);
+					}
+					break;
 				}
 			}
 		}
@@ -274,18 +278,7 @@ void Tile::setTileMap(int _a, int _b,std::string _c)
 	Tilemap[-_a][_b] += _c;
 	TileName += _c;
 }
-void Tile::BeginPlay()
-{
-	Super::BeginPlay();
-	TileSize = helper::TileSize;
 
-
-	Renderer->CreateAnimation("Dmove0", "baba", 0.2f, true, 0, 2);
-	Renderer->CreateAnimation("babablock", "textbaba", 0.2f);
-
-	SetActorScale3D(FVector(36.0f, 36.0f, -100.0f));
-	Renderer->ChangeAnimation("babablock");
-}
 
 void Tile::Tick(float _DeltaTime)
 {
@@ -297,4 +290,8 @@ void Tile::Tick(float _DeltaTime)
 	MoveOneBlock(_DeltaTime, MoveDir);
 	Sentence(Noun);
 	DebugMessageFunction();
+	if (TileName != "") 
+	{
+	Renderer->ChangeAnimation(TileName);
+	}
 }
