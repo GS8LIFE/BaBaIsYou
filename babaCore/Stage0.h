@@ -1,5 +1,6 @@
 #pragma once
 #include "PreCompile.h"
+#include "Map.h"
 #include <EngineCore/GameMode.h>
 #include "ContentsConstValue.h"
 
@@ -18,6 +19,8 @@ public:
 	Stage0& operator=(const Stage0& _Other) = delete;
 	Stage0& operator=(Stage0&& _Other) noexcept = delete;
 
+	void SquarTile();
+	void SetSquar(std::shared_ptr<Map> _Squar,float _x,float _y);
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

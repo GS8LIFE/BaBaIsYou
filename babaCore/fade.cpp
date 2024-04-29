@@ -16,11 +16,11 @@ void fade::BeginPlay()
 {
 	Super::BeginPlay();
 	// Renderer->SetSamplering(ETextureSampling::LINEAR);
-	Renderer->CreateAnimation("fade", "fade", 0.2f, false);
-	SetActorScale3D(FVector(1188.0f, 648.0f, 100.0f));
+	Renderer->CreateAnimation("fade", "fade", 0.03f, false);
+	SetActorScale3D(FVector(1260.0f, 720.0f, 100.0f));
 	Renderer->ChangeAnimation("fade");
-	Renderer->SetOrder(3);
-}
+	Renderer->SetOrder(9);
+} 
 
 void fade::Tick(float _DeltaTime)
 {

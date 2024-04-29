@@ -49,7 +49,6 @@ void APlayGameMode::BeginPlay()
 		std::shared_ptr<Tile> TilePtr7 = GetWorld()->SpawnActor<Tile>("Tile", 5);
 
 
-
 		Tilemap[12][10] = "/";
 		Tilemap[13][10] = "/";
 		Tilemap[14][10] = "/";
