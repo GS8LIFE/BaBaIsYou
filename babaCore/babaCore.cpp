@@ -2,6 +2,7 @@
 #include "babaCore.h"
 #include "PlayGameMode.h"
 #include "TitleGameMode.h"
+#include "Stage1.h"
 #include <EngineCore/EngineSprite.h>
 
 babaCore::babaCore()

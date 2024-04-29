@@ -1,12 +1,13 @@
 #pragma once
 #include "PreCompile.h"
-#include <Enginecore/Actor.h>
-#include <EngineCore/SpriteRenderer.h>
+#include <EngineCore/GameMode.h>
+#include "ContentsConstValue.h"
 
 // Ό³Έν :
-class Stage1 : public AActor , public helper
+class Stage1 : public AGameMode, public helper
 {
-	GENERATED_BODY(AActor)
+	GENERATED_BODY(AGameMode)
+
 public:
 	// constrcuter destructer
 	Stage1();
@@ -21,7 +22,7 @@ public:
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
-private:
 
+private:
 };
 

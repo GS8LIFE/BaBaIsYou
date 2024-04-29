@@ -58,6 +58,8 @@ private:
 	bool IsPlayer = false;
 	static char NowDir;
 	std::string CharName = "Cursor";
+	int TileY = 0;
+	int TileX = 0;
 
 };
 

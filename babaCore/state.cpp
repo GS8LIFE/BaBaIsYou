@@ -1,6 +1,8 @@
 #include "PreCompile.h"
 #include "Player.h"
 #include "Tile.h"
+#include "Stage0.h"
+#include "Stage1.h"
 #include <EngineCore/SpriteRenderer.h>
 
 
@@ -52,7 +54,7 @@ void APlayer::StateInit()
 
 
 	// Ã¼ÀÎÁö
-	State.ChangeState("Idle");
+	State.ChangeState("move");
 }
 
 
@@ -93,88 +95,88 @@ void APlayer::moveStart()
 	case 0:
 		if (NowDir == 'D')
 		{
-			Renderer->ChangeAnimation("Dmove0");
+			CharName = "Dmove0";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			Renderer->ChangeAnimation("Amove0");
+			CharName = "Amove0";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			Renderer->ChangeAnimation("Smove0");
+			CharName = "Smove0";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			Renderer->ChangeAnimation("Wmove0");
+			CharName = "Wmove0";
 			return;
 		}
 		break;
 	case 1:
 		if (NowDir == 'D')
 		{
-			Renderer->ChangeAnimation("Dmove1");
+			CharName = "Dmove1";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			Renderer->ChangeAnimation("Amove1");
+			CharName = "Amove1";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			Renderer->ChangeAnimation("Smove1");
+			CharName = "Smove1";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			Renderer->ChangeAnimation("Wmove1");
+			CharName = "Wmove1";
 			return;
 		}
 		break;
 	case 2:
 		if (NowDir == 'D')
 		{
-			Renderer->ChangeAnimation("Dmove2");
+			CharName = "Dmove2";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			Renderer->ChangeAnimation("Amove2");
+			CharName = "Amove2";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			Renderer->ChangeAnimation("Smove2");
+			CharName = "Smove2";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			Renderer->ChangeAnimation("Wmove2");
+			CharName = "Wmove2";
 			return;
 		}
 		break;	
 	case 3:
 		if (NowDir == 'D')
 		{
-			Renderer->ChangeAnimation("Dmove3");
+			CharName = "Dmove3";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			Renderer->ChangeAnimation("Amove3");
+			CharName = "Amove3";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			Renderer->ChangeAnimation("Smove3");
+			CharName = "Smove3";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			Renderer->ChangeAnimation("Wmove3");
+			CharName = "Wmove3";
 			return;
 		}
 		break;
@@ -192,6 +194,67 @@ void APlayer::move(float _DeltaTime)
 	//{
 	//	int a = 0;
 	//}
+	if (CharName == "Cursor" && IsUp(VK_SPACE))
+	{
+		switch (TileY)
+		{
+		case 16:
+			switch (TileX)
+			{
+			case 10:
+				GEngine->CreateLevel<Stage0>("stage0");
+				GEngine->ChangeLevel("stage0");
+				break;
+			default:
+				break;
+			}
+			break;
+		case 14:
+			switch (TileX)
+			{
+			case 11:
+				GEngine->ChangeLevel("");
+				break;
+			case 12:
+				GEngine->ChangeLevel("");
+				break;
+			default:
+				break;
+			}
+			break;
+		case 13:
+			switch (TileX)
+			{
+			case 11:
+				GEngine->ChangeLevel("");
+				break;
+			case 12:
+				GEngine->ChangeLevel("");
+				break;
+			case 13:
+				GEngine->ChangeLevel("");
+				break;
+			default:
+				break;
+			}
+			break;
+		case 12:
+			switch (TileX)
+			{
+			case 11:
+				GEngine->ChangeLevel("");
+				break;
+			case 12:
+				GEngine->ChangeLevel("");
+				break;
+			default:
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+	}
 	if (true == IsUp('A') && Row != 0)
 	{
 		NowDir = 'A';
