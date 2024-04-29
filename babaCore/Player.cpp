@@ -66,7 +66,7 @@ void APlayer::BeginPlay()
 	Renderer->CreateAnimation("Smove1", "baba", 0.2f, true, 48, 50);
 	Renderer->CreateAnimation("Smove2", "baba", 0.2f, true, 51, 53);
 	Renderer->CreateAnimation("Smove3", "baba", 0.2f, true, 54, 56);
-	SetActorScale3D(FVector(100.0f, 100.0f, -100.0f));
+	SetActorScale3D(FVector(50.0f, 50.0f, -50.0f));
 	SetActorLocation(FVector(612.0f, 342.0f, 0.0f));
 	// 내부에서 샘플러도 같이 찾을
 	Renderer->SetOrder(5);
@@ -107,6 +107,7 @@ bool APlayer::ContainString(std::vector<std::string> _strings, std::string _text
 			return true;
 		}
 	}
+	return false;
 }
 
 
@@ -197,4 +198,13 @@ void APlayer::Tick(float _DeltaTime)
 	Renderer->ChangeAnimation(CharName);
 	DebugMessageFunction();
 	
+
+	if (GetActorLocation().Y < 0)
+	{
+		TileY = -GetActorLocation().Y / TileSize;
+	}
+	if (GetActorLocation().X > 0)
+	{
+		TileX = GetActorLocation().X / TileSize;
+	}
 }

@@ -46,6 +46,9 @@
     <ClCompile Include="TileAnimationName.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
+    <ClCompile Include="Stage0.cpp">
+      <Filter>Stage</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TitleGameMode.h">
@@ -83,6 +86,9 @@
     </ClInclude>
     <ClInclude Include="fade.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage0.h">
+      <Filter>Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

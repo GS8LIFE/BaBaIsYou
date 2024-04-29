@@ -18,11 +18,11 @@ public:
 	Map& operator=(const Map& _Other) = delete;
 	Map& operator=(Map&& _Other) noexcept = delete;
 
+	USpriteRenderer* Renderer = nullptr;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
 private:
-	USpriteRenderer* Renderer = nullptr;
 };
 

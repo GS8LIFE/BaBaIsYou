@@ -18,6 +18,7 @@ void Map::BeginPlay()
 	Super::BeginPlay();
 	// Renderer->SetSamplering(ETextureSampling::LINEAR);
 	Renderer->CreateAnimation("Map", "Map", 0.2f);
+	Renderer->CreateAnimation("MapBack", "MapBack", 0.2f);
 	SetActorScale3D(FVector(1188.0f, 648.0f, 100.0f));
 	Renderer->ChangeAnimation("Map");
 	Renderer->SetOrder(-2);
