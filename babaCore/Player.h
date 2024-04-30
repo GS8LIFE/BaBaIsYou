@@ -8,13 +8,13 @@
 #include "string"
 #include "fade.h"
 #include <EngineCore/StateManager.h>
-
+class Stage0;
 // Ό³Έν :
 class USpriteRenderer;
 class APlayer : public AActor , public helper
 {
 	GENERATED_BODY(AActor)
-
+	friend Stage0;
 public:
 	// constrcuter destructer
 	APlayer();

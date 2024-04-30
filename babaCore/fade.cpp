@@ -23,6 +23,7 @@ void fade::BeginPlay()
 	SetActorScale3D(FVector(1260.0f, 720.0f, 100.0f));
 	Renderer->SetSprite("babaisfefa.png");
 	Renderer->SetOrder(9);
+	Level = helper::StageLevel;
 } 
 
 void fade::ChangeLevel(int _Level)
@@ -59,7 +60,9 @@ void fade::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 	if (Level != helper::StageLevel)
 	{
-		int a;
+		Level = helper::StageLevel;
+		Name = "fadeIn";
+		Renderer->ChangeAnimation("fadeIn");
 	}
 	if (Name == "fadeIn")
 	{
@@ -88,6 +91,7 @@ void fade::Tick(float _DeltaTime)
 			default:
 				break;
 			}
+
 			Destroy();
 		}
 	}

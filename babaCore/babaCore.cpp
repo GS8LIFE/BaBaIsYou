@@ -68,7 +68,6 @@ void babaCore::Initialize()
 
 	GEngine->CreateLevel<APlayGameMode>("PlayLevel");
 	GEngine->CreateLevel<ATitleGameMode>("TitleLevel");
-	GEngine->CreateLevel<Stage0>("stage0");
 	GEngine->ChangeLevel("PlayLevel");
 
 

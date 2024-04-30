@@ -43,10 +43,6 @@ void APlayer::DebugMessageFunction()
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
-	{
-		std::string Msg = std::format("MousePos : {}\n", GEngine->EngineWindow.GetScreenMousePos().ToString());
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
 
 	{
 		std::string Msg = std::format("Location : {},{}\n", TileX, TileY);
@@ -54,10 +50,13 @@ void APlayer::DebugMessageFunction()
 	}
 
 	{
-		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX]);
+		std::string Msg = std::format("Name : {}\n", CharName);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
-
+	{
+		std::string Msg = std::format("TileName : {}\n", Tilemap[TileY][TileX]);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
 	{
 		std::string Msg = std::format("------------------------------");
 		UEngineDebugMsgWindow::PushMsg(Msg);

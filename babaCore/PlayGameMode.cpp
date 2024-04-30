@@ -47,7 +47,7 @@ void APlayGameMode::BeginPlay()
 		std::shared_ptr<Tile> TilePtr5 = GetWorld()->SpawnActor<Tile>("Tile", 5);
 		std::shared_ptr<Tile> TilePtr6 = GetWorld()->SpawnActor<Tile>("Tile", 5);
 		std::shared_ptr<Tile> TilePtr7 = GetWorld()->SpawnActor<Tile>("Tile", 5);
-
+		std::shared_ptr<fade> fadeIn = GetWorld()->SpawnActor<fade>("fade");
 
 		Tilemap[12][10] = "/";
 		Tilemap[13][10] = "/";
@@ -89,6 +89,7 @@ void APlayGameMode::BeginPlay()
 
 		MapPtr->SetActorLocation({ 630.0f, -360.0f, 0.0f });
 		MapDecoPtr->SetActorLocation({ 630.0f, -360.0f, 0.0f });
+		fadeIn->SetActorLocation({ 630.0f, -360.0f, 0.0f });
 
 	}
 }

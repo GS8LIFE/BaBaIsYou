@@ -22,7 +22,6 @@ void APlayer::StateInit()
 	// 함수들 세팅하고
 	State.SetUpdateFunction("Idle", std::bind(&APlayer::Idle, this, std::placeholders::_1));
 
-	std::shared_ptr<fade> fadeIn = GetWorld()->SpawnActor<fade>("fade");
 
 	// 콜백[0]  콜백[1]   콜백[2][3][4][5][6] [7] 콜백8
 
@@ -207,6 +206,8 @@ void APlayer::move(float _DeltaTime)
 			case 10:
 			{
 				helper::StageLevel = 0;
+				GEngine->CreateLevel<Stage0>("stage0");
+				InputOff();
 				break;
 			}
 			default:

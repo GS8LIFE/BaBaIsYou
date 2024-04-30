@@ -3,6 +3,8 @@
 #include "Map.h"
 #include "fade.h"
 #include <EngineCore/Camera.h>
+#include "Player.h"
+
 Stage0::Stage0() 
 {
 	for (size_t YY = 0; YY < 19; YY++)
@@ -55,12 +57,13 @@ void Stage0::BeginPlay()
 	std::shared_ptr<fade> fadeout = GetWorld()->SpawnActor<fade>("fade");
 	std::shared_ptr<APlayer> Player = GetWorld()->SpawnActor<APlayer>("Player");
 	SquarTile();
+	RokcTile();
 	std::shared_ptr<Map> Mapback = GetWorld()->SpawnActor<Map>("Mapback");
 
 
 	fadeout->Renderer->ChangeAnimation("fadeOut");
 	fadeout->SetActorLocation({ 630.0f, -360.0f, 0.0f });
-	fadeout->Level = 3;
+	fadeout->Level = 0;
 	fadeout->Renderer->ChangeAnimation("fadeOut");
 
 	Mapback->Renderer->ChangeAnimation("MapBack");
@@ -75,6 +78,16 @@ void Stage0::Tick(float _DeltaTime)
 	Super::Tick(_DeltaTime);
 
 	int a = 0;
+}
+
+void Stage0::RokcTile()
+{
+	std::shared_ptr<APlayer> rock1 = GetWorld()->SpawnActor<APlayer>("rock");
+	std::shared_ptr<APlayer> rock2 = GetWorld()->SpawnActor<APlayer>("rock");
+	std::shared_ptr<APlayer> rock3 = GetWorld()->SpawnActor<APlayer>("rock");
+	SetRock(rock1, 17, 10);
+	SetRock(rock2, 17, 11);
+	SetRock(rock3, 17, 12);
 }
 
 void Stage0::SquarTile()
@@ -156,4 +169,12 @@ void Stage0::SetSquar(std::shared_ptr<Map> _Squar,float _x,float _y)
 	_Squar->SetActorLocation({ TileSize * (_x+0.5f), -TileSize * (_y+0.5f), 0.0f });
 	_Squar->Renderer->ChangeAnimation("Squar");
 	_Squar->SetActorScale3D({ 35.0f,35.0f });
+}
+
+void Stage0::SetRock(std::shared_ptr<APlayer> _Rock, float _x, float _y)
+{
+	_Rock->SetActorLocation({ TileSize * (_x + 0.5f), -TileSize * (_y + 0.5f), 0.0f });
+	_Rock->SetActorScale3D({ 35.0f,35.0f });
+	_Rock->setTileMap(_Rock->GetActorLocation().Y / TileSize, _Rock->GetActorLocation().X / TileSize, "Rock");
+	_Rock->InputOff();
 }

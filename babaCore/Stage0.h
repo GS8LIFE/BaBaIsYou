@@ -4,10 +4,13 @@
 #include <EngineCore/GameMode.h>
 #include "ContentsConstValue.h"
 
+class APlayer;
+
 // Ό³Έν :
 class Stage0 : public AGameMode, public helper
 {
-	GENERATED_BODY(AActor)
+	GENERATED_BODY(AGameMode)
+	friend APlayer;
 public:
 	// constrcuter destructer
 	Stage0();
@@ -18,8 +21,9 @@ public:
 	Stage0(Stage0&& _Other) noexcept = delete;
 	Stage0& operator=(const Stage0& _Other) = delete;
 	Stage0& operator=(Stage0&& _Other) noexcept = delete;
-
+	void RokcTile();
 	void SquarTile();
+	void SetRock(std::shared_ptr<APlayer> _Squar, float _x, float _y);
 	void SetSquar(std::shared_ptr<Map> _Squar,float _x,float _y);
 protected:
 	void BeginPlay() override;

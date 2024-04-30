@@ -20,7 +20,7 @@ public:
 
 	void ChangeLevel(int _Level);
 	USpriteRenderer* Renderer = nullptr;
-	int Level = -3;
+	int Level = -1;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;

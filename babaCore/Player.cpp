@@ -197,8 +197,9 @@ void APlayer::Tick(float _DeltaTime)
 
 void APlayer::AnimationCollect()
 {
-	Renderer->CreateAnimation("Cursor", "Cursor", 0.2f);
 	//커서
+	Renderer->CreateAnimation("Cursor", "Cursor", 0.2f);
+	//바바
 	Renderer->CreateAnimation("Dmove0", "baba", 0.2f, true, 0, 2);
 	Renderer->CreateAnimation("Dmove1", "baba", 0.2f, true, 3, 5);
 	Renderer->CreateAnimation("Dmove2", "baba", 0.2f, true, 6, 8);
@@ -215,6 +216,7 @@ void APlayer::AnimationCollect()
 	Renderer->CreateAnimation("Smove1", "baba", 0.2f, true, 48, 50);
 	Renderer->CreateAnimation("Smove2", "baba", 0.2f, true, 51, 53);
 	Renderer->CreateAnimation("Smove3", "baba", 0.2f, true, 54, 56);
-	//바바
+	//돌
+		Renderer->CreateAnimation("Rock", "Rock", 0.2f);
 
 }
