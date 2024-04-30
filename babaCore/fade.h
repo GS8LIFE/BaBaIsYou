@@ -18,11 +18,14 @@ public:
 	fade& operator=(const fade& _Other) = delete;
 	fade& operator=(fade&& _Other) noexcept = delete;
 
+	void ChangeLevel(int _Level);
+	USpriteRenderer* Renderer = nullptr;
+	int Level = -3;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
 
 private:
-	USpriteRenderer* Renderer = nullptr;
+	std::string Name;
 };
 

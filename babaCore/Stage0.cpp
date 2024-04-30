@@ -58,8 +58,10 @@ void Stage0::BeginPlay()
 	std::shared_ptr<Map> Mapback = GetWorld()->SpawnActor<Map>("Mapback");
 
 
-
+	fadeout->Renderer->ChangeAnimation("fadeOut");
 	fadeout->SetActorLocation({ 630.0f, -360.0f, 0.0f });
+	fadeout->Level = 3;
+	fadeout->Renderer->ChangeAnimation("fadeOut");
 
 	Mapback->Renderer->ChangeAnimation("MapBack");
 	Mapback->SetActorLocation({ 630.0f, -360.0f, 0.0f });

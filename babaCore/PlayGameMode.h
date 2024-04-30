@@ -3,7 +3,7 @@
 #include "ContentsConstValue.h"
 
 // Ό³Έν :
-class APlayGameMode : public AGameMode , public helper
+class APlayGameMode : public AGameMode , public helper 
 {
 	GENERATED_BODY(AGameMode)
 

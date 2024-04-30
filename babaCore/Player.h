@@ -6,11 +6,12 @@
 #include "Tile.h"
 #include "vector"
 #include "string"
+#include "fade.h"
 #include <EngineCore/StateManager.h>
 
 // Ό³Έν :
 class USpriteRenderer;
-class APlayer : public AActor , public helper 
+class APlayer : public AActor , public helper
 {
 	GENERATED_BODY(AActor)
 

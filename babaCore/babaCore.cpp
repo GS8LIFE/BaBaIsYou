@@ -3,6 +3,7 @@
 #include "PlayGameMode.h"
 #include "TitleGameMode.h"
 #include "Stage1.h"
+#include "Stage0.h"
 #include <EngineCore/EngineSprite.h>
 
 babaCore::babaCore()
@@ -67,6 +68,7 @@ void babaCore::Initialize()
 
 	GEngine->CreateLevel<APlayGameMode>("PlayLevel");
 	GEngine->CreateLevel<ATitleGameMode>("TitleLevel");
+	GEngine->CreateLevel<Stage0>("stage0");
 	GEngine->ChangeLevel("PlayLevel");
 
 

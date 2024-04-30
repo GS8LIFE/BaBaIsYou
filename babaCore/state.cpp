@@ -1,5 +1,6 @@
 #include "PreCompile.h"
 #include "Player.h"
+#include "fade.h"
 #include "Tile.h"
 #include "Stage0.h"
 #include "Stage1.h"
@@ -20,6 +21,8 @@ void APlayer::StateInit()
 
 	// 함수들 세팅하고
 	State.SetUpdateFunction("Idle", std::bind(&APlayer::Idle, this, std::placeholders::_1));
+
+	std::shared_ptr<fade> fadeIn = GetWorld()->SpawnActor<fade>("fade");
 
 	// 콜백[0]  콜백[1]   콜백[2][3][4][5][6] [7] 콜백8
 
@@ -202,9 +205,10 @@ void APlayer::move(float _DeltaTime)
 			switch (TileX)
 			{
 			case 10:
-				GEngine->CreateLevel<Stage0>("stage0");
-				GEngine->ChangeLevel("stage0");
+			{
+				helper::StageLevel = 0;
 				break;
+			}
 			default:
 				break;
 			}
@@ -213,7 +217,8 @@ void APlayer::move(float _DeltaTime)
 			switch (TileX)
 			{
 			case 11:
-				GEngine->ChangeLevel("");
+			{
+			}
 				break;
 			case 12:
 				GEngine->ChangeLevel("");
