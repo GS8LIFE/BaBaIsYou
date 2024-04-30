@@ -7,11 +7,12 @@
 #include "Player.h"
 #include "map"
 // Ό³Έν :
-
+class Stage0;
 class Tile : public AActor , public helper
 {
 	GENERATED_BODY(AActor)
 public:
+	friend Stage0;
 	// constrcuter destructer
 	Tile();
 	~Tile();

@@ -77,6 +77,7 @@ void Tile::Sentence(bool _Noun)
 					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
 					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1]));
 					SentenceRow += texterase(WhatyourName(Objects, Tilemap[TileY][TileX + 2]));
+					Rule.push_back(SentenceRow);
 				}
 			}
 			else if (containsString(Nouns, Tilemap[TileY][TileX + 2]))
@@ -86,10 +87,17 @@ void Tile::Sentence(bool _Noun)
 					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
 					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1]));
 					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX + 2]));
+					Rule.push_back(SentenceRow);
 				}
 			}
 			else
 			{
+				auto find = std::find(Rule.begin(), Rule.end(), SentenceRow);
+				if 
+					(find != Rule.end()) 
+				{
+					Rule.erase(find);
+				}
 				SentenceRow.clear();
 			}
 		}
@@ -102,6 +110,7 @@ void Tile::Sentence(bool _Noun)
 					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
 					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX]));
 					SentenceColumn += texterase(WhatyourName(Objects, Tilemap[TileY + 2][TileX]));
+					Rule.push_back(SentenceColumn);
 				}
 			}
 			else if (containsString(Nouns, Tilemap[TileY + 2][TileX]))
@@ -111,21 +120,52 @@ void Tile::Sentence(bool _Noun)
 					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
 					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX]));
 					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY + 2][TileX]));
+					Rule.push_back(SentenceColumn);
 				}
 			}
 			else
 			{
+				auto find = std::find(Rule.begin(), Rule.end(), SentenceColumn);
+				if
+					(find != Rule.end())
+				{
+					Rule.erase(find);
+				}
 				SentenceColumn.clear();
 			}
 		}
 		else
 		{
+			auto findColumn = std::find(Rule.begin(), Rule.end(), SentenceColumn);
+			if
+				(findColumn != Rule.end())
+			{
+				Rule.erase(findColumn);
+			}
+			auto findRow = std::find(Rule.begin(), Rule.end(), SentenceRow);
+			if
+				(findRow != Rule.end())
+			{
+				Rule.erase(findRow);
+			}
 			SentenceColumn.clear();
 			SentenceRow.clear();
 		}
 	}
 	else
 	{
+		auto findColumn = std::find(Rule.begin(), Rule.end(), SentenceColumn);
+		if
+			(findColumn != Rule.end())
+		{
+			Rule.erase(findColumn);
+		}
+		auto findRow = std::find(Rule.begin(), Rule.end(), SentenceRow);
+		if
+			(findRow != Rule.end())
+		{
+			Rule.erase(findRow);
+		}
 		SentenceColumn.clear();
 		SentenceRow.clear();
 	}
@@ -276,7 +316,7 @@ void Tile::TileLocation()
 void Tile::setTileMap(int _a, int _b,std::string _c)
 {
 	Tilemap[-_a][_b] += _c;
-	TileName += _c;
+ 	TileName = _c;
 }
 
 

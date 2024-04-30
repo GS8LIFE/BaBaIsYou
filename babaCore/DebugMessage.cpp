@@ -58,6 +58,16 @@ void APlayer::DebugMessageFunction()
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 	{
+		std::string rules;
+		for (const auto& rule : helper::Rule) 
+		{
+		rules += rule + ", ";
+		}
+		rules = rules.substr(0, rules.size() - 2); // 마지막 쉼표와 공백 제거
+		std::string Msg = std::format("Rule : {}\n", rules);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+	{
 		std::string Msg = std::format("------------------------------");
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}

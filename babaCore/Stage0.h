@@ -22,7 +22,10 @@ public:
 	Stage0& operator=(const Stage0& _Other) = delete;
 	Stage0& operator=(Stage0&& _Other) noexcept = delete;
 	void RokcTile();
+	void RuleTile();
 	void SquarTile();
+	void RuleCheck();
+	void SetTile(std::shared_ptr<Tile> _Tile, std::string _Name, float _x, float _y);
 	void SetRock(std::shared_ptr<APlayer> _Squar, float _x, float _y);
 	void SetSquar(std::shared_ptr<Map> _Squar,float _x,float _y);
 protected:

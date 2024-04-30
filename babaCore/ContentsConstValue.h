@@ -3,6 +3,7 @@
 class helper
 {
 public:
+	static std::vector<std::string> Rule;
 	static int StageLevel;
 	static const float TileSize;
 	static std::vector<std::vector<std::string>> Tilemap;
