@@ -141,7 +141,7 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 		{
 			Tilemap[_Column - _stack - 2][_Row] = Tilemap[_Column - _stack - 1][_Row];
 			if (_stack != -1) {
-				int stack = TileStack(AllTile, Tilemap[_Column + _stack - 2][_Row]);
+				int stack = TileStack(AllTile, Tilemap[_Column - _stack - 2][_Row]);
 				for (int i = 0; i < stack; i++)
 				{
 					visitTile.push_back(std::make_pair(_Column - _stack - 1, _Row));
