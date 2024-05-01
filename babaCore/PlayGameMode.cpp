@@ -20,14 +20,19 @@ APlayGameMode::~APlayGameMode()
 void APlayGameMode::BeginPlay()
 {
 	Super::BeginPlay();
-	for (int t = 0; t < 20; t++)   //타일맵 초기화 가로35,세로20
+	Tilemap.resize(20);
+	for (int first = 0; first < 20; first++)   //타일맵 초기화 가로35,세로20
 	{
-	Tilemap.push_back(std::vector<std::string>());
+		Tilemap[first].resize(35);
 
-	for (int i = 0; i < 35; ++i) 
-	{
-		Tilemap[t].push_back("");
-	}
+		for (int second = 0; second < 35; ++second)
+		{
+			Tilemap[first][second].resize(20);
+			for (int stackIndex = 0; stackIndex < 20; ++stackIndex)
+			{
+				Tilemap[first][second][stackIndex] = "";
+			}
+		}
 	}
 	std::shared_ptr<UCamera> Camera = GetWorld()->GetMainCamera();
 	Camera->SetActorLocation(FVector(630.0f, -360.0f, -100.0f));
@@ -49,23 +54,23 @@ void APlayGameMode::BeginPlay()
 		std::shared_ptr<Tile> TilePtr7 = GetWorld()->SpawnActor<Tile>("Tile", 5);
 		std::shared_ptr<fade> fadeIn = GetWorld()->SpawnActor<fade>("fade");
 
-		Tilemap[12][10] = "/";
-		Tilemap[13][10] = "/";
-		Tilemap[14][10] = "/";
-		Tilemap[15][10] = "/";
-		Tilemap[17][10] = "/";
-		Tilemap[18][10] = "/";
-		Tilemap[16][9] = "/";
-		Tilemap[11][11] = "/";
-		Tilemap[17][11] = "/";
-		Tilemap[15][12] = "/";
-		Tilemap[16][12] = "/";
-		Tilemap[11][12] = "/";
-		Tilemap[11][13] = "/";
-		Tilemap[15][13] = "/";
-		Tilemap[12][14] = "/";
-		Tilemap[13][14] = "/";
-		Tilemap[14][14] = "/";
+		Tilemap[12][10].push_back("/");
+		Tilemap[13][10].push_back("/");
+		Tilemap[14][10].push_back("/");
+		Tilemap[15][10].push_back("/");
+		Tilemap[17][10].push_back("/");
+		Tilemap[18][10].push_back("/");
+		Tilemap[16][9].push_back("/");
+		Tilemap[11][11].push_back("/");
+		Tilemap[17][11].push_back("/");
+		Tilemap[15][12].push_back("/");
+		Tilemap[16][12].push_back("/");
+		Tilemap[11][12].push_back("/");
+		Tilemap[11][13].push_back("/");
+		Tilemap[15][13].push_back("/");
+		Tilemap[12][14].push_back("/");
+		Tilemap[13][14].push_back("/");
+		Tilemap[14][14].push_back("/");
 		TilePtr0->SetActorLocation({ TileSize * 10.5f, -TileSize * 16.5f });
 		TilePtr0->setTileMap(TilePtr0->GetActorLocation().Y / TileSize, TilePtr0->GetActorLocation().X / TileSize, "00");
 		TilePtr1->SetActorLocation({ TileSize * 11.5f, -TileSize * 14.5f });

@@ -26,8 +26,9 @@ public:
 	APlayer& operator=(const APlayer& _Other) = delete;
 	APlayer& operator=(APlayer&& _Other) noexcept = delete;
 
-	static std::vector<std::pair<int,int>> visitTile;
+	static std::vector<std::tuple<int,int,int>> visitTile;
 	int TileStack(std::vector<std::string> _strings, std::string _text);
+	std::string GetName();
 	bool ContainString(std::vector<std::string> _strings, std::string _text);
 	void setTileMap(int _a, int _b,std::string _c);
 	bool TileAttribute(const std::string& _TileName,std::string _Attribute);
@@ -37,6 +38,7 @@ public:
 	{
 		IsPlayer = _Player; 
 	}
+	std::string Pop_text(std::string _Tile, std::string _CharName);
 	UStateManager State;
 protected:
 	void BeginPlay() override;
@@ -62,6 +64,7 @@ private:
 	std::string CharName = "Cursor";
 	int TileY = 0;
 	int TileX = 0;
+	int high = 0;
 
 };
 

@@ -58,6 +58,7 @@ private:
 	bool Object = false;	
 	int TileY = 0;
 	int TileX = 0;
+	int high = 0;
 	std::string SentenceRow;
 	std::string SentenceColumn;
 };

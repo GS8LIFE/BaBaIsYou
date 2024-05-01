@@ -3,7 +3,7 @@
 #include <EngineCore/DefaultSceneComponent.h>
 #include <EngineCore/EngineDebugMsgWindow.h>
 char APlayer::NowDir;
-std::vector<std::pair<int, int>> APlayer::visitTile;
+std::vector<std::tuple<int, int,int>> APlayer::visitTile;
 
 APlayer::APlayer()
 {
@@ -43,7 +43,8 @@ APlayer::~APlayer()
 
 void APlayer::setTileMap(int _a, int _b,std::string _c)
 {
-	Tilemap[-_a][_b] = _c;
+	high = Tilemap[-_a][_b].size();
+	Tilemap[-_a][_b].push_back(_c);
 	CharName = _c;
 }
 void APlayer::BeginPlay()
@@ -109,24 +110,25 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{ 
 	if (_Dir == "Column")
 	{
-		Tilemap[_Column + _stack + 2][_Row] = Tilemap[_Column + _stack +1][_Row];
+		Tilemap[_Column + _stack + 2][_Row].push_back(Tilemap[_Column + _stack +1][_Row][high]);
 		if (_stack != -1)
 		{
-			int stack = TileStack(AllTile, Tilemap[_Column + _stack + 2][_Row]);
+			int stack = Tilemap[_Column + _stack + 2][_Row].size();
 			for (int i = 0; i < stack; i++)
 			{
-			visitTile.push_back(std::make_pair(_Column + _stack + 1, _Row));
+				visitTile.push_back(std::make_tuple (_Column + _stack + 1, _Row,high));
 			}
 		}
 	}
 	else if(_Dir == "Row")
 	{
-		Tilemap[_Column][_Row + _stack + 2] = Tilemap[_Column][_Row + _stack +1];
+		Tilemap[_Column][_Row + _stack + 2].push_back(Tilemap[_Column][_Row + _stack +1][high]);
 		if (_stack != -1) {
-			int stack = TileStack(AllTile, Tilemap[_Column][_Row + _stack + 2]);
+			
+			int stack = Tilemap[_Column][_Row + _stack + 2].size();
 			for (int i = 0; i < stack; i++)
 			{
-			visitTile.push_back(std::make_pair(_Column, _Row + _stack + 1));
+			visitTile.push_back(std::make_tuple(_Column, _Row + _stack + 1, high));
 			}
 		}
 	}
@@ -139,12 +141,13 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{
 		if (_Dir == "Column")
 		{
-			Tilemap[_Column - _stack - 2][_Row] = Tilemap[_Column - _stack - 1][_Row];
+			int Prehigh = high;
+			setTileMap(_Column - _stack - 2, _Row, Tilemap[_Column - _stack - 1][_Row][high]);
 			if (_stack != -1) {
-				int stack = TileStack(AllTile, Tilemap[_Column - _stack - 2][_Row]);
+				int stack = Tilemap[_Column - _stack - 2][_Row].size();
 				for (int i = 0; i < stack; i++)
 				{
-					visitTile.push_back(std::make_pair(_Column - _stack - 1, _Row));
+					visitTile.push_back(std::make_tuple(_Column - _stack - 1, _Row, Prehigh));
 				}
 			}
 		}
@@ -193,29 +196,42 @@ void APlayer::Tick(float _DeltaTime)
 	}
 }
 
+std::string APlayer::Pop_text(std::string _Tile, std::string _CharName)
+{
+	std::string erasetext = _CharName;
 
+	int pos = _Tile.find(erasetext);
+	if (pos != std::string::npos)
+	{
+		return _Tile.erase(pos, erasetext.length());
+	}
+}
+std::string APlayer::GetName()
+{
+	return CharName;
+}
 
 void APlayer::AnimationCollect()
 {
 	//커서
 	Renderer->CreateAnimation("Cursor", "Cursor", 0.2f);
 	//바바
-	Renderer->CreateAnimation("Dmove0", "baba", 0.2f, true, 0, 2);
-	Renderer->CreateAnimation("Dmove1", "baba", 0.2f, true, 3, 5);
-	Renderer->CreateAnimation("Dmove2", "baba", 0.2f, true, 6, 8);
-	Renderer->CreateAnimation("Dmove3", "baba", 0.2f, true, 9, 11);
-	Renderer->CreateAnimation("Wmove0", "baba", 0.2f, true, 12, 14);
-	Renderer->CreateAnimation("Wmove1", "baba", 0.2f, true, 15, 17);
-	Renderer->CreateAnimation("Wmove2", "baba", 0.2f, true, 18, 20);
-	Renderer->CreateAnimation("Wmove3", "baba", 0.2f, true, 21, 23);
-	Renderer->CreateAnimation("Amove0", "baba", 0.2f, true, 30, 32);
-	Renderer->CreateAnimation("Amove1", "baba", 0.2f, true, 33, 35);
-	Renderer->CreateAnimation("Amove2", "baba", 0.2f, true, 36, 38);
-	Renderer->CreateAnimation("Amove3", "baba", 0.2f, true, 39, 41);
-	Renderer->CreateAnimation("Smove0", "baba", 0.2f, true, 45, 47);
-	Renderer->CreateAnimation("Smove1", "baba", 0.2f, true, 48, 50);
-	Renderer->CreateAnimation("Smove2", "baba", 0.2f, true, 51, 53);
-	Renderer->CreateAnimation("Smove3", "baba", 0.2f, true, 54, 56);
+	Renderer->CreateAnimation("BabaDmove0", "baba", 0.2f, true, 0, 2);
+	Renderer->CreateAnimation("BabaDmove1", "baba", 0.2f, true, 3, 5);
+	Renderer->CreateAnimation("BabaDmove2", "baba", 0.2f, true, 6, 8);
+	Renderer->CreateAnimation("BabaDmove3", "baba", 0.2f, true, 9, 11);
+	Renderer->CreateAnimation("BabaWmove0", "baba", 0.2f, true, 12, 14);
+	Renderer->CreateAnimation("BabaWmove1", "baba", 0.2f, true, 15, 17);
+	Renderer->CreateAnimation("BabaWmove2", "baba", 0.2f, true, 18, 20);
+	Renderer->CreateAnimation("BabaWmove3", "baba", 0.2f, true, 21, 23);
+	Renderer->CreateAnimation("BabaAmove0", "baba", 0.2f, true, 30, 32);
+	Renderer->CreateAnimation("BabaAmove1", "baba", 0.2f, true, 33, 35);
+	Renderer->CreateAnimation("BabaAmove2", "baba", 0.2f, true, 36, 38);
+	Renderer->CreateAnimation("BabaAmove3", "baba", 0.2f, true, 39, 41);
+	Renderer->CreateAnimation("BabaSmove0", "baba", 0.2f, true, 45, 47);
+	Renderer->CreateAnimation("BabaSmove1", "baba", 0.2f, true, 48, 50);
+	Renderer->CreateAnimation("BabaSmove2", "baba", 0.2f, true, 51, 53);
+	Renderer->CreateAnimation("BabaSmove3", "baba", 0.2f, true, 54, 56);
 	//돌
 		Renderer->CreateAnimation("Rock", "Rock", 0.2f);
 

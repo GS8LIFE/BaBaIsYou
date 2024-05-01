@@ -178,9 +178,13 @@ void Tile::CreateChar()
 
 std::string Tile::GetTileName()
 {
+	std::string TileName;
 	int Y = GetActorLocation().Y/TileSize;
 	int X = GetActorLocation().X/TileSize;
-	return Tilemap[Y][X];
+	for (const std::string& str : Tilemap[Y][X]) {
+		TileName += str;
+	}
+	return TileName;
 }
 void Tile::SetMove(bool _SetMove)
 {
@@ -216,7 +220,7 @@ void Tile::move(float _DeltaTime)
 		int Column = GetActorLocation().Y * -1 / TileSize;
 		int Row = GetActorLocation().X / TileSize;
 		std::pair Tilepair = std::make_pair(Column,Row);
-		for (std::pair<int,int> pair : APlayer::visitTile) {
+		for (std::pair<int,int,int> pair : APlayer::visitTile) {
 
 			if (pair.first == Tilepair.first)
 			{
@@ -315,7 +319,8 @@ void Tile::TileLocation()
 
 void Tile::setTileMap(int _a, int _b,std::string _c)
 {
-	Tilemap[-_a][_b] += _c;
+	high = Tilemap[-_a][_b].size();
+	Tilemap[-_a][_b].push_back(_c);
  	TileName = _c;
 }
 

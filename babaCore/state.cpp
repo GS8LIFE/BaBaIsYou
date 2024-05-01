@@ -97,88 +97,88 @@ void APlayer::moveStart()
 	case 0:
 		if (NowDir == 'D')
 		{
-			CharName = "Dmove0";
+			CharName = "BabaDmove0";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "Amove0";
+			CharName = "BabaAmove0";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "Smove0";
+			CharName = "BabaSmove0";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "Wmove0";
+			CharName = "BabaWmove0";
 			return;
 		}
 		break;
 	case 1:
 		if (NowDir == 'D')
 		{
-			CharName = "Dmove1";
+			CharName = "BabaDmove1";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "Amove1";
+			CharName = "BabaAmove1";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "Smove1";
+			CharName = "BabaSmove1";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "Wmove1";
+			CharName = "BabaWmove1";
 			return;
 		}
 		break;
 	case 2:
 		if (NowDir == 'D')
 		{
-			CharName = "Dmove2";
+			CharName = "BabaDmove2";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "Amove2";
+			CharName = "BabaAmove2";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "Smove2";
+			CharName = "BabaSmove2";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "Wmove2";
+			CharName = "BabaWmove2";
 			return;
 		}
 		break;	
 	case 3:
 		if (NowDir == 'D')
 		{
-			CharName = "Dmove3";
+			CharName = "BabaDmove3";
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "Amove3";
+			CharName = "BabaAmove3";
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "Smove3";
+			CharName = "BabaSmove3";
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "Wmove3";
+			CharName = "BabaWmove3";
 			return;
 		}
 		break;
@@ -274,8 +274,8 @@ void APlayer::move(float _DeltaTime)
 					MoveDir = GetActorLocation();
 					MoveDir += {-TileSize, 0.0f};
 					State.ChangeState("move");
-					Tilemap[Column][Row - 1] = Tilemap[Column][Row];
-					Tilemap[Column][Row] = "";
+					Tilemap[Column][Row - 1] += CharName;
+					Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 					movestack++;
 				}
 			}
@@ -288,8 +288,8 @@ void APlayer::move(float _DeltaTime)
 				MoveDir = GetActorLocation();
 				MoveDir += {-TileSize, 0.0f};
 				State.ChangeState("move");
-				Tilemap[Column][Row - 1] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = "";
+				Tilemap[Column][Row - 1] += CharName;
+				Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 				movestack++;
 			}
 		}
@@ -314,7 +314,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {-TileSize, 0.0f};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = "";
+			Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 			movestack++;
 		}
 	}
@@ -331,8 +331,8 @@ void APlayer::move(float _DeltaTime)
 					MoveDir = GetActorLocation();
 					MoveDir += {TileSize, 0.0f};
 					State.ChangeState("move");
-					Tilemap[Column][Row + 1] = Tilemap[Column][Row];
-					Tilemap[Column][Row] = "";
+					Tilemap[Column][Row + 1] += CharName;
+					Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row],CharName);	
 					movestack++;
 				}
 			}
@@ -346,7 +346,7 @@ void APlayer::move(float _DeltaTime)
 				MoveDir += {TileSize, 0.0f};
 				State.ChangeState("move");
 				Tilemap[Column][Row + 1] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = "";
+				Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 				movestack++;
 			}
 		}
@@ -371,7 +371,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {TileSize, 0.0f};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = "";
+			Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 			movestack++;
 		}
 	}
@@ -389,7 +389,7 @@ void APlayer::move(float _DeltaTime)
 					MoveDir += {0.0f,TileSize};
 					State.ChangeState("move");
 					Tilemap[Column - 1][Row ] = Tilemap[Column][Row];
-					Tilemap[Column][Row] = "";
+					Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 					movestack++;
 				}
 			}
@@ -403,7 +403,7 @@ void APlayer::move(float _DeltaTime)
 				MoveDir += {0.0f, TileSize};
 				State.ChangeState("move");
 				Tilemap[Column - 1][Row] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = "";
+				Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 				movestack++;
 			}
 		}
@@ -428,7 +428,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {0.0f, TileSize};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = "";
+			Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 			movestack++;
 		}
 	}
@@ -446,7 +446,7 @@ void APlayer::move(float _DeltaTime)
 					MoveDir += {0.0f,-TileSize};
 					State.ChangeState("move");
 					Tilemap[Column + 1][Row] = Tilemap[Column][Row];
-					Tilemap[Column][Row] = "";
+					Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 					movestack++;
 				}
 			}
@@ -460,7 +460,7 @@ void APlayer::move(float _DeltaTime)
 				MoveDir += {0.0f, -TileSize};
 				State.ChangeState("move");
 				Tilemap[Column + 1][Row] = Tilemap[Column][Row];
-				Tilemap[Column][Row] = "";
+				Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 				movestack++;
 			}
 		}
@@ -485,7 +485,7 @@ void APlayer::move(float _DeltaTime)
 			MoveDir += {0.0f, -TileSize};
 			State.ChangeState("move");
 
-			Tilemap[Column][Row] = "";
+			Tilemap[Column][Row] = Pop_text(Tilemap[Column][Row], CharName);
 			movestack++;
 		}
 	}

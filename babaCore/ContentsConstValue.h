@@ -6,7 +6,7 @@ public:
 	static std::vector<std::string> Rule;
 	static int StageLevel;
 	static const float TileSize;
-	static std::vector<std::vector<std::string>> Tilemap;
+	static std::vector<std::vector<std::vector<std::string>>> Tilemap;
 	static std::vector<std::string> Nouns;
 	static std::vector<std::string> Verbs;
 	static std::vector<std::string> Objects;
