@@ -191,7 +191,7 @@ bool APlayer::ContainString(int _y, int _x,std::string _string)
 	bool value = false;
 	for (size_t i = 0; i < Tilemap[_y][_x].size(); i++)
 	{
-		value = Tilemap[_y][_x][i] == _string;
+		value = Tilemap[_y][_x][i] != _string;
 		if (value == true)
 		{
 			return value;

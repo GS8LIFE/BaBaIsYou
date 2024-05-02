@@ -322,7 +322,7 @@ void APlayer::move(float _DeltaTime)
 		int stack = 0;
 		if (CharName == "Cursor")
 		{
-			if (TilemapBack(Column,Row+1) != "/") //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
+			if (ContainString(Column,Row+1, "/")) //가고자 하는 곳에 아무것도 없음 (정확히는 Empty존재)
 			{
 				{
 					MoveActive = true;
