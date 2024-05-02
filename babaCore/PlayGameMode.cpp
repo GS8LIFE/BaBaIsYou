@@ -27,8 +27,8 @@ void APlayGameMode::BeginPlay()
 
 		for (int second = 0; second < 35; ++second)
 		{
-			Tilemap[first][second].resize(20);
-			for (int stackIndex = 0; stackIndex < 20; ++stackIndex)
+			Tilemap[first][second].resize(1);
+			for (int stackIndex = 0; stackIndex < 1; ++stackIndex)
 			{
 				Tilemap[first][second][stackIndex] = "";
 			}

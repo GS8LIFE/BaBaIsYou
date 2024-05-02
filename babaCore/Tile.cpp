@@ -63,30 +63,30 @@ std::string Tile::texterase(std::string _text)
 	}
 }
 
-
+//[경고]Tilemap 반드시 바꿀 것! [0]만 체크하면 맨 처음에 들어간 즉 처음 쌓인 타일만 탐색하게 됨!! 곂치는게 인식이 안되는 상황이 생 길 수 있음
 void Tile::Sentence(bool _Noun)
 {
 	if (_Noun)
 	{
-		if (containsString(Verbs, Tilemap[TileY][TileX + 1]))
+		if (containsString(Verbs, Tilemap[TileY][TileX + 1][0]))
 		{
-			if (containsString(Objects, Tilemap[TileY][TileX + 2]))
+			if (containsString(Objects, Tilemap[TileY][TileX + 2][0]))
 			{
 				if (SentenceRow.empty())
 				{
-					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
-					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1]));
-					SentenceRow += texterase(WhatyourName(Objects, Tilemap[TileY][TileX + 2]));
+					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
+					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1][0]));
+					SentenceRow += texterase(WhatyourName(Objects, Tilemap[TileY][TileX + 2][0]));
 					Rule.push_back(SentenceRow);
 				}
 			}
-			else if (containsString(Nouns, Tilemap[TileY][TileX + 2]))
+			else if (containsString(Nouns, Tilemap[TileY][TileX + 2][0]))
 			{
 				if (SentenceRow.empty())
 				{
-					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
-					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1]));
-					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX + 2]));
+					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
+					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1][0]));
+					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX + 2][0]));
 					Rule.push_back(SentenceRow);
 				}
 			}
@@ -101,25 +101,25 @@ void Tile::Sentence(bool _Noun)
 				SentenceRow.clear();
 			}
 		}
-		else if (containsString(Verbs, Tilemap[TileY + 1][TileX]))
+		else if (containsString(Verbs, Tilemap[TileY + 1][TileX][0]))
 		{
-			if (containsString(Objects, Tilemap[TileY + 2][TileX]))
+			if (containsString(Objects, Tilemap[TileY + 2][TileX][0]))
 			{
 				if(SentenceColumn.empty())
 				{
-					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
-					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX]));
-					SentenceColumn += texterase(WhatyourName(Objects, Tilemap[TileY + 2][TileX]));
+					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
+					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX][0]));
+					SentenceColumn += texterase(WhatyourName(Objects, Tilemap[TileY + 2][TileX][0]));
 					Rule.push_back(SentenceColumn);
 				}
 			}
-			else if (containsString(Nouns, Tilemap[TileY + 2][TileX]))
+			else if (containsString(Nouns, Tilemap[TileY + 2][TileX][0]))
 			{
 				if (SentenceColumn.empty())
 				{
-					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX]));
-					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX]));
-					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY + 2][TileX]));
+					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
+					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX][0]));
+					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY + 2][TileX][0]));
 					Rule.push_back(SentenceColumn);
 				}
 			}
@@ -220,17 +220,15 @@ void Tile::move(float _DeltaTime)
 		int Column = GetActorLocation().Y * -1 / TileSize;
 		int Row = GetActorLocation().X / TileSize;
 		std::pair Tilepair = std::make_pair(Column,Row);
-		for (std::pair<int,int,int> pair : APlayer::visitTile) {
+		for (std::tuple<int,int,int> tuple : APlayer::visitTile) {
 
-			if (pair.first == Tilepair.first)
+			if (std::get<0>(tuple) == Tilepair.first)
 			{
-				if (pair.second == Tilepair.second)
+				if (std::get<1>(tuple) == Tilepair.second)
 				{
 					IsMove = true;
-					auto it = std::find(APlayer::visitTile.begin(), APlayer::visitTile.end(), pair);
-					if (it != APlayer::visitTile.end()) {
-						APlayer::visitTile.erase(it);
-					}
+					Tilemap[std::get<0>(tuple)][std::get<1>(tuple)].erase(Tilemap[std::get<0>(tuple)][std::get<1>(tuple)].begin() + std::get<2>(tuple));
+					APlayer::visitTile.erase(std::find(APlayer::visitTile.begin(), APlayer::visitTile.end(), tuple));
 					break;
 				}
 			}

@@ -38,7 +38,8 @@ public:
 	{
 		IsPlayer = _Player; 
 	}
-	std::string Pop_text(std::string _Tile, std::string _CharName);
+	void Pop_text(std::vector<std::string>& _Tile);
+	bool ContainString(int _y,int _x,std::string _string);
 	UStateManager State;
 protected:
 	void BeginPlay() override;
@@ -65,6 +66,7 @@ private:
 	int TileY = 0;
 	int TileX = 0;
 	int high = 0;
+	int prehigh = 0;
 
 };
 

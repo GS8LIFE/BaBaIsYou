@@ -23,7 +23,7 @@ void Tile::DebugMessageFunction()
 	}
 
 	{
-		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX]);
+		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX][0]);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
@@ -38,6 +38,10 @@ void APlayer::DebugMessageFunction()
 {
 
 
+	{
+		std::string Msg = std::format("Prehigh : {}\n", prehigh);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
 	{
 		std::string Msg = std::format("PlayerPos : {}\n", GetActorLocation().ToString());
 		UEngineDebugMsgWindow::PushMsg(Msg);
@@ -54,7 +58,7 @@ void APlayer::DebugMessageFunction()
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 	{
-		std::string Msg = std::format("TileName : {}\n", Tilemap[TileY][TileX]);
+		std::string Msg = std::format("TileName : {}\n", Tilemap[TileY][TileX][0]);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 	{
