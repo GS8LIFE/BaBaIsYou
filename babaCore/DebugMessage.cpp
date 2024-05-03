@@ -11,7 +11,7 @@ void Tile::DebugMessageFunction()
 		std::string Msg = std::format("{} Location : {},{}\n", TileName, TileX, TileY);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
-
+	
 	{
 		std::string Msg = std::format("Name : {}\n", TileName);
 		UEngineDebugMsgWindow::PushMsg(Msg);
@@ -22,11 +22,7 @@ void Tile::DebugMessageFunction()
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 
-	{
-		std::string Msg = std::format("Name : {}\n", Tilemap[TileY][TileX][0]);
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-
+	
 	{
 		std::string Msg = std::format("------------------------------");
 		UEngineDebugMsgWindow::PushMsg(Msg);
@@ -38,6 +34,10 @@ void APlayer::DebugMessageFunction()
 {
 
 
+	{
+		std::string Msg = std::format("high : {}\n", high);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
 	{
 		std::string Msg = std::format("Prehigh : {}\n", prehigh);
 		UEngineDebugMsgWindow::PushMsg(Msg);
@@ -58,10 +58,6 @@ void APlayer::DebugMessageFunction()
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 	{
-		std::string Msg = std::format("TileName : {}\n", Tilemap[TileY][TileX][0]);
-		UEngineDebugMsgWindow::PushMsg(Msg);
-	}
-	{
 		std::string rules;
 		for (const auto& rule : helper::Rule) 
 		{
@@ -76,3 +72,4 @@ void APlayer::DebugMessageFunction()
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 }
+

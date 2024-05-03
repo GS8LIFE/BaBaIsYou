@@ -199,7 +199,32 @@ bool Tile::containsString(const std::vector<std::string>& strings, const std::st
 	}
 	return false;
 }
-
+bool Tile::NotcontainsString(const std::vector<std::string>& strings, std::vector<std::string> target) {
+	for (const auto& str : strings) {
+		for (auto tag : target)
+		{
+			auto it = std::search(str.begin(), str.end(), tag.begin(), tag.end());
+			if (it != str.end())
+			{
+				return false;
+			}
+		}
+	}
+	return true;
+}
+bool Tile::containsString(const std::vector<std::string>& strings,  std::vector<std::string> target) {
+	for (const auto& str : strings) {
+		for (auto tag : target) 
+		{
+		auto it = std::search(str.begin(), str.end(), tag.begin(), tag.end());
+		if (it != str.end()) 
+		{
+			return true;
+		}
+		}
+	}
+	return false;
+}
 std::string Tile::WhatyourName(const std::vector<std::string>& strings, std::string& target) {
 	for (const auto& str : strings) {
 		if (str == target) {
@@ -227,7 +252,6 @@ void Tile::move(float _DeltaTime)
 				if (std::get<1>(tuple) == Tilepair.second)
 				{
 					IsMove = true;
-					Tilemap[std::get<0>(tuple)][std::get<1>(tuple)].erase(Tilemap[std::get<0>(tuple)][std::get<1>(tuple)].begin() + std::get<2>(tuple));
 					APlayer::visitTile.erase(std::find(APlayer::visitTile.begin(), APlayer::visitTile.end(), tuple));
 					break;
 				}
@@ -318,7 +342,7 @@ void Tile::TileLocation()
 void Tile::setTileMap(int _a, int _b,std::string _c)
 {
 	high = Tilemap[-_a][_b].size();
-	Tilemap[-_a][_b].push_back(_c);
+	Tilemap[-_a][_b][0] = (_c);
  	TileName = _c;
 }
 

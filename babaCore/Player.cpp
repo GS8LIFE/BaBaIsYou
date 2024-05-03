@@ -40,12 +40,25 @@ APlayer::~APlayer()
 
 
 }
-
-void APlayer::setTileMap(int _y, int _x,std::string _c)
+void APlayer::setTileMap(int _y, int _x, std::string _c)
 {
 	prehigh = high;
 	high = Tilemap[-_y][_x].size();
 	Tilemap[-_y][_x].push_back(_c);
+	CharName = _c;
+}
+void APlayer::setTileMap(int _y, int _x,int _y2,int _x2,std::string _c)
+{
+	prehigh = high;
+	high = Tilemap[-_y][_x].size();
+	if (Tile::containsString(helper::AllTile,Tilemap[_y2][_x2]))
+	{
+		Tilemap[-_y][_x][0]=(_c);
+	}
+	else
+	{
+		Tilemap[-_y][_x].push_back(_c);
+	}
 	CharName = _c;
 }
 void APlayer::BeginPlay()
@@ -111,21 +124,35 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{ 
 	if (_Dir == "Column")
 	{
-		setTileMap(_Column + _stack + 2, _Row, Tilemap[_Column + _stack + 1][_Row][high]);
+		setTileMap(-(_Column + _stack + 2), _Row , _Column + _stack + 1, _Row , Tilemap[_Column + _stack + 1][_Row ][0]);
 		if (_stack != -1)
 		{
-			visitTile.push_back(std::make_tuple(_Column + _stack + 1, _Row,prehigh));
+			visitTile.push_back(std::make_tuple(_Column + _stack + 1, _Row , 0));
 		}
-		Pop_text(Tilemap[_Column + _stack + 2][_Row]);
+		if (Tile::containsString(helper::AllTile, Tilemap[_Column + _stack + 1][_Row ]))
+		{
+			TilePop_text(Tilemap[_Column + _stack + 1][_Row ]);
+		}
+		else
+		{
+			Pop_text(Tilemap[_Column + _stack + 1][_Row ]);
+		}
 	}
 	else if(_Dir == "Row")
 	{
-		setTileMap(_Column, _Row + _stack + 2, Tilemap[_Column][_Row + _stack + 1][high]);
+		setTileMap(-_Column, _Row + _stack + 2, _Column, _Row + _stack + 1, Tilemap[_Column][_Row + _stack + 1][0]);
 		if (_stack != -1)
 		{
-			visitTile.push_back(std::make_tuple(_Column, _Row + _stack + 1, high));
+			visitTile.push_back(std::make_tuple(_Column, _Row + _stack + 1, 0));
 		}
-		Pop_text(Tilemap[_Column][_Row + _stack + 2]);
+		if (Tile::containsString(helper::AllTile, Tilemap[_Column][_Row + _stack + 1]))
+		{
+			TilePop_text(Tilemap[_Column][_Row + _stack + 1]);
+		}
+		else
+		{
+			Pop_text(Tilemap[_Column][_Row + _stack + 1]);
+		}
 	}
 	else
 	{
@@ -136,21 +163,35 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{
 		if (_Dir == "Column")
 		{
-			setTileMap(_Column - _stack - 2, _Row, Tilemap[_Column - _stack - 1][_Row][high]);
-			if (_stack != -1) 
+			setTileMap(-(_Column - _stack - 2), _Row, _Column - _stack - 1, _Row, Tilemap[_Column - _stack - 1][_Row][0]);
+			if (_stack != -1)
 			{
-					visitTile.push_back(std::make_tuple(_Column - _stack - 1, _Row, prehigh));
+				visitTile.push_back(std::make_tuple(_Column - _stack - 1, _Row, 0));
 			}
-			Pop_text(Tilemap[_Column - _stack - 2][_Row]);
+			if (Tile::containsString(helper::AllTile, Tilemap[_Column - _stack - 1][_Row]))
+			{
+				TilePop_text(Tilemap[_Column - _stack - 1][_Row]);
+			}
+			else
+			{
+				Pop_text(Tilemap[_Column - _stack - 1][_Row]);
+			}
 		}
 		else if (_Dir == "Row")
 		{
-			setTileMap(_Column, _Row - _stack - 2, Tilemap[_Column][_Row - _stack - 1][high]);
-			if (_stack != -1) 
+			setTileMap(-_Column, _Row - _stack - 2, _Column, _Row - _stack - 1, Tilemap[_Column][_Row - _stack - 1][0]);
+			if (_stack != -1)
 			{
-					visitTile.push_back(std::make_tuple(_Column, _Row - _stack - 1,prehigh));
+				visitTile.push_back(std::make_tuple(_Column, _Row - _stack - 1, 0));
 			}
-			Pop_text(Tilemap[_Column][_Row - _stack - 2]);
+			if (Tile::containsString(helper::AllTile, Tilemap[_Column][_Row - _stack - 1]))
+			{
+				TilePop_text(Tilemap[_Column][_Row - _stack - 1]);
+			}
+			else
+			{
+				Pop_text(Tilemap[_Column][_Row - _stack - 1]);
+			}
 		}
 		else
 		{
@@ -186,23 +227,47 @@ void APlayer::Tick(float _DeltaTime)
 	}
 }
 
-bool APlayer::ContainString(int _y, int _x,std::string _string)
+bool APlayer::NotContainString(int _y, int _x,std::string _string)
 {
-	bool value = false;
+	bool value = true;
 	for (size_t i = 0; i < Tilemap[_y][_x].size(); i++)
 	{
-		value = Tilemap[_y][_x][i] != _string;
+		value = Tilemap[_y][_x][i] == _string;
 		if (value == true)
 		{
-			return value;
+			return false;
 		}
+	}
+	return true;
+}
+
+bool APlayer::equalContainString(int _y, int _x, std::string _string)
+{
+	bool value = false;
+	if (Tilemap[_y][_x].size() == 1)
+	{
+		for (size_t i = 0; i < 1; i++)
+		{
+			value = Tilemap[_y][_x][i] == _string;
+			if (value == true)
+			{
+				return value;
+			}
+		}
+	}
+	else
+	{
+		return value;
 	}
 	return value;
 }
-
 void APlayer::Pop_text(std::vector<std::string>& _Tile)
 {
-	_Tile.erase(_Tile.begin() + prehigh);
+	_Tile.erase(_Tile.end() - 1);
+}
+void APlayer::TilePop_text(std::vector<std::string>& _Tile)
+{
+	_Tile[0] = " ";
 }
 std::string APlayer::GetName()
 {

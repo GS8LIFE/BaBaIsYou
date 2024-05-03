@@ -24,6 +24,8 @@ public:
 	void Sentence(bool _Noun);
 	std::string texterase(std::string _text);
 	static bool containsString(const std::vector<std::string>& strings, const std::string& target); // 해당하는 문자가 있는지 확인
+	static bool containsString(const std::vector<std::string>& strings, std::vector<std::string> target); // 해당하는 문자가 있는지 확인
+	static bool NotcontainsString(const std::vector<std::string>& strings, std::vector<std::string> target); // 해당하는 문자가 있는지 확인
 	std::string WhatyourName(const std::vector<std::string>& strings, std::string& target); // 해당하는 문자가 있는지 확인
 	// delete Functionvoid 
 	void SetTileName(std::string _TileName)

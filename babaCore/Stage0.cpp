@@ -7,12 +7,18 @@
 
 Stage0::Stage0() 
 {
-	for (size_t YY = 0; YY < 19; YY++)
+	Tilemap.clear();
+	Tilemap.resize(20);
+	for (int first = 0; first < 20; first++)   //타일맵 초기화 가로35,세로20
 	{
-		for (size_t XX = 0; XX < 34; XX++)
+		Tilemap[first].resize(35);
+
+		for (int second = 0; second < 35; ++second)
 		{
+			Tilemap[first][second].resize(1);
+			for (size_t i = 0; i < 1; i++)
 			{
-				Tilemap[YY][XX].push_back("");
+				Tilemap[first][second][i] = " ";
 			}
 		}
 	}
@@ -30,10 +36,6 @@ Stage0::Stage0()
 			for (int i = 0; i < 1; ++i)
 			{
 				Tilemap[t][i].push_back("/");
-			}
-			for (int i = 6; i < 34; ++i)
-			{
-				Tilemap[t][i].push_back("");
 			}
 			for (int i = 34; i < 35; ++i)
 			{

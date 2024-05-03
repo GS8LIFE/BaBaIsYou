@@ -30,7 +30,8 @@ public:
 	int TileStack(std::vector<std::string> _strings, std::string _text);
 	std::string GetName();
 	bool ContainString(std::vector<std::string> _strings, std::string _text);
-	void setTileMap(int _a, int _b,std::string _c);
+	void setTileMap(int _y, int _x, std::string _c);
+	void setTileMap(int _y, int _x,int _y2,int _x2,std::string _c);
 	bool TileAttribute(const std::string& _TileName,std::string _Attribute);
 	void AnimationCollect();
 	void PushState(int _Column, int _Row, int _stack,std::string _Dir,char _Dir2); //_Dir -> 가로 세로 Dir2 -> +할건지 -할건지
@@ -39,7 +40,9 @@ public:
 		IsPlayer = _Player; 
 	}
 	void Pop_text(std::vector<std::string>& _Tile);
-	bool ContainString(int _y,int _x,std::string _string);
+	void TilePop_text(std::vector<std::string>& _Tile);
+	bool NotContainString(int _y,int _x,std::string _string);
+	bool equalContainString(int _y, int _x, std::string _string);
 	UStateManager State;
 protected:
 	void BeginPlay() override;

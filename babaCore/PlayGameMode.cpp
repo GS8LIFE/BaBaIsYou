@@ -30,7 +30,7 @@ void APlayGameMode::BeginPlay()
 			Tilemap[first][second].resize(1);
 			for (int stackIndex = 0; stackIndex < 1; ++stackIndex)
 			{
-				Tilemap[first][second][stackIndex] = "";
+				Tilemap[first][second][stackIndex] = " ";
 			}
 		}
 	}
