@@ -97,88 +97,88 @@ void APlayer::moveStart()
 	case 0:
 		if (NowDir == 'D')
 		{
-			CharName = "BabaDmove0";
+			CharName = "BabaDmove0" + ActorRule;
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "BabaAmove0";
+			CharName = "BabaAmove0" + ActorRule;
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "BabaSmove0";
+			CharName = "BabaSmove0" + ActorRule;
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "BabaWmove0";
+			CharName = "BabaWmove0" + ActorRule;
 			return;
 		}
 		break;
 	case 1:
 		if (NowDir == 'D')
 		{
-			CharName = "BabaDmove1";
+			CharName = "BabaDmove1" + ActorRule;
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "BabaAmove1";
+			CharName = "BabaAmove1" + ActorRule;
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "BabaSmove1";
+			CharName = "BabaSmove1" + ActorRule;
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "BabaWmove1";
+			CharName = "BabaWmove1" + ActorRule;
 			return;
 		}
 		break;
 	case 2:
 		if (NowDir == 'D')
 		{
-			CharName = "BabaDmove2";
+			CharName = "BabaDmove2" + ActorRule;
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "BabaAmove2";
+			CharName = "BabaAmove2" + ActorRule;
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "BabaSmove2";
+			CharName = "BabaSmove2" + ActorRule;
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "BabaWmove2";
+			CharName = "BabaWmove2" + ActorRule;
 			return;
 		}
 		break;	
 	case 3:
 		if (NowDir == 'D')
 		{
-			CharName = "BabaDmove3";
+			CharName = "BabaDmove3" + ActorRule;
 			return;
 		}
 		if (NowDir == 'A')
 		{
-			CharName = "BabaAmove3";
+			CharName = "BabaAmove3" + ActorRule;
 			return;
 		}
 		if (NowDir == 'S')
 		{
-			CharName = "BabaSmove3";
+			CharName = "BabaSmove3" + ActorRule;
 			return;
 		}
 		if (NowDir == 'W')
 		{
-			CharName = "BabaWmove3";
+			CharName = "BabaWmove3" + ActorRule;
 			return;
 		}
 		break;
@@ -293,10 +293,10 @@ void APlayer::move(float _DeltaTime)
 				movestack++;
 			}
 		}
-		else if (Tile::containsString(helper::AllTile, Tilemap[Column][Row - 1]))
+		else if (Tile::containsString("Push", Tilemap[Column][Row - 1]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tile::containsString(helper::AllTile, Tilemap[Column][Row + (stack - 2)]))
+			while (Tile::containsString("Push", Tilemap[Column][Row - stack - 2]))
 			{
 				if (Tilemap[Column][Row + (stack + 2)][Tilemap[Column][Row + (stack + 2)].size() - 1] == "/")
 				{
@@ -348,10 +348,10 @@ void APlayer::move(float _DeltaTime)
 				movestack++;
 			}
 		}
-		else if (Tile::containsString(helper::AllTile, Tilemap[Column][Row+1]))
+		else if (Tile::containsString("Push", Tilemap[Column][Row+1]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tile::containsString(helper::AllTile, Tilemap[Column][Row + (stack + 2)]))
+			while (Tile::containsString("Push", Tilemap[Column][Row + (stack + 2)]))
 			{
 				if (Tilemap[Column][Row + (stack + 2)][Tilemap[Column][Row + (stack + 2)].size()-1] == "/")
 				{
@@ -403,10 +403,10 @@ void APlayer::move(float _DeltaTime)
 				movestack++;
 			}
 		}
-		else if (Tile::containsString(helper::AllTile, Tilemap[Column-1][Row]))
+		else if (Tile::containsString("Push", Tilemap[Column-1][Row]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tile::containsString(helper::AllTile, Tilemap[Column - (stack + 2)][Row]))
+			while (Tile::containsString("Push", Tilemap[Column - (stack + 2)][Row]))
 			{
 				if (Tilemap[Column - (stack + 2)][Row ][Tilemap[Column - (stack + 2)][Row ].size() - 1] == "/")
 				{
@@ -416,7 +416,7 @@ void APlayer::move(float _DeltaTime)
 			}
 			while (stack >= -1)
 			{
-				PushState(-Column, Row, stack, "Column", '-');
+				PushState(Column, Row, stack, "Column", '-');
 				stack--;
 			}
 			MoveActive = true;
@@ -459,10 +459,10 @@ void APlayer::move(float _DeltaTime)
 				movestack++;
 			}
 		}
-		else if (Tile::containsString(helper::AllTile, Tilemap[Column + 1][Row]))
+		else if (Tile::containsString("Push", Tilemap[Column + 1][Row]))
 			//Tilemap[GetActorLocation().Y/TileSize][(GetActorLocation().X / TileSize) + 1] << 현재 엑터의 오른쪽을 체크
 		{
-			while (Tile::containsString(helper::AllTile, Tilemap[Column + (stack + 2)][Row]))
+			while (Tile::containsString("Push", Tilemap[Column + (stack + 2)][Row]))
 			{
 				if (Tilemap[Column + (stack + 2)][Row][Tilemap[Column - (stack + 2)][Row].size() - 1] == "/")
 				{
@@ -472,7 +472,7 @@ void APlayer::move(float _DeltaTime)
 			}
 			while (stack >= -1)
 			{
-				PushState(-Column, Row, stack, "Column", '+');
+				PushState(Column, Row, stack, "Column", '+');
 				stack--;
 			}
 			MoveActive = true;

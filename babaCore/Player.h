@@ -43,10 +43,19 @@ public:
 	void TilePop_text(std::vector<std::string>& _Tile);
 	bool NotContainString(int _y,int _x,std::string _string);
 	bool equalContainString(int _y, int _x, std::string _string);
+	std::string earse_Text(const std::string& strings, std::vector<std::string> target);
+	std::string earse_Text(const std::string& strings, std::string target);
+	std::string earse_Text(const std::vector<std::string>& strings, std::string target);
+	std::string GetRule(const std::string& strings, std::vector<std::string> target);
+	std::string Checkearse_Text(const std::string& strings, std::vector<std::string> target);
+	bool PlayerCheck(const std::string& strings, std::string target);
+	std::string texterase(std::string _text);
 	UStateManager State;
 protected:
 	void BeginPlay() override;
 	void Tick(float _DeltaTime) override;
+	void PlayerChecker();
+	void RuleChecker();
 
 private:
 	USpriteRenderer* Renderer;
@@ -70,6 +79,6 @@ private:
 	int TileX = 0;
 	int high = 0;
 	int prehigh = 0;
-
+	std::string ActorRule;
 };
 

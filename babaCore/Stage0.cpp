@@ -74,7 +74,7 @@ void Stage0::BeginPlay()
 
 	Player->SetActorLocation({ TileSize * 13.5f, -TileSize * 11.5f, 0.0f });     // 18,-18이 0,0 이미지 위치임
 	Player->SetActorScale3D({35.0f,35.0f,30.0f});
-	Player->setTileMap(Player->GetActorLocation().Y / TileSize, Player->GetActorLocation().X / TileSize, "BabaDmove0");
+	Player->setTileMap(Player->GetActorLocation().Y / TileSize, Player->GetActorLocation().X / TileSize, "BabaDmove0You");
 
 	
 }
@@ -100,9 +100,9 @@ void Stage0::RuleTile()
 	std::shared_ptr<Tile> Tilebaba = GetWorld()->SpawnActor<Tile>("Tilebaba");
 	std::shared_ptr<Tile> Tileis = GetWorld()->SpawnActor<Tile>("Tileis");
 	std::shared_ptr<Tile> TileYou = GetWorld()->SpawnActor<Tile>("Tileyou");
-	SetTile(Tilebaba,"TextBaba", 12, 7);
-	SetTile(Tileis,"TextIs", 13, 7);
-	SetTile(TileYou,"TextYou", 14, 7);
+	SetTile(Tilebaba,"TextBabaPush", 12, 7);
+	SetTile(Tileis,"TextIsPush", 13, 7);
+	SetTile(TileYou,"TextYouPush", 14, 7);
 }
 void Stage0::SquarTile()
 {
@@ -195,7 +195,7 @@ void Stage0::SetRock(std::shared_ptr<APlayer> _Rock, float _x, float _y)
 {
 	_Rock->SetActorLocation({ TileSize * (_x + 0.5f), -TileSize * (_y + 0.5f), 0.0f });
 	_Rock->SetActorScale3D({ 35.0f,35.0f });
-	_Rock->setTileMap(_Rock->GetActorLocation().Y / TileSize, _Rock->GetActorLocation().X / TileSize, "Rock");
+	_Rock->setTileMap(_Rock->GetActorLocation().Y / TileSize, _Rock->GetActorLocation().X / TileSize, "RockPush");
 	_Rock->InputOff();
 }
 

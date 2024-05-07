@@ -109,13 +109,85 @@ bool APlayer::ContainString(std::vector<std::string> _strings, std::string _text
 	return false;
 }
 
+std::string APlayer::texterase(std::string _text)
+{
+	std::string erasetext = "Text";
 
+	int pos = _text.find(erasetext);
+	if (pos != std::string::npos)
+	{
+		return _text.erase(pos, erasetext.length());
+	}
+}
 
+std::string APlayer::earse_Text(const std::string& strings, std::vector<std::string> target) {
+	for (auto tag : target)
+	{
+		auto it = std::search(strings.begin(), strings.end(), tag.begin(), tag.end());
+		if (it != strings.end())
+		{
+			return tag;
+		}
+	}
+	return strings;
+}
 
+std::string APlayer::Checkearse_Text(const std::string& strings, std::vector<std::string> target) {
+	for (auto tag : target)
+	{
+		tag = texterase(tag);
+		auto it = std::search(strings.begin(), strings.end(), tag.begin(), tag.end());
+		if (it != strings.end())
+		{
+			return tag;
+		}
+	}
+	return strings;
+}
 
+std::string APlayer::earse_Text(const std::string& strings, std::string target) {
+	
+		auto it = std::search(strings.begin(), strings.end(), target.begin(), target.end());
+		if (it != strings.end())
+		{
+			return target;
+		}
+	return strings;
+}
 
+std::string APlayer::earse_Text(const std::vector<std::string>& strings, std::string target) {
+	for (auto tag : strings)
+	{
+		auto it = std::search(tag.begin(), tag.end(), target.begin(), target.end());
+		if (it != tag.end())
+		{
+			return tag;
+		}
+	}
+	return target;
+}
+bool APlayer::PlayerCheck(const std::string& strings, std::string target) {
 
+	auto it = std::search(strings.begin(), strings.end(), target.begin(), target.end());
+	if (it != strings.end())
+	{
+		return true;
+	}
+	return false;
+}
 
+std::string APlayer::GetRule(const std::string& strings, std::vector<std::string> target){
+	ActorRule.clear();
+	for (auto tag : target)
+	{
+		auto it = std::search(strings.begin(), strings.end(), tag.begin(), tag.end());
+		if (it != strings.end())
+		{
+			ActorRule += tag;
+		}
+	}
+	return ActorRule;
+}
 
 void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _Dir2)
 {
@@ -203,28 +275,22 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 		MsgBoxAssert("방향이 +방향인지 -방향인지 제대로 적어주십시오.");
 	}
 }
-
-
-
-void APlayer::Tick(float _DeltaTime)
-{
-	// 위에 뭔가를 쳐야할때도 있다.
-	Super::Tick(_DeltaTime);
-
-	State.Update(_DeltaTime);
-	MoveOneBlock(_DeltaTime, MoveDir);
-	Renderer->ChangeAnimation(CharName);
-	DebugMessageFunction();
 	
+void APlayer::PlayerChecker()
+{
+	if (PlayerCheck(earse_Text(Rule, "You"), Checkearse_Text(CharName, helper::Nouns)))
+	{
+		IsPlayer = true;
+	}
+	else
+	{
+		IsPlayer = false;
+	}
+}
 
-	if (GetActorLocation().Y < 0)
-	{
-		TileY = -GetActorLocation().Y / TileSize;
-	}
-	if (GetActorLocation().X > 0)
-	{
-		TileX = GetActorLocation().X / TileSize;
-	}
+void APlayer::RuleChecker()
+{
+
 }
 
 bool APlayer::NotContainString(int _y, int _x,std::string _string)
@@ -274,6 +340,32 @@ std::string APlayer::GetName()
 	return CharName;
 }
 
+
+
+void APlayer::Tick(float _DeltaTime)
+{
+	// 위에 뭔가를 쳐야할때도 있다.
+	Super::Tick(_DeltaTime);
+
+	PlayerChecker();
+	GetRule(CharName,helper::State);
+
+	State.Update(_DeltaTime);
+	MoveOneBlock(_DeltaTime, MoveDir);
+	Renderer->ChangeAnimation(earse_Text(CharName, helper::AnimationState));
+	DebugMessageFunction();
+
+
+	if (GetActorLocation().Y < 0)
+	{
+		TileY = -GetActorLocation().Y / TileSize;
+	}
+	if (GetActorLocation().X > 0)
+	{
+		TileX = GetActorLocation().X / TileSize;
+	}
+}
+
 void APlayer::AnimationCollect()
 {
 	//커서
@@ -296,6 +388,6 @@ void APlayer::AnimationCollect()
 	Renderer->CreateAnimation("BabaSmove2", "baba", 0.2f, true, 51, 53);
 	Renderer->CreateAnimation("BabaSmove3", "baba", 0.2f, true, 54, 56);
 	//돌
-		Renderer->CreateAnimation("Rock", "Rock", 0.2f);
+	Renderer->CreateAnimation("Rock", "Rock", 0.2f);
 
 }

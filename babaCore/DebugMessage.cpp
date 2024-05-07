@@ -32,7 +32,10 @@ void Tile::DebugMessageFunction()
 
 void APlayer::DebugMessageFunction()
 {
-
+	{
+		std::string Msg = std::format("IsPlayer : {}\n", IsPlayer);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
 
 	{
 		std::string Msg = std::format("high : {}\n", high);
@@ -64,7 +67,11 @@ void APlayer::DebugMessageFunction()
 		rules += rule + ", ";
 		}
 		rules = rules.substr(0, rules.size() - 2); // 마지막 쉼표와 공백 제거
-		std::string Msg = std::format("Rule : {}\n", rules);
+		std::string Msg = std::format("Global Rule : {}\n", rules);
+		UEngineDebugMsgWindow::PushMsg(Msg);
+	}
+	{
+		std::string Msg = std::format("Actor Rule : {}\n",ActorRule);
 		UEngineDebugMsgWindow::PushMsg(Msg);
 	}
 	{

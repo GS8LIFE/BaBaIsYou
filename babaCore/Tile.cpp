@@ -34,9 +34,9 @@ Tile::~Tile()
 
 void Tile::TileTypeCheck()
 {
-	Noun = containsString(Nouns, TileName);
-	Verb = containsString(Verbs, TileName);
-	Object = containsString(Objects, TileName);
+	Noun = containsString(Nouns, earse_Text(TileName, Nouns));
+	Verb = containsString(Verbs, earse_Text(TileName, Verbs));
+	Object = containsString(Objects, earse_Text(TileName, Objects));
 	if (Noun)
 	{
 		Type = "Noun";
@@ -68,15 +68,15 @@ void Tile::Sentence(bool _Noun)
 {
 	if (_Noun)
 	{
-		if (containsString(Verbs, Tilemap[TileY][TileX + 1][0]))
+		if (containsString(earse_Text(Tilemap[TileY][TileX + 1][0],Verbs),Verbs))
 		{
-			if (containsString(Objects, Tilemap[TileY][TileX + 2][0]))
+			if (containsString(earse_Text(Tilemap[TileY][TileX + 2][0],Objects),Objects))
 			{
 				if (SentenceRow.empty())
 				{
-					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
-					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1][0]));
-					SentenceRow += texterase(WhatyourName(Objects, Tilemap[TileY][TileX + 2][0]));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX][0], Nouns));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX + 1][0], Verbs));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX + 2][0], Objects));
 					Rule.push_back(SentenceRow);
 				}
 			}
@@ -84,9 +84,9 @@ void Tile::Sentence(bool _Noun)
 			{
 				if (SentenceRow.empty())
 				{
-					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
-					SentenceRow += texterase(WhatyourName(Verbs, Tilemap[TileY][TileX + 1][0]));
-					SentenceRow += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX + 2][0]));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX][0], Nouns));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX + 1][0], Verbs));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX + 2][0], Nouns));
 					Rule.push_back(SentenceRow);
 				}
 			}
@@ -101,25 +101,25 @@ void Tile::Sentence(bool _Noun)
 				SentenceRow.clear();
 			}
 		}
-		else if (containsString(Verbs, Tilemap[TileY + 1][TileX][0]))
+		else if (containsString(earse_Text(Tilemap[TileY + 1][TileX][0], Verbs), Verbs))
 		{
-			if (containsString(Objects, Tilemap[TileY + 2][TileX][0]))
+			if (containsString(earse_Text(Tilemap[TileY + 2][TileX][0], Objects), Objects))
 			{
-				if(SentenceColumn.empty())
+				if(SentenceRow.empty())
 				{
-					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
-					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX][0]));
-					SentenceColumn += texterase(WhatyourName(Objects, Tilemap[TileY + 2][TileX][0]));
-					Rule.push_back(SentenceColumn);
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX][0], Nouns));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY + 1][TileX][0], Verbs));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY + 2][TileX][0], Objects));
+					Rule.push_back(SentenceRow);
 				}
 			}
 			else if (containsString(Nouns, Tilemap[TileY + 2][TileX][0]))
 			{
-				if (SentenceColumn.empty())
+				if (SentenceRow.empty())
 				{
-					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY][TileX][0]));
-					SentenceColumn += texterase(WhatyourName(Verbs, Tilemap[TileY + 1][TileX][0]));
-					SentenceColumn += texterase(WhatyourName(Nouns, Tilemap[TileY + 2][TileX][0]));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY][TileX][0], Nouns));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY + 1][TileX][0], Verbs));
+					SentenceRow += texterase(earse_Text(Tilemap[TileY + 2][TileX][0], Nouns));
 					Rule.push_back(SentenceColumn);
 				}
 			}
@@ -216,14 +216,36 @@ bool Tile::containsString(const std::vector<std::string>& strings,  std::vector<
 	for (const auto& str : strings) {
 		for (auto tag : target) 
 		{
-		auto it = std::search(str.begin(), str.end(), tag.begin(), tag.end());
-		if (it != str.end()) 
-		{
-			return true;
-		}
+			auto it = std::search(tag.begin(), tag.end(), str.begin(), str.end());
+			if (it != tag.end()) 
+			{
+				return true;
+			}
 		}
 	}
 	return false;
+}
+bool Tile::containsString(const std::string& strings, std::vector<std::string> target) {
+	for (auto tag : target)
+	{
+		auto it = std::search(tag.begin(), tag.end(), strings.begin(), strings.end());
+		if (it != tag.end())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+std::string Tile::earse_Text(const std::string& strings, std::vector<std::string> target) {
+	for (auto tag : target)
+	{
+		auto it = std::search(strings.begin(), strings.end(), tag.begin(), tag.end());
+		if (it != strings.end())
+		{
+			return tag;
+		}
+	}
+	return strings;
 }
 std::string Tile::WhatyourName(const std::vector<std::string>& strings, std::string& target) {
 	for (const auto& str : strings) {
@@ -357,8 +379,8 @@ void Tile::Tick(float _DeltaTime)
 	MoveOneBlock(_DeltaTime, MoveDir);
 	Sentence(Noun);
 	DebugMessageFunction();
-	if (TileName != "") 
+	if (TileName != " ") 
 	{
-	Renderer->ChangeAnimation(TileName);
+	Renderer->ChangeAnimation(earse_Text(TileName,helper::AllTile));
 	}
 }
