@@ -35,6 +35,7 @@ public:
 	bool TileAttribute(const std::string& _TileName,std::string _Attribute);
 	void AnimationCollect();
 	void PushState(int _Column, int _Row, int _stack,std::string _Dir,char _Dir2); //_Dir -> 가로 세로 Dir2 -> +할건지 -할건지
+	void PlayerOrObject();
 	void SetPlayer(bool _Player)
 	{
 		IsPlayer = _Player; 
@@ -48,6 +49,7 @@ public:
 	std::string earse_Text(const std::vector<std::string>& strings, std::string target);
 	std::string GetRule(const std::string& strings, std::vector<std::string> target);
 	std::string Checkearse_Text(const std::string& strings, std::vector<std::string> target);
+	int isTile(int _x,int _y);
 	bool PlayerCheck(const std::string& strings, std::string target);
 	std::string texterase(std::string _text);
 	UStateManager State;
@@ -71,6 +73,7 @@ private:
 	void Idle(float _DeltaTime);
 	void moveStart();
 	void move(float _DeltaTime);
+	void Actmove(float _DeltaTime);
 	int movestack = 0; // 움직인 횟수
 	bool IsPlayer = false;
 	static char NowDir;
@@ -79,6 +82,7 @@ private:
 	int TileX = 0;
 	int high = 0;
 	int prehigh = 0;
+	bool IsMove = false;
 	std::string ActorRule;
 };
 

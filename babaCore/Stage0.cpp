@@ -61,6 +61,7 @@ void Stage0::BeginPlay()
 	SquarTile();
 	RokcTile();
 	RuleTile();
+	WallTile();
 	std::shared_ptr<Map> Mapback = GetWorld()->SpawnActor<Map>("Mapback");
 
 
@@ -75,7 +76,6 @@ void Stage0::BeginPlay()
 	Player->SetActorLocation({ TileSize * 13.5f, -TileSize * 11.5f, 0.0f });     // 18,-18이 0,0 이미지 위치임
 	Player->SetActorScale3D({35.0f,35.0f,30.0f});
 	Player->setTileMap(Player->GetActorLocation().Y / TileSize, Player->GetActorLocation().X / TileSize, "BabaDmove0You");
-
 	
 }
 void Stage0::Tick(float _DeltaTime)
@@ -84,7 +84,53 @@ void Stage0::Tick(float _DeltaTime)
 	RuleCheck();
 	int a = 0;
 }
-
+void Stage0::WallTile()
+{
+	std::shared_ptr<APlayer> Wall1 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall2 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall3 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall4 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall5 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall6 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall7 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall8 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall9 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall10 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall11 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall12 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall13 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall14 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall15 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall16 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall17 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall18 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall19 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall20 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall21 = GetWorld()->SpawnActor<APlayer>("Wall");
+	std::shared_ptr<APlayer> Wall22 = GetWorld()->SpawnActor<APlayer>("Wall");
+	SetWall(Wall1, 12, 9);
+	SetWall(Wall2, 13, 9);
+	SetWall(Wall3, 14, 9);
+	SetWall(Wall4, 15, 9);
+	SetWall(Wall5, 16, 9);
+	SetWall(Wall6, 17, 9);
+	SetWall(Wall7, 18, 9);
+	SetWall(Wall8, 19, 9);
+	SetWall(Wall9, 20, 9);
+	SetWall(Wall10, 21, 9);
+	SetWall(Wall11, 22, 9);
+	SetWall(Wall12, 12, 13);
+	SetWall(Wall13, 13, 13);
+	SetWall(Wall14, 14, 13);
+	SetWall(Wall15, 15, 13);
+	SetWall(Wall16, 16, 13);
+	SetWall(Wall17, 17, 13);
+	SetWall(Wall18, 18, 13);
+	SetWall(Wall19, 19, 13);
+	SetWall(Wall20, 20, 13);
+	SetWall(Wall21, 21, 13);
+	SetWall(Wall22, 22, 13);
+}
 void Stage0::RokcTile()
 {
 	std::shared_ptr<APlayer> rock1 = GetWorld()->SpawnActor<APlayer>("rock");
@@ -196,9 +242,17 @@ void Stage0::SetRock(std::shared_ptr<APlayer> _Rock, float _x, float _y)
 	_Rock->SetActorLocation({ TileSize * (_x + 0.5f), -TileSize * (_y + 0.5f), 0.0f });
 	_Rock->SetActorScale3D({ 35.0f,35.0f });
 	_Rock->setTileMap(_Rock->GetActorLocation().Y / TileSize, _Rock->GetActorLocation().X / TileSize, "RockPush");
-	_Rock->InputOff();
+	_Rock->InputOn();
+	_Rock->State.ChangeState("Actmove");
 }
-
+void Stage0::SetWall(std::shared_ptr<APlayer> _Rock, float _x, float _y)
+{
+	_Rock->SetActorLocation({ TileSize * (_x + 0.5f), -TileSize * (_y + 0.5f), 0.0f });
+	_Rock->SetActorScale3D({ 35.0f,35.0f });
+	_Rock->setTileMap(_Rock->GetActorLocation().Y / TileSize, _Rock->GetActorLocation().X / TileSize, "Wall");
+	_Rock->InputOn();
+	_Rock->State.ChangeState("Actmove");
+}
 void Stage0::RuleCheck()
 {
 	if (Tile::containsString(Rule, "BabaIsYou"))

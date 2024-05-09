@@ -71,7 +71,17 @@ void APlayer::BeginPlay()
 	Renderer->SetOrder(5);
 	StateInit();
 }
-
+void APlayer::PlayerOrObject()
+{
+		if (IsPlayer)
+		{
+			State.ChangeState("move");
+		}
+		else
+		{
+			State.ChangeState("Actmove");
+		}
+}
 bool APlayer::TileAttribute(const std::string& _TileName, std::string _Attribute)
 {
 	return _TileName.find(_Attribute) != std::string::npos;
@@ -189,6 +199,17 @@ std::string APlayer::GetRule(const std::string& strings, std::vector<std::string
 	return ActorRule;
 }
 
+int APlayer::isTile(int _x,int _y)
+{
+	if (Tile::containsString(helper::AllTile, Tilemap[_y][_x]))
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
 void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _Dir2)
 {
 	
@@ -196,7 +217,7 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{ 
 	if (_Dir == "Column")
 	{
-		setTileMap(-(_Column + _stack + 2), _Row , _Column + _stack + 1, _Row , Tilemap[_Column + _stack + 1][_Row ][0]);
+		setTileMap(-(_Column + _stack + 2), _Row , _Column + _stack + 1, _Row , Tilemap[_Column + _stack + 1][_Row ][isTile(_Row, _Column + _stack + 1)]);
 		if (_stack != -1)
 		{
 			visitTile.push_back(std::make_tuple(_Column + _stack + 1, _Row , 0));
@@ -212,7 +233,7 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	}
 	else if(_Dir == "Row")
 	{
-		setTileMap(-_Column, _Row + _stack + 2, _Column, _Row + _stack + 1, Tilemap[_Column][_Row + _stack + 1][0]);
+		setTileMap(-_Column, _Row + _stack + 2, _Column, _Row + _stack + 1, Tilemap[_Column][_Row + _stack + 1][isTile(_Row+_stack+1,_Column)]);
 		if (_stack != -1)
 		{
 			visitTile.push_back(std::make_tuple(_Column, _Row + _stack + 1, 0));
@@ -235,7 +256,7 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	{
 		if (_Dir == "Column")
 		{
-			setTileMap(-(_Column - _stack - 2), _Row, _Column - _stack - 1, _Row, Tilemap[_Column - _stack - 1][_Row][0]);
+			setTileMap(-(_Column - _stack - 2), _Row, _Column - _stack - 1, _Row, Tilemap[_Column - _stack - 1][_Row][isTile(_Row , _Column - _stack - 1)]);
 			if (_stack != -1)
 			{
 				visitTile.push_back(std::make_tuple(_Column - _stack - 1, _Row, 0));
@@ -251,7 +272,7 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 		}
 		else if (_Dir == "Row")
 		{
-			setTileMap(-_Column, _Row - _stack - 2, _Column, _Row - _stack - 1, Tilemap[_Column][_Row - _stack - 1][0]);
+			setTileMap(-_Column, _Row - _stack - 2, _Column, _Row - _stack - 1, Tilemap[_Column][_Row - _stack - 1][isTile(_Row - _stack - 1, _Column)]);
 			if (_stack != -1)
 			{
 				visitTile.push_back(std::make_tuple(_Column, _Row - _stack - 1, 0));
@@ -278,6 +299,11 @@ void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _D
 	
 void APlayer::PlayerChecker()
 {
+	if (CharName == "Cursor")
+	{
+		IsPlayer = true;
+		return;
+	}
 	if (PlayerCheck(earse_Text(Rule, "You"), Checkearse_Text(CharName, helper::Nouns)))
 	{
 		IsPlayer = true;
@@ -295,7 +321,8 @@ void APlayer::RuleChecker()
 
 bool APlayer::NotContainString(int _y, int _x,std::string _string)
 {
-	bool value = true;
+	bool retrunValue = true;
+	bool value = false;
 	for (size_t i = 0; i < Tilemap[_y][_x].size(); i++)
 	{
 		value = Tilemap[_y][_x][i] == _string;
@@ -304,7 +331,7 @@ bool APlayer::NotContainString(int _y, int _x,std::string _string)
 			return false;
 		}
 	}
-	return true;
+	return retrunValue;
 }
 
 bool APlayer::equalContainString(int _y, int _x, std::string _string)
@@ -356,6 +383,7 @@ void APlayer::Tick(float _DeltaTime)
 	DebugMessageFunction();
 
 
+	PlayerOrObject();
 	if (GetActorLocation().Y < 0)
 	{
 		TileY = -GetActorLocation().Y / TileSize;
@@ -365,6 +393,13 @@ void APlayer::Tick(float _DeltaTime)
 		TileX = GetActorLocation().X / TileSize;
 	}
 }
+
+
+
+
+
+
+
 
 void APlayer::AnimationCollect()
 {
@@ -389,5 +424,6 @@ void APlayer::AnimationCollect()
 	Renderer->CreateAnimation("BabaSmove3", "baba", 0.2f, true, 54, 56);
 	//µ¹
 	Renderer->CreateAnimation("Rock", "Rock", 0.2f);
-
+	//º®
+	Renderer->CreateAnimation("Wall", "Wall", 0.2f,true,0,2);
 }
