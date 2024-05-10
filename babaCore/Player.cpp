@@ -207,7 +207,7 @@ int APlayer::isTile(int _x,int _y)
 	}
 	else
 	{
-		return 1;
+		return Tilemap[_y][_x].size()-1;
 	}
 }
 void APlayer::PushState(int _Column,int _Row,int _stack,std::string _Dir,char _Dir2)
